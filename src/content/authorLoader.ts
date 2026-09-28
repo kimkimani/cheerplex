@@ -1,0 +1,262 @@
+import { RAW_AUTHOR_MAP } from './authorData';
+
+export interface AuthorBadge {
+  text: string;
+  type?: 'verified' | 'modeler' | 'experience' | 'tactical' | 'support' | 'security' | 'custom';
+}
+
+export interface ParsedAuthor {
+  id: string;
+  name: string;
+  role: string;
+  avatar?: string;
+  experience?: string;
+  credentials?: string;
+  specialization?: string;
+  reviewerName?: string;
+  reviewerTitle?: string;
+  badges: AuthorBadge[];
+  social?: {
+    twitter?: string;
+    email?: string;
+    phone?: string;
+    linkedin?: string;
+  };
+  knowsAbout: string[];
+  shortBio: string;
+  fullContent: string;
+}
+
+/**
+ * Default fallback author (John K. Mwangi)
+ */
+export const DEFAULT_AUTHOR: ParsedAuthor = {
+  id: 'john-mwangi',
+  name: 'John K. Mwangi',
+  role: 'Lead Football Analyst and Predictive Model Expert',
+  avatar: '',
+  experience: '7 Years',
+  credentials: 'B.Sc. Actuarial Science and Applied Statistics (University of Nairobi)',
+  specialization: 'Predictive Goal Distribution, xG Calibration and Jackpot Permutations',
+  reviewerName: 'David Ochieng',
+  reviewerTitle: 'Senior Tactical and Statistical Verifier',
+  badges: [
+    { text: 'Verified Sports Analyst', type: 'verified' },
+    { text: '7 Yrs Experience', type: 'experience' }
+  ],
+  social: {
+    twitter: 'https://x.com/cheerplex_ke',
+    email: 'john.mwangi@cheerplex.co.ke'
+  },
+  knowsAbout: [
+    'Predictive Goal Distribution',
+    'Expected Goals (xG) Forecasting',
+    'Jackpot Permutation and Cover Strategy',
+    'Kenyan and European Football Tactics'
+  ],
+  shortBio: '7 years experience in statistical sports modeling and actuarial probability and leads such at Cheerplex.',
+  fullContent: ''
+};
+
+/**
+ * Reads physical markdown author file from src/content/authors in Node.js environment directly from disk.
+ */
+function readServerAuthorFile(authorIdOrKey: string): string | null {
+  if (typeof window === 'undefined') {
+    try {
+      const fs = require('fs');
+      const path = require('path');
+      const authorsDir = path.join(process.cwd(), 'src', 'content', 'authors');
+      const cleanKey = authorIdOrKey.toLowerCase().trim().replace(/^\//, '').replace(/\.md$/, '');
+      if (!cleanKey) return null;
+
+      const directFile = path.join(authorsDir, `${cleanKey}.md`);
+      if (fs.existsSync(directFile)) {
+        return fs.readFileSync(directFile, 'utf-8');
+      }
+
+      if (fs.existsSync(authorsDir)) {
+        const filenames = fs.readdirSync(authorsDir);
+        for (const file of filenames) {
+          if (file.toLowerCase() === `${cleanKey}.md` || file.toLowerCase() === cleanKey) {
+            return fs.readFileSync(path.join(authorsDir, file), 'utf-8');
+          }
+        }
+      }
+    } catch (e) {
+      // fs is unavailable in client environments
+    }
+  }
+  return null;
+}
+
+/**
+ * Normalizes input name/key to matched author identifier.
+ */
+export function normalizeAuthorKey(input?: string): string {
+  if (!input) return 'john-mwangi';
+  const clean = input.toLowerCase().trim();
+
+  if (clean.includes('mwangi') || clean.includes('john') || clean === 'lead analyst') return 'john-mwangi';
+  if (clean.includes('ochieng') || clean.includes('david')) return 'david-ochieng';
+  if (clean.includes('wanjiku') || clean.includes('grace wanjiku')) return 'grace-wanjiku';
+  if (clean.includes('muthoni') || clean.includes('grace muthoni')) return 'grace-muthoni';
+  if (clean.includes('rotich') || clean.includes('kipchumba rotich')) return 'kipchumba-rotich';
+  if (clean.includes('mutua') || clean.includes('faith')) return 'faith-mutua';
+  if (clean.includes('kipchumba') || clean.includes('brian')) return 'brian-kipchumba';
+  if (clean.includes('omondi') || clean.includes('samuel')) return 'dr-samuel-omondi';
+  if (clean.includes('safety') || clean.includes('player safety') || clean.includes('welfare')) return 'cheerplex-safety-board';
+  if (clean.includes('legal') || clean.includes('compliance')) return 'legal-compliance';
+
+  return clean.replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+}
+
+/**
+ * Parse frontmatter and content from raw author markdown string.
+ */
+export function parseAuthorMarkdown(raw: string, fallbackId: string = 'author'): ParsedAuthor {
+  let frontmatterBlock = '';
+  let bodyContent = raw;
+
+  if (raw.startsWith('---')) {
+    const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
+    if (match) {
+      frontmatterBlock = match[1];
+      bodyContent = match[2].trim();
+    }
+  }
+
+  const fm: Record<string, any> = {};
+  if (frontmatterBlock) {
+    const lines = frontmatterBlock.split('\n');
+    let currentKey = '';
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith('#')) continue;
+
+      // Handle array items
+      if (trimmed.startsWith('- ') && currentKey) {
+        const itemVal = trimmed.substring(2).trim();
+        // Check if item is an object (e.g. badges)
+        if (itemVal.startsWith('text:') || (lines[i + 1] && lines[i + 1].trim().startsWith('type:'))) {
+          const textMatch = itemVal.match(/text:\s*["']?([^"'\n]+)["']?/);
+          const badgeObj: any = { text: textMatch ? textMatch[1] : itemVal };
+          if (lines[i + 1] && lines[i + 1].trim().startsWith('type:')) {
+            const typeMatch = lines[i + 1].trim().match(/type:\s*["']?([^"'\n]+)["']?/);
+            if (typeMatch) badgeObj.type = typeMatch[1];
+            i++;
+          }
+          if (!Array.isArray(fm[currentKey])) fm[currentKey] = [];
+          fm[currentKey].push(badgeObj);
+        } else {
+          if (!Array.isArray(fm[currentKey])) fm[currentKey] = [];
+          fm[currentKey].push(itemVal.replace(/^["']|["']$/g, ''));
+        }
+        continue;
+      }
+
+      // Handle key-value pairs
+      const colonIdx = line.indexOf(':');
+      if (colonIdx !== -1) {
+        const key = line.substring(0, colonIdx).trim();
+        const value = line.substring(colonIdx + 1).trim();
+
+        if (value === '') {
+          currentKey = key;
+          fm[key] = [];
+        } else {
+          currentKey = key;
+          let cleanVal = value.replace(/^["']|["']$/g, '');
+          if (cleanVal === 'true') fm[key] = true;
+          else if (cleanVal === 'false') fm[key] = false;
+          else fm[key] = cleanVal;
+        }
+      }
+    }
+  }
+
+  // Build badge array
+  let parsedBadges: AuthorBadge[] = [];
+  if (Array.isArray(fm.badges)) {
+    parsedBadges = fm.badges.map(b => typeof b === 'string' ? { text: b, type: 'verified' } : b);
+  } else if (fm.badges && typeof fm.badges === 'string') {
+    parsedBadges = [{ text: fm.badges, type: 'verified' }];
+  } else {
+    parsedBadges = [];
+  }
+
+  return {
+    id: fm.id || fallbackId,
+    name: fm.name || fm.authorName || fm.title || '',
+    role: fm.role || fm.authorTitle || fm.title || '',
+    avatar: fm.avatar || fm.authorAvatar || '',
+    experience: fm.experience || '',
+    credentials: fm.credentials || '',
+    specialization: fm.specialization || '',
+    reviewerName: fm.reviewerName || '',
+    reviewerTitle: fm.reviewerTitle || '',
+    badges: parsedBadges,
+    social: typeof fm.social === 'object' ? fm.social : (fm.twitter || fm.email ? { twitter: fm.twitter, email: fm.email } : undefined),
+    knowsAbout: Array.isArray(fm.knowsAbout) ? fm.knowsAbout : [],
+    shortBio: fm.shortBio || fm.description || fm.authorDescription || '',
+    fullContent: bodyContent
+  };
+}
+
+/**
+ * Loads raw markdown for a specific author.
+ */
+function loadRawAuthorMarkdown(authorKey: string): string {
+  const normKey = normalizeAuthorKey(authorKey);
+
+  // 0. Server-side filesystem read (real-time disk access)
+  if (typeof window === 'undefined') {
+    const serverContent = readServerAuthorFile(normKey);
+    if (serverContent) return serverContent;
+  }
+
+  // 1. Fallback map check
+  if (RAW_AUTHOR_MAP && RAW_AUTHOR_MAP[normKey]) {
+    return RAW_AUTHOR_MAP[normKey];
+  }
+
+  return '';
+}
+
+/**
+ * Retrieves a parsed author profile by author ID or name.
+ */
+export function getAuthor(authorIdOrName?: string): ParsedAuthor {
+  if (!authorIdOrName) return DEFAULT_AUTHOR;
+
+  const normKey = normalizeAuthorKey(authorIdOrName);
+  const raw = loadRawAuthorMarkdown(normKey);
+
+  if (raw) {
+    return parseAuthorMarkdown(raw, normKey);
+  }
+
+  return {
+    ...DEFAULT_AUTHOR,
+    id: normKey,
+    name: authorIdOrName
+  };
+}
+
+/**
+ * Returns all available verified authors/analysts.
+ */
+export function getAllAuthors(): ParsedAuthor[] {
+  const knownKeys = [
+    'john-mwangi',
+    'david-ochieng',
+    'grace-wanjiku',
+    'brian-kipchumba',
+    'samuel-omondi'
+  ];
+
+  return knownKeys.map(key => getAuthor(key));
+}
+

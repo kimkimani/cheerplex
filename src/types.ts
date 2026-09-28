@@ -1,0 +1,99 @@
+export interface Fixture {
+  id: number;
+  fixtureNumber?: number;
+  fixtureRef?: string;
+  homeTeam: string;
+  awayTeam: string;
+  homeTeamLogo?: string;
+  awayTeamLogo?: string;
+  prediction: string;
+  result: 'won' | 'lost' | 'pending';
+  status: 'LIVE' | 'FT' | 'NS' | 'HT';
+  statusLong?: string;
+  kickoffTime: string; // ISO string or human-readable format
+  date?: string;
+  time?: string;
+  leagueName: string;
+  leagueFlag?: string;
+  countryFlag?: string;
+  leagueLogo?: string;
+  countryName?: string;
+  leagueCountry?: string;
+  homeScore?: number | string;
+  awayScore?: number | string;
+  confidence: number; // e.g., 85 for 85%
+  isDoubleChance?: boolean;
+  popular?: number | string | boolean; // 1 for popular / top banker status
+  aiAnalysis?: string; // AI generated context
+  probabilities?: { home?: string | number; draw?: string | number; away?: string | number } | null;
+  explicitProbs?: { home?: number | string; draw?: number | string; away?: number | string; percentPredHome?: string | null; percentPredDraw?: string | null; percentPredAway?: string | null } | null;
+  probs?: any;
+  homeProb?: number;
+  drawProb?: number;
+  awayProb?: number;
+  percentPredHome?: string | null;
+  percentPredDraw?: string | null;
+  percentPredAway?: string | null;
+}
+
+export interface JackpotFixtureTimeSummary {
+  id: number | string;
+  position: number;
+  homeTeam: string;
+  awayTeam: string;
+  kickoffTime: string;
+  status?: string;
+  prediction?: string;
+}
+
+export interface VipPackage {
+  id: number | string;
+  slug: string;
+  name: string;
+  price: number;
+  durationDays: number;
+  description: string;
+  features: string[];
+  isFeatured?: boolean;
+  earliestKickoff?: string | null;
+  latestKickoff?: string | null;
+  timeWindow?: string | null;
+  firstFixture?: JackpotFixtureTimeSummary | null;
+  lastFixture?: JackpotFixtureTimeSummary | null;
+}
+
+export interface OddsPack {
+  id: number;
+  slug: string;
+  name: string;
+  tag: string;
+  price: number;
+  durationDays: number;
+  picksPerDay: number;
+  oddsMinDecimal: string;
+  description: string;
+  color: string;
+  riskLevel: 'Conservative' | 'Balanced' | 'Aggressive' | 'High Yield';
+}
+
+export interface DesignIteration {
+  id: string;
+  name: string;
+  version: string;
+  description: string;
+  notes: string[];
+  themeClass: string;
+}
+
+export interface ExternalLink {
+  id: number | string;
+  anchorText: string;
+  url: string;
+  rel: 'dofollow' | 'nofollow' | string;
+  isDofollow: boolean;
+  tag?: string;
+  target?: string;
+  description?: string;
+  orderIndex?: number;
+  isActive?: boolean;
+}

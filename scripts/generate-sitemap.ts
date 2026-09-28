@@ -1,0 +1,41 @@
+import fs from 'fs';
+import path from 'path';
+import { generateSitemapXml } from '../src/utils/sitemapGenerator';
+
+function buildStaticSitemap() {
+  try {
+    const publicDir = path.join(process.cwd(), 'public');
+    if (!fs.existsSync(publicDir)) {
+      fs.mkdirSync(publicDir, { recursive: true });
+    }
+
+    const xml = generateSitemapXml();
+    const sitemapPath = path.join(publicDir, 'sitemap.xml');
+    fs.writeFileSync(sitemapPath, xml, 'utf-8');
+    console.log(`[Sitemap Generator] Successfully generated ${sitemapPath}`);
+
+    const robotsContent = `User-agent: *
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/
+Disallow: /xmlrpc.php
+Disallow: /feed/
+Disallow: /tag/
+Disallow: /*.php$
+Disallow: /*.cgi$
+Disallow: /*.asp$
+Disallow: /*.aspx$
+Disallow: /*.jsp$
+Allow: /
+
+Sitemap: https://cheerplex.co.ke/sitemap.xml
+`;
+    const robotsPath = path.join(publicDir, 'robots.txt');
+    fs.writeFileSync(robotsPath, robotsContent, 'utf-8');
+    console.log(`[Sitemap Generator] Successfully generated ${robotsPath}`);
+  } catch (err) {
+    console.error('[Sitemap Generator] Error building static sitemap:', err);
+  }
+}
+
+buildStaticSitemap();
