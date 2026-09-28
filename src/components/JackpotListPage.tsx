@@ -325,7 +325,7 @@ export default function JackpotListPage({
                   className="flex-1 py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-mono text-xs font-black   tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md no-underline transition-all active:scale-98 border-none"
                 >
                   <Trophy className="w-4 h-4 text-amber-300" />
-                  <span>View Permutations & Predictions</span>
+                  <span>View Jackpot Predictions</span>
                   <ArrowRight className="w-4 h-4 text-white" />
                 </a>
               </div>
