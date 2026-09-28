@@ -82,7 +82,7 @@ export default function OddsPacks({
   return (
     <section 
       id="odds-packs" 
-      aria-label="Cheerplex Daily Odds Multipliers"
+      aria-label="Cheerplex Daily Odds Packs"
       className="p-4 sm:p-5 md:p-6 rounded-2xl sm:rounded-3xl bg-[var(--card)] border border-[var(--border)] shadow-xs text-left space-y-4 sm:space-y-5 relative overflow-hidden w-full"
     >
       {/* 1. COMPACT HEADER */}
@@ -94,7 +94,7 @@ export default function OddsPacks({
           <div>
             <div className="flex items-center gap-2 flex-wrap">
               <h2 className="text-base sm:text-lg md:text-xl font-black tracking-tight uppercase text-[var(--text)] font-display">
-                {title || "Cheerplex Curated Odds Multipliers"}
+                {title || "Cheerplex Odds Packs"}
               </h2>
               <span className="text-[10px] font-mono font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/50 border border-blue-300 dark:border-blue-800">
                 <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
@@ -102,7 +102,7 @@ export default function OddsPacks({
               </span>
             </div>
             <p className="text-xs text-[var(--text-muted)] line-clamp-1 mt-0.5">
-              {subtitle || "Curated multi-bet accumulators constructed to achieve target odds with maximum probability and instant bookie codes."}
+              {subtitle || "Get multi-bet for best target odds."}
             </p>
           </div>
         </div>
@@ -228,7 +228,7 @@ export default function OddsPacks({
                   ) : (
                     <>
                       <Smartphone className="w-3.5 h-3.5" />
-                      <span>Get Booking Slip • KES {pack.price}</span>
+                      <span>Get Odds Slip • KES {pack.price}</span>
                       <ArrowRight className="w-3.5 h-3.5 ml-0.5" />
                     </>
                   )}

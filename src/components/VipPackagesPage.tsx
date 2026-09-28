@@ -142,7 +142,7 @@ export default function VipPackagesPage({
                 Kenyan Major Jackpot Prediction Slips
               </h2>
               <p className="text-xs text-[var(--text-muted)]">
-                Select any jackpot pool below to view calibrated 15 to 17-match double-chance prediction slips.
+                Select any jackpot pool below to view tips for 15 to 17 fixtures prediction slips.
               </p>
             </div>
           </div>

@@ -725,10 +725,10 @@ export default function CategoryPredictionsPage({
         <div className="flex items-center justify-between">
           <div className="space-y-0.5">
             <span className="text-[10px] font-mono font-bold   tracking-wider text-blue-600 dark:text-blue-400">
-              Explore Alternative Markets
+              Alternative Cheerplex Tips
             </span>
             <h3 className="text-sm font-black text-[var(--text)]  ">
-              Complementary Mathematical Prediction Portals
+              Our Other Prediction Selections and Tips
             </h3>
           </div>
           <a
@@ -790,13 +790,13 @@ export default function CategoryPredictionsPage({
         <div className="space-y-2 max-w-xl">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 text-amber-300 text-[10px] font-mono font-bold  ">
             <Crown className="w-3.5 h-3.5 text-amber-300 shrink-0" />
-            <span>Cheerplex Join VIP • Instant Pochi La Biashara</span>
+            <span>Cheerplex Join VIP • Instant Access</span>
           </div>
           <h3 className="text-base sm:text-lg font-black   tracking-tight font-display">
-            Want Curated 5+ Odds or Weekly VIP Selections?
+            Want Best Sure 5+ Odds or Weekly VIP Selections?
           </h3>
           <p className="text-xs text-slate-300 leading-relaxed font-sans">
-            Get mathematically validated 3+ to 9+ daily odds slips and complete jackpot permutations delivered straight to your phone via SMS & WhatsApp. Instant activation via Safaricom M-Pesa to <strong className="text-white">0740841375</strong>.
+            Get mathematically analyzed and validated 3+ to 9+ daily odds and complete jackpot predictions.
           </p>
         </div>
 
