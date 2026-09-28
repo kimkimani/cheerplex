@@ -682,7 +682,7 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
                   : 'text-[var(--text-muted)] hover:text-[var(--text)]'
               }`}
             >
-              <span>Dashboard</span>
+              <span>Home</span>
               {activePage === 'home' && (
                 <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400 rounded-full" />
               )}
