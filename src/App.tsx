@@ -616,15 +616,15 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
           <div className="flex items-center gap-2 overflow-hidden text-[11px] sm:text-xs">
             <span className="inline-flex items-center gap-1.5 font-bold text-blue-400 shrink-0   tracking-wider font-mono">
               <span className="w-2 h-2 rounded-full bg-blue-500 animate-ping"></span>
-              CHEERPLEX RADAR:
+              Cheerplex Latest Update:
             </span>
             <span className="truncate text-slate-300 font-medium">
-              SportPesa Mega Jackpot Active (Ksh 412M+) • High-Probability 1X2 Mathematical Bankers • Real-Time Community Consensus
+              SportPesa Mega Jackpot is now Active 
             </span>
           </div>
           <div className="flex items-center gap-3 shrink-0 text-[11px] font-mono font-medium text-slate-400">
             <span className="flex items-center gap-1.5 text-blue-400">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span> Verified Predictive Engine
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span> Check Updated Tips
             </span>
             <span className="text-slate-700">|</span>
             <span className="text-slate-300">Kenya 18+ Responsible Play</span>
@@ -1389,14 +1389,13 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
                     </span>
                   </span>
                   <span className="text-[9.5px] text-slate-400 font-mono   tracking-wider">
-                    Sports Intelligence Lab • Nairobi
+                    Your Best Sports Lab • Nairobi
                   </span>
                 </div>
               </div>
 
               <p className="leading-relaxed text-slate-400 text-xs">
-                Cheerplex is Kenya's independent algorithmic sports research laboratory headquartered in Nairobi. Our mathematical models compile statistical regressions, Monte Carlo simulations, and low-variance betting slips.
-              </p>
+                Providing accurate betting predictions and tips for major jackpots and matches worldwide. Trust our experts for your betting success.              </p>
 
               {/* Direct Support & Hotline Badges */}
               <div className="pt-2 space-y-2">
@@ -1670,9 +1669,8 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
                 Integrity & Compliance
               </strong>
               <p className="leading-relaxed text-[11px] text-slate-400">
-                Cheerplex is an analytics consultancy. We do not accept bets or operate gambling infrastructure. All content is strictly statistical intelligence for Kenyan fans aged 18+.
-              </p>
-
+                Betting involves risk. Please gamble responsibly and only bet what you can afford to lose. Our predictions are not guaranteed success. Must be 18+ to participate in betting.              
+                </p>
               <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 font-mono text-[10.5px]">
                 <div className="flex items-center justify-between text-slate-300">
                   <span>Gambling Helpline:</span>
@@ -1732,7 +1730,7 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
           {/* Bottom Legal Copyright & Links Row */}
           <div className="border-t border-slate-800/80 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
             <div className="font-mono text-[11px] text-center md:text-left">
-              © 2026 CHEERPLEX SPORTS LAB LTD. Quantitative Sports Modeling Portal. Registered in Nairobi, Kenya. All rights reserved.
+              © 2026 CHEERPLEX SPORTS . All rights reserved.
             </div>
             <div className="flex flex-wrap items-center justify-center gap-3 font-mono font-bold text-[11px]">
               <a 
