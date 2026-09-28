@@ -122,7 +122,7 @@ function PageFAQ({ items }: { items: FAQItem[] }) {
           <HelpCircle className="w-4.5 h-4.5" />
         </div>
         <div>
-          <h2 className="text-sm font-black text-[var(--text)] uppercase tracking-wider font-mono">Frequently Asked Questions</h2>
+          <h2 className="text-sm font-black text-[var(--text)]   tracking-wider font-mono">Frequently Asked Questions</h2>
           <p className="text-[10px] text-[var(--text-muted)] mt-0.5">Quick answers to specific legal, database, and billing topics</p>
         </div>
       </div>
@@ -273,7 +273,7 @@ export default function StaticPages({ pageId, onBackToHome }: StaticPagesProps) 
 
             <div className="relative p-6 md:p-8 rounded-[var(--radius)] border border-rose-500/20 bg-[var(--card)] overflow-hidden">
               <div className="relative z-10 space-y-3">
-                <span className="text-[10px] font-mono font-black uppercase text-rose-500 tracking-wider px-2 py-1 rounded bg-rose-500/10 flex items-center gap-1.5 w-fit">
+                <span className="text-[10px] font-mono font-black   text-rose-500 tracking-wider px-2 py-1 rounded bg-rose-500/10 flex items-center gap-1.5 w-fit">
                   <AlertTriangle className="w-3.5 h-3.5 text-rose-500 animate-pulse" /> Safety and Responsibility
                 </span>
                 <h1 className="text-xl md:text-3xl font-extrabold tracking-tight text-[var(--text)]" style={{ fontFamily: 'var(--font-display)' }}>
@@ -302,7 +302,7 @@ export default function StaticPages({ pageId, onBackToHome }: StaticPagesProps) 
                   { title: 'Acknowledge Probability Chaos', text: 'Even the most advanced statistical modeling, machine learning, or historical trends cannot guarantee a 100% correct football result. Always understand that outcomes carry inherent risks.' }
                 ].map((g, idx) => (
                   <div key={idx} className="p-5 rounded-[var(--radius)] bg-[var(--card)] border border-[var(--border)] space-y-2">
-                    <h4 className="text-xs font-black text-rose-500 uppercase tracking-tight flex items-center gap-2">
+                    <h4 className="text-xs font-black text-rose-500   tracking-tight flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
                       {g.title}
                     </h4>
@@ -376,7 +376,7 @@ export default function StaticPages({ pageId, onBackToHome }: StaticPagesProps) 
 
             <div className="relative p-6 md:p-8 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--card)] overflow-hidden">
               <div className="relative z-10 space-y-2">
-                <span className="text-[10px] font-mono font-black uppercase text-indigo-500 tracking-wider px-2 py-1 rounded bg-indigo-500/10">
+                <span className="text-[10px] font-mono font-black   text-indigo-500 tracking-wider px-2 py-1 rounded bg-indigo-500/10">
                   Cheerplex Support
                 </span>
                 <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight text-[var(--text)]" style={{ fontFamily: 'var(--font-display)' }}>
@@ -419,7 +419,7 @@ export default function StaticPages({ pageId, onBackToHome }: StaticPagesProps) 
                   <hr className="border-[var(--border)]" />
 
                   <div className="space-y-3">
-                    <h3 className="text-sm font-black text-[var(--text)] uppercase tracking-wider font-mono">
+                    <h3 className="text-sm font-black text-[var(--text)]   tracking-wider font-mono">
                       How to speed up support
                     </h3>
                     <ul className="space-y-2 text-xs text-[var(--text)] list-disc pl-5">
@@ -442,7 +442,7 @@ export default function StaticPages({ pageId, onBackToHome }: StaticPagesProps) 
 
                 {/* Optional Web Form */}
                 <div className="p-6 rounded-[var(--radius)] bg-[var(--card)] border border-[var(--border)] space-y-4">
-                  <div className="text-xs font-black text-[var(--text)] uppercase tracking-wider font-mono">
+                  <div className="text-xs font-black text-[var(--text)]   tracking-wider font-mono">
                     Send Email Ticket
                   </div>
                   {formSubmitted ? (
@@ -527,7 +527,7 @@ export default function StaticPages({ pageId, onBackToHome }: StaticPagesProps) 
                   <hr className="border-[var(--border)]" />
                   
                   <div>
-                    <h4 className="text-xs font-bold text-[var(--text)] uppercase tracking-wider font-mono">Business hours</h4>
+                    <h4 className="text-xs font-bold text-[var(--text)]   tracking-wider font-mono">Business hours</h4>
                     <p className="text-xs text-[var(--text-muted)] mt-1">
                       Mon–Sat 09:00–18:00 EAT. We aim to respond within a few hours during business hours.
                     </p>
@@ -535,7 +535,7 @@ export default function StaticPages({ pageId, onBackToHome }: StaticPagesProps) 
                 </div>
 
                 <div className="p-5 rounded-[var(--radius)] bg-[var(--card)] border border-[var(--border)] space-y-3">
-                  <div className="text-xs font-black text-[var(--text)] uppercase tracking-wider font-mono">Contact Details</div>
+                  <div className="text-xs font-black text-[var(--text)]   tracking-wider font-mono">Contact Details</div>
                   <div className="space-y-2 text-xs text-[var(--text)]">
                     <p><strong>Support:</strong> +254740841375</p>
                     <p><strong>Email:</strong> info@Cheerplex.co.ke</p>
@@ -549,7 +549,7 @@ export default function StaticPages({ pageId, onBackToHome }: StaticPagesProps) 
             <div className="p-6 rounded-[var(--radius)] bg-[var(--card)] border border-[var(--border)] space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--border)] pb-3">
                 <div>
-                  <div className="text-sm font-extrabold text-[var(--text)] font-mono uppercase tracking-wider flex items-center gap-2">
+                  <div className="text-sm font-extrabold text-[var(--text)] font-mono   tracking-wider flex items-center gap-2">
                     <Globe className="w-4 h-4 text-emerald-500" />
                     <span>Saved Contacts and Social Channels Table</span>
                   </div>
@@ -565,7 +565,7 @@ export default function StaticPages({ pageId, onBackToHome }: StaticPagesProps) 
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse text-xs">
                   <thead>
-                    <tr className="border-b border-[var(--border)] bg-slate-50 dark:bg-slate-900/50 text-[10px] uppercase font-mono text-[var(--text-muted)]">
+                    <tr className="border-b border-[var(--border)] bg-slate-50 dark:bg-slate-900/50 text-[10px]   font-mono text-[var(--text-muted)]">
                       <th className="py-2.5 px-3">Channel / Social</th>
                       <th className="py-2.5 px-3">Contact Detail / Link</th>
                       <th className="py-2.5 px-3">Purpose and Description</th>
@@ -612,10 +612,10 @@ export default function StaticPages({ pageId, onBackToHome }: StaticPagesProps) 
         return (
           <div className="space-y-6 text-left">
             <div className="p-6 md:p-8 rounded-3xl border border-[var(--border)] bg-[var(--card)] shadow-xs space-y-3">
-              <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/60">
+              <span className="text-[10px] font-mono font-bold   tracking-wider px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/60">
                 Cheerplex Intelligence
               </span>
-              <h1 className="text-2xl sm:text-3xl font-black text-[var(--text)] tracking-tight uppercase font-display">
+              <h1 className="text-2xl sm:text-3xl font-black text-[var(--text)] tracking-tight   font-display">
                 {pageMd.displayTitle || pageMd.title}
               </h1>
               {pageMd.introParagraph ? (
@@ -633,7 +633,7 @@ export default function StaticPages({ pageId, onBackToHome }: StaticPagesProps) 
 
             {(pageMd.listTitle || pageMd.listSubtitle) && (
               <div className="p-4 rounded-2xl bg-[var(--card)] border border-[var(--border)] space-y-1">
-                <h2 className="text-base font-black uppercase text-[var(--text)] font-display tracking-tight">
+                <h2 className="text-base font-black   text-[var(--text)] font-display tracking-tight">
                   {pageMd.listTitle}
                 </h2>
                 {pageMd.listSubtitle && (
@@ -646,7 +646,7 @@ export default function StaticPages({ pageId, onBackToHome }: StaticPagesProps) 
 
             {(pageMd.sectionTitle || pageMd.sectionDescription) && (
               <div className="p-4 rounded-2xl bg-[var(--card)] border border-[var(--border)] space-y-1">
-                <h2 className="text-base font-black uppercase text-[var(--text)] font-display tracking-tight">
+                <h2 className="text-base font-black   text-[var(--text)] font-display tracking-tight">
                   {pageMd.sectionTitle}
                 </h2>
                 {pageMd.sectionDescription && (
@@ -675,7 +675,7 @@ export default function StaticPages({ pageId, onBackToHome }: StaticPagesProps) 
           <span>Back Home</span>
         </button>
 
-        <span className="text-[10px] font-mono text-slate-700 dark:text-slate-300 font-bold uppercase tracking-wider">
+        <span className="text-[10px] font-mono text-slate-700 dark:text-slate-300 font-bold   tracking-wider">
           Cheerplex Portal
         </span>
       </div>

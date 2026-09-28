@@ -338,7 +338,7 @@ export function parseAllFixtureLine(line: string): {
     // Normalize legacy formats like "2 - 53%" into "2 (Away)"
     const legacyDashMatch = rawVote.match(/^([1X2]|DC[1X2]+)\s*-\s*\d+%/i);
     if (legacyDashMatch) {
-      const voteTip = legacyDashMatch[1].to ();
+      const voteTip = legacyDashMatch[1].toUpperCase();
       let label = 'Home';
       if (voteTip === '2') label = 'Away';
       else if (voteTip === 'X') label = 'Draw';

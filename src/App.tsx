@@ -614,7 +614,7 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
       <aside aria-label="Live sports alerts" className="w-full bg-slate-950 text-slate-200 text-xs py-2 px-4 border-b border-slate-800 hidden sm:block">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-2 overflow-hidden text-[11px] sm:text-xs">
-            <span className="inline-flex items-center gap-1.5 font-bold text-blue-400 shrink-0 uppercase tracking-wider font-mono">
+            <span className="inline-flex items-center gap-1.5 font-bold text-blue-400 shrink-0   tracking-wider font-mono">
               <span className="w-2 h-2 rounded-full bg-blue-500 animate-ping"></span>
               CHEERPLEX RADAR:
             </span>
@@ -1079,13 +1079,13 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
                         
                         {/* Left: Headline & Intro */}
                         <div className="lg:col-span-7 space-y-4">
-                          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/60 text-[10px] font-mono font-bold uppercase tracking-wider">
+                          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/60 text-[10px] font-mono font-bold   tracking-wider">
                             <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                             <span>Quantitative Intelligence</span>
                           </div>
 
                           <h1 
-                            className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight leading-[1.15] text-[var(--text)] uppercase font-display"
+                            className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight leading-[1.15] text-[var(--text)]   font-display"
                           >
                             {homeMd.displayTitle || homeMd.title || "Mathematical Football Predictions & Sure Daily Bankers"}
                           </h1>
@@ -1149,11 +1149,11 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
                     <section id="jackpot-section" className="p-6 rounded-3xl bg-[var(--card)] border border-[var(--border)] shadow-xs relative overflow-hidden text-left space-y-5">
                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[var(--border)] pb-4">
                         <div className="space-y-1 max-w-xl">
-                          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800 text-[10px] font-mono font-bold uppercase">
+                          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800 text-[10px] font-mono font-bold  ">
                             <Trophy className="w-3 h-3 text-amber-500" />
                             <span>Kenyan Jackpot Analytics Engine</span>
                           </div>
-                          <h2 className="text-base sm:text-xl font-black text-[var(--text)] tracking-tight uppercase font-display">
+                          <h2 className="text-base sm:text-xl font-black text-[var(--text)] tracking-tight   font-display">
                             Cheerplex Premium Kenyan Jackpots
                           </h2>
                           <p className="text-xs text-[var(--text-muted)] leading-relaxed">
@@ -1191,11 +1191,11 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
                                   ACTIVE
                                 </span>
                               </div>
-                              <h3 className="text-xs sm:text-sm font-black text-[var(--text)] uppercase font-display">
+                              <h3 className="text-xs sm:text-sm font-black text-[var(--text)]   font-display">
                                 {item.name}
                               </h3>
                               <div className="p-2 rounded-xl bg-white dark:bg-slate-800/80 border border-[var(--border)] flex items-baseline justify-between">
-                                <span className="text-[9px] font-mono uppercase text-slate-500">Pool Prize</span>
+                                <span className="text-[9px] font-mono   text-slate-500">Pool Prize</span>
                                 <span className="text-xs font-black font-mono text-emerald-600 dark:text-emerald-400">
                                   {item.estimatedPool}
                                 </span>
@@ -1210,7 +1210,7 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
                                   handleSelectPage(item.id);
                                 }
                               }}
-                              className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-black font-mono uppercase rounded-xl transition-all no-underline cursor-pointer flex items-center justify-center gap-1 shadow-xs"
+                              className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-black font-mono   rounded-xl transition-all no-underline cursor-pointer flex items-center justify-center gap-1 shadow-xs"
                             >
                               <span>Analyze Combination</span>
                               <ChevronRight className="w-3.5 h-3.5" />
@@ -1247,7 +1247,7 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
                           <div className="space-y-1 border-b border-[var(--border)] pb-3">
                             <div className="flex items-center gap-2">
                               <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                              <h2 className="text-base sm:text-lg font-black uppercase text-[var(--text)] tracking-tight font-display">
+                              <h2 className="text-base sm:text-lg font-black   text-[var(--text)] tracking-tight font-display">
                                 {homeMd.sectionTitle || "Cheerplex Quantitative Analysis & Strategy"}
                               </h2>
                             </div>
@@ -1388,7 +1388,7 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
                       .CO.KE
                     </span>
                   </span>
-                  <span className="text-[9.5px] text-slate-400 font-mono uppercase tracking-wider">
+                  <span className="text-[9.5px] text-slate-400 font-mono   tracking-wider">
                     Sports Intelligence Lab • Nairobi
                   </span>
                 </div>
@@ -1400,7 +1400,7 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
 
               {/* Direct Support & Hotline Badges */}
               <div className="pt-2 space-y-2">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold block">
+                <span className="text-[10px] font-mono   tracking-wider text-slate-400 font-bold block">
                   Verified Dispatch Channels:
                 </span>
                 <div className="flex flex-wrap items-center gap-2">
@@ -1448,7 +1448,7 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
 
             {/* Column 2: Mathematical Markets Directory */}
             <div className="space-y-3">
-              <strong className="text-white block text-xs font-black uppercase tracking-wider font-mono border-b border-slate-800 pb-2">
+              <strong className="text-white block text-xs font-black   tracking-wider font-mono border-b border-slate-800 pb-2">
                 Mathematical Predictions
               </strong>
               <div className="flex flex-col gap-1.5 font-medium text-xs">
@@ -1554,7 +1554,7 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
 
             {/* Column 3: Kenyan Jackpot Pools Directory */}
             <div className="space-y-3">
-              <strong className="text-white block text-xs font-black uppercase tracking-wider font-mono border-b border-slate-800 pb-2">
+              <strong className="text-white block text-xs font-black   tracking-wider font-mono border-b border-slate-800 pb-2">
                 Kenyan Jackpot Pools
               </strong>
               <div className="flex flex-col gap-1.5 font-medium text-xs">
@@ -1666,7 +1666,7 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
 
             {/* Column 4: Compliance, Security & Player Protection */}
             <div className="space-y-3">
-              <strong className="text-white block text-xs font-black uppercase tracking-wider font-mono border-b border-slate-800 pb-2">
+              <strong className="text-white block text-xs font-black   tracking-wider font-mono border-b border-slate-800 pb-2">
                 Integrity & Compliance
               </strong>
               <p className="leading-relaxed text-[11px] text-slate-400">
@@ -1693,7 +1693,7 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
                       handleSelectPage('responsible-gambling');
                     }
                   }}
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-rose-950/60 hover:bg-rose-900 text-rose-300 text-[10.5px] font-mono font-bold uppercase tracking-wider border border-rose-800/80 transition-all no-underline cursor-pointer"
+                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-rose-950/60 hover:bg-rose-900 text-rose-300 text-[10.5px] font-mono font-bold   tracking-wider border border-rose-800/80 transition-all no-underline cursor-pointer"
                 >
                   <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping" />
                   <span>Responsible Play Advisory</span>

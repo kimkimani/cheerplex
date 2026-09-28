@@ -43,16 +43,16 @@ export default function VipPackagesPage({
       <div className="relative overflow-hidden p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl bg-[var(--card)] border border-[var(--border)] shadow-xs">
         <div className="max-w-3xl space-y-3 relative z-10">
           <div className="flex items-center gap-2.5 flex-wrap">
-            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
+            <span className="text-[11px] font-mono font-bold   tracking-wider text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
               <Crown className="w-4 h-4 text-amber-500" /> Cheerplex VIP Packages
             </span>
             <span className="text-slate-300 dark:text-slate-700">·</span>
-            <span className="text-[11px] text-slate-500 dark:text-slate-400 font-mono font-bold uppercase tracking-wider">
+            <span className="text-[11px] text-slate-500 dark:text-slate-400 font-mono font-bold   tracking-wider">
               Instant Safaricom M-Pesa Activation
             </span>
           </div>
 
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-[var(--text)] tracking-tight uppercase font-display">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-[var(--text)] tracking-tight   font-display">
             {pageMd.displayTitle || pageMd.title || <>VIP PACKAGES, <span className="text-blue-600 dark:text-blue-400">DAILY ODDS PACKS</span> &amp; JACKPOT SLIPS</>}
           </h1>
 
@@ -70,19 +70,19 @@ export default function VipPackagesPage({
           <div className="flex flex-wrap gap-2 pt-1.5">
             <a 
               href="#vip-bundles-section" 
-              className="px-3.5 sm:px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 text-xs font-mono font-bold uppercase transition-all no-underline flex items-center gap-1.5 shadow-xs cursor-pointer active:scale-95"
+              className="px-3.5 sm:px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 text-xs font-mono font-bold   transition-all no-underline flex items-center gap-1.5 shadow-xs cursor-pointer active:scale-95"
             >
               <Crown className="w-3.5 h-3.5 text-amber-300" /> VIP Packages
             </a>
             <a 
               href="#odds-packs-section" 
-              className="px-3.5 sm:px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-[var(--text)] hover:bg-slate-200 dark:hover:bg-slate-700 border border-[var(--border)] text-xs font-mono font-bold uppercase transition-all no-underline flex items-center gap-1.5 cursor-pointer active:scale-95"
+              className="px-3.5 sm:px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-[var(--text)] hover:bg-slate-200 dark:hover:bg-slate-700 border border-[var(--border)] text-xs font-mono font-bold   transition-all no-underline flex items-center gap-1.5 cursor-pointer active:scale-95"
             >
               <Zap className="w-3.5 h-3.5 text-blue-500" /> Daily Odds Packs
             </a>
             <a 
               href="#jackpot-listing-section" 
-              className="px-3.5 sm:px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-[var(--text)] hover:bg-slate-200 dark:hover:bg-slate-700 border border-[var(--border)] text-xs font-mono font-bold uppercase transition-all no-underline flex items-center gap-1.5 cursor-pointer active:scale-95"
+              className="px-3.5 sm:px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-[var(--text)] hover:bg-slate-200 dark:hover:bg-slate-700 border border-[var(--border)] text-xs font-mono font-bold   transition-all no-underline flex items-center gap-1.5 cursor-pointer active:scale-95"
             >
               <Trophy className="w-3.5 h-3.5 text-amber-500" /> Kenyan Jackpots
             </a>
@@ -92,19 +92,19 @@ export default function VipPackagesPage({
         {/* Highlight Stats Bar */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 pt-4 sm:pt-5 mt-5 sm:mt-6 border-t border-[var(--border)] relative z-10">
           <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-[var(--border)]">
-            <span className="text-[10px] text-slate-400 uppercase font-bold font-mono block">VIP Accuracy</span>
+            <span className="text-[10px] text-slate-400   font-bold font-mono block">VIP Accuracy</span>
             <p className="text-xs sm:text-sm font-black text-emerald-600 dark:text-emerald-400 font-mono mt-0.5">89.4% Banker Rate</p>
           </div>
           <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-[var(--border)]">
-            <span className="text-[10px] text-slate-400 uppercase font-bold font-mono block">Odds Delivery</span>
+            <span className="text-[10px] text-slate-400   font-bold font-mono block">Odds Delivery</span>
             <p className="text-xs sm:text-sm font-black text-blue-600 dark:text-blue-400 font-mono mt-0.5">Instant via SMS</p>
           </div>
           <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-[var(--border)]">
-            <span className="text-[10px] text-slate-400 uppercase font-bold font-mono block">Jackpots Tracked</span>
+            <span className="text-[10px] text-slate-400   font-bold font-mono block">Jackpots Tracked</span>
             <p className="text-xs sm:text-sm font-black text-[var(--text)] font-mono mt-0.5">{activeJackpots.length} Major Pools</p>
           </div>
           <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-[var(--border)]">
-            <span className="text-[10px] text-slate-400 uppercase font-bold font-mono block">M-Pesa Verification</span>
+            <span className="text-[10px] text-slate-400   font-bold font-mono block">M-Pesa Verification</span>
             <p className="text-xs sm:text-sm font-black text-amber-500 font-mono mt-0.5">Automated 24/7</p>
           </div>
         </div>
@@ -138,7 +138,7 @@ export default function VipPackagesPage({
               <Trophy className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-base sm:text-lg font-black text-[var(--text)] tracking-tight uppercase font-display">
+              <h2 className="text-base sm:text-lg font-black text-[var(--text)] tracking-tight   font-display">
                 Kenyan Major Jackpot Prediction Slips
               </h2>
               <p className="text-xs text-[var(--text-muted)]">
@@ -164,7 +164,7 @@ export default function VipPackagesPage({
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-2">
-                    <span className="text-[9.5px] font-mono font-black uppercase tracking-wider text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/80 px-2 py-0.5 rounded-md border border-blue-200 dark:border-blue-800">
+                    <span className="text-[9.5px] font-mono font-black   tracking-wider text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/80 px-2 py-0.5 rounded-md border border-blue-200 dark:border-blue-800">
                       {jackpot.gamesCount} Matches
                     </span>
                     <span className="text-[9.5px] font-mono font-bold text-slate-500 dark:text-slate-400 flex items-center gap-1">
@@ -191,7 +191,7 @@ export default function VipPackagesPage({
                         onSelectJackpot(jackpot.id);
                       }
                     }}
-                    className="min-h-[40px] flex-1 py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer no-underline transition-all active:scale-95 border-none shadow-xs"
+                    className="min-h-[40px] flex-1 py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-mono text-xs font-bold   tracking-wider flex items-center justify-center gap-1.5 cursor-pointer no-underline transition-all active:scale-95 border-none shadow-xs"
                   >
                     <span>{isUnlocked ? 'View Slips' : 'View Predictions'}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -210,7 +210,7 @@ export default function VipPackagesPage({
             <div className="space-y-1 border-b border-[var(--border)] pb-3">
               <div className="flex items-center gap-2">
                 <Crown className="w-4 h-4 text-amber-500" />
-                <h2 className="text-base sm:text-lg font-black uppercase text-[var(--text)] tracking-tight font-display">
+                <h2 className="text-base sm:text-lg font-black   text-[var(--text)] tracking-tight font-display">
                   {pageMd.sectionTitle || "Cheerplex VIP Comprehensive Strategy Guide"}
                 </h2>
               </div>

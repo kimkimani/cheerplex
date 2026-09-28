@@ -339,7 +339,7 @@ export default function CategoryPredictionsPage({
   const handleCopyAccumulator = () => {
     if (topThreeAccumulator.length === 0) return;
     const slipText = [
-      `🔥 CHEERPLEX CURATED ${category.label.to ()} 3-MATCH ACCUMULATOR`,
+      `🔥 CHEERPLEX CURATED ${category.label.toUpperCase()} 3-MATCH ACCUMULATOR`,
       `Total Estimated Odds: ${accumulatorCombinedOdds}x`,
       `----------------------------------------`,
       ...topThreeAccumulator.map((f, i) => `${i + 1}. ${f.homeTeam} vs ${f.awayTeam} → Tip: ${formatTipLabel(f.prediction)} (Odds: ${getBankerEstimatedOdds(f)})`),
