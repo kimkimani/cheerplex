@@ -281,8 +281,8 @@ export default function JackpotPage({ jackpot, hasPaid, onOpenPayment, onBackToL
           <div className="flex items-center gap-2 flex-wrap">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-black   tracking-wider bg-blue-600 text-white shadow-2xs">
               <Sparkles className="w-3 h-3 text-amber-300" />
-              Algorithm V4.2 Slip
-            </span>
+              {jackpot.id}
+            </span> 
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-bold   tracking-wider bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-[var(--border)]">
               <Trophy className="w-3 h-3 text-amber-500" />
               {jackpot.gamesCount} Matches

@@ -1081,7 +1081,7 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
                         <div className="lg:col-span-7 space-y-4">
                           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/60 text-[10px] font-mono font-bold   tracking-wider">
                             <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
-                            <span>Quantitative Intelligence</span>
+                            <span>Welcome to Cheerplex.</span>
                           </div>
 
                           <h1 
