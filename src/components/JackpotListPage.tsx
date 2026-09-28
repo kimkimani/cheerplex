@@ -116,7 +116,7 @@ export default function JackpotListPage({
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-3 max-w-2xl">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="px-3 py-1 rounded-full text-[10px] font-mono font-black uppercase tracking-wider bg-blue-50 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 flex items-center gap-1.5">
+              <span className="px-3 py-1 rounded-full text-[10px] font-mono font-black   tracking-wider bg-blue-50 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 flex items-center gap-1.5">
                 <Trophy className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" /> Top 5 Kenyan Jackpots
               </span>
               <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
@@ -124,7 +124,7 @@ export default function JackpotListPage({
               </span>
             </div>
 
-            <h1 className="text-xl md:text-3xl font-black text-[var(--text)] tracking-tight uppercase font-display">
+            <h1 className="text-xl md:text-3xl font-black text-[var(--text)] tracking-tight   font-display">
               {pageMd.displayTitle || "Cheerplex Verified Kenyan Jackpot Predictions"}
             </h1>
             {pageMd.introParagraph ? (
@@ -141,19 +141,19 @@ export default function JackpotListPage({
           {/* Quick Metrics Bento Box */}
           <div className="grid grid-cols-2 gap-3 p-4 bg-slate-50 dark:bg-slate-900/80 rounded-2xl border border-[var(--border)] shrink-0 font-mono">
             <div>
-              <span className="text-[9.5px] uppercase font-bold text-[var(--text-muted)] block">Bonus Strike Rate</span>
+              <span className="text-[9.5px]   font-bold text-[var(--text-muted)] block">Bonus Strike Rate</span>
               <div className="text-lg font-black text-emerald-600 dark:text-emerald-400">84.2%</div>
             </div>
             <div>
-              <span className="text-[9.5px] uppercase font-bold text-[var(--text-muted)] block">Avg Permutations</span>
+              <span className="text-[9.5px]   font-bold text-[var(--text-muted)] block">Avg Permutations</span>
               <div className="text-lg font-black text-blue-600 dark:text-blue-400">3-4 Doubles</div>
             </div>
             <div>
-              <span className="text-[9.5px] uppercase font-bold text-[var(--text-muted)] block">M-Pesa STK</span>
+              <span className="text-[9.5px]   font-bold text-[var(--text-muted)] block">M-Pesa STK</span>
               <div className="text-xs font-bold text-[var(--text)] mt-1">Instant SMS</div>
             </div>
             <div>
-              <span className="text-[9.5px] uppercase font-bold text-[var(--text-muted)] block">Active Pools</span>
+              <span className="text-[9.5px]   font-bold text-[var(--text-muted)] block">Active Pools</span>
               <div className="text-xs font-bold text-[var(--text)] mt-1">{listData.length} Pools Ready</div>
             </div>
           </div>
@@ -188,7 +188,7 @@ export default function JackpotListPage({
       {/* 2. POOLS LIST SECTION HEADER */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-1 border-b border-[var(--border)] text-left">
         <div>
-          <h2 className="text-base sm:text-lg font-black text-[var(--text)] uppercase font-display tracking-tight">
+          <h2 className="text-base sm:text-lg font-black text-[var(--text)]   font-display tracking-tight">
             {pageMd.listTitle || "Active Kenyan Bookmaker Jackpot Pools"}
           </h2>
           <p className="text-xs text-[var(--text-muted)] mt-0.5">
@@ -214,13 +214,13 @@ export default function JackpotListPage({
                 {/* Top Row: Operator Badge, Country, Games, Price */}
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
-                    <span className={`px-2.5 py-0.5 rounded-md font-mono text-[9px] font-black uppercase tracking-wider border ${brandMeta.badge}`}>
+                    <span className={`px-2.5 py-0.5 rounded-md font-mono text-[9px] font-black   tracking-wider border ${brandMeta.badge}`}>
                       {brandMeta.brand}
                     </span>
                     <span className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[9.5px] font-mono font-bold text-[var(--text-muted)] border border-[var(--border)]">
                       {jackpot.gamesCount} Matches
                     </span>
-                    <span className={`px-2 py-0.5 rounded-md text-[9px] font-mono font-black uppercase tracking-wider ${timing.statusBadge.badgeClass}`}>
+                    <span className={`px-2 py-0.5 rounded-md text-[9px] font-mono font-black   tracking-wider ${timing.statusBadge.badgeClass}`}>
                       {timing.statusBadge.badgeText}
                     </span>
                   </div>
@@ -232,11 +232,11 @@ export default function JackpotListPage({
 
                 {/* Title and Prize Pool Banner */}
                 <div>
-                  <h3 className="text-lg font-black text-[var(--text)] tracking-tight uppercase font-display group-hover:text-blue-600 transition-colors">
+                  <h3 className="text-lg font-black text-[var(--text)] tracking-tight   font-display group-hover:text-blue-600 transition-colors">
                     {jackpot.name}
                   </h3>
                   <div className="mt-1.5 flex items-baseline gap-2">
-                    <span className="text-[10px] font-mono font-bold uppercase text-[var(--text-muted)]">
+                    <span className="text-[10px] font-mono font-bold   text-[var(--text-muted)]">
                       Estimated Jackpot Pool:
                     </span>
                     <span className="text-lg font-black text-blue-600 dark:text-blue-400 font-mono tracking-tight">
@@ -270,7 +270,7 @@ export default function JackpotListPage({
                     <div className="flex items-start justify-between gap-2 text-[11px] font-mono">
                       <div className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300 font-bold shrink-0">
                         <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-                        <span className="text-[10px] uppercase text-[var(--text-muted)]">First Match:</span>
+                        <span className="text-[10px]   text-[var(--text-muted)]">First Match:</span>
                       </div>
                       <div className="text-right">
                         <span className="font-bold text-blue-600 dark:text-blue-400 block text-[11px]">
@@ -288,7 +288,7 @@ export default function JackpotListPage({
                     <div className="flex items-start justify-between gap-2 text-[11px] font-mono">
                       <div className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300 font-bold shrink-0">
                         <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0" />
-                        <span className="text-[10px] uppercase text-[var(--text-muted)]">Final Match:</span>
+                        <span className="text-[10px]   text-[var(--text-muted)]">Final Match:</span>
                       </div>
                       <div className="text-right">
                         <span className="font-bold text-slate-900 dark:text-slate-100 block text-[11px]">
@@ -322,7 +322,7 @@ export default function JackpotListPage({
                       onSelectJackpot(jackpot.id);
                     }
                   }}
-                  className="flex-1 py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-mono text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md no-underline transition-all active:scale-98 border-none"
+                  className="flex-1 py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-mono text-xs font-black   tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md no-underline transition-all active:scale-98 border-none"
                 >
                   <Trophy className="w-4 h-4 text-amber-300" />
                   <span>View Permutations & Predictions</span>
@@ -340,7 +340,7 @@ export default function JackpotListPage({
           {/* <div className="space-y-1 border-b border-[var(--border)] pb-3">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-              <h2 className="text-base sm:text-lg font-black uppercase text-[var(--text)] tracking-tight font-display">
+              <h2 className="text-base sm:text-lg font-black   text-[var(--text)] tracking-tight font-display">
                 {pageMd.sectionTitle || "Cheerplex Jackpot Combinatorics & Strategy"}
               </h2>
             </div>

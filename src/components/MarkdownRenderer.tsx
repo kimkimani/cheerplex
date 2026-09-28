@@ -175,7 +175,7 @@ function CompactJackpotTopConfidenceSection({ items, postSlug }: CompactJackpotT
     <div className="my-2.5 rounded-xl border border-[var(--border)] bg-[var(--card)] overflow-hidden shadow-xs">
       {/* Compact Top Header Bar with Filter Tags */}
       <div className="px-3 py-2 bg-slate-50 dark:bg-slate-900/60 border-b border-[var(--border)] flex items-center justify-between gap-2 flex-wrap">
-        <div className="flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase tracking-wider text-[var(--text)]">
+        <div className="flex items-center gap-1.5 text-[11px] font-mono font-bold   tracking-wider text-[var(--text)]">
           <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse" />
           <span>Top Confidence Picks</span>
         </div>
@@ -236,13 +236,13 @@ function CompactJackpotTopConfidenceSection({ items, postSlug }: CompactJackpotT
                       {item.matchTip}
                     </span>
                     {isDC && (
-                      <span className="text-[9px] font-mono font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800/60">
+                      <span className="text-[9px] font-mono font-bold   tracking-wider text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800/60">
                         DC
                       </span>
                     )}
                   </div>
                   {item.isHighest && (
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[9px] font-bold font-mono uppercase tracking-wider bg-blue-600 text-white shrink-0 shadow-xs">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[9px] font-bold font-mono   tracking-wider bg-blue-600 text-white shrink-0 shadow-xs">
                       Highest Confidence
                     </span>
                   )}
@@ -338,7 +338,7 @@ export function parseAllFixtureLine(line: string): {
     // Normalize legacy formats like "2 - 53%" into "2 (Away)"
     const legacyDashMatch = rawVote.match(/^([1X2]|DC[1X2]+)\s*-\s*\d+%/i);
     if (legacyDashMatch) {
-      const voteTip = legacyDashMatch[1].toUpperCase();
+      const voteTip = legacyDashMatch[1].to ();
       let label = 'Home';
       if (voteTip === '2') label = 'Away';
       else if (voteTip === 'X') label = 'Draw';
@@ -593,7 +593,7 @@ function CompactAllJackpotFixturesSection({
                       className={`inline-flex items-center gap-1 px-2 py-0.5 min-h-[26px] rounded-lg font-mono border ${confClass}`}
                       title={`Confidence Score: ${item.confidence}`}
                     >
-                      <span className="text-[9px] uppercase tracking-wider font-semibold opacity-75">Conf:</span>
+                      <span className="text-[9px]   tracking-wider font-semibold opacity-75">Conf:</span>
                       <strong className="font-bold text-[11px]">{item.confidence.toString().includes('%') ? item.confidence : `${item.confidence}%`}</strong>
                     </div>
 
@@ -610,7 +610,7 @@ function CompactAllJackpotFixturesSection({
                         title={isPollVisible ? "Hide voting poll" : "Show voting poll"}
                       >
                         <Users className="w-3 h-3 text-blue-600 dark:text-blue-400 shrink-0" />
-                        <span className="text-[9px] uppercase tracking-wider font-semibold text-[var(--text-muted)]">
+                        <span className="text-[9px]   tracking-wider font-semibold text-[var(--text-muted)]">
                           Fan Pick:
                         </span>
                         <strong className="font-bold">{item.mostVoted}</strong>
@@ -632,7 +632,7 @@ function CompactAllJackpotFixturesSection({
                         title={isPollVisible ? "Hide voting poll" : "Show voting poll"}
                       >
                         <Users className="w-3 h-3 shrink-0 text-blue-600 dark:text-blue-400" />
-                        <span className="text-[9px] uppercase tracking-wider font-semibold">Fan Poll</span>
+                        <span className="text-[9px]   tracking-wider font-semibold">Fan Poll</span>
                         {isPollVisible ? <ChevronUp className="w-3 h-3 shrink-0 opacity-70" /> : <ChevronDown className="w-3 h-3 shrink-0 opacity-70" />}
                       </button>
                     )}
@@ -653,7 +653,7 @@ function CompactAllJackpotFixturesSection({
                         className="inline-flex items-center gap-1.5 px-2.5 py-0.5 min-h-[26px] rounded-lg font-mono shrink-0 border bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800/60"
                         title="Official Cheerplex Tip"
                       >
-                        <span className="text-[9px] uppercase tracking-wider font-semibold opacity-75">Pick:</span>
+                        <span className="text-[9px]   tracking-wider font-semibold opacity-75">Pick:</span>
                         <strong className="font-bold text-[11px]">{item.prediction}</strong>
                       </div>
                     )}
@@ -678,7 +678,7 @@ function CompactAllJackpotFixturesSection({
                     <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
                       <div className="flex items-center gap-1.5 text-[11px] font-mono font-bold text-[var(--text)]">
                         <Users className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
-                        <span className="uppercase tracking-wider">Fan Voting Poll</span>
+                        <span className="  tracking-wider">Fan Voting Poll</span>
                       </div>
 
                       <div className="flex items-center gap-2">
@@ -719,7 +719,7 @@ function CompactAllJackpotFixturesSection({
                   <div className="mt-2.5 pt-2 border-t border-[var(--border)] flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-slate-50 dark:bg-slate-900/40 rounded-xl p-2.5 border border-[var(--border)]">
                     <div className="flex items-center gap-2 min-w-0 flex-wrap">
                       <div className="flex items-center gap-1.5 shrink-0">
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase tracking-wider bg-blue-600 text-white shadow-xs">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold   tracking-wider bg-blue-600 text-white shadow-xs">
                           <Star className="w-2.5 h-2.5 fill-white shrink-0" />
                           <span>Pick:</span>
                         </span>
@@ -745,7 +745,7 @@ function CompactAllJackpotFixturesSection({
                 ) : (
                   <div className="mt-2.5 pt-2 border-t border-[var(--border)] flex items-center justify-between gap-2.5 bg-blue-50/50 dark:bg-blue-950/30 rounded-xl p-2.5 border border-blue-200 dark:border-blue-800/60 flex-wrap sm:flex-nowrap">
                     <div className="flex items-center gap-2 min-w-0">
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase tracking-wider bg-blue-600 text-white shadow-xs shrink-0">
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold   tracking-wider bg-blue-600 text-white shadow-xs shrink-0">
                         <Crown className="w-2.5 h-2.5 shrink-0" />
                         <span>VIP Tip:</span>
                       </span>
@@ -1097,7 +1097,7 @@ export default function MarkdownRenderer({
       elements.push(
         <h4
           key={`h4-${i}`}
-          className="text-xs sm:text-sm font-bold text-blue-600 dark:text-blue-400 mt-4 mb-1.5 uppercase font-mono tracking-wider"
+          className="text-xs sm:text-sm font-bold text-blue-600 dark:text-blue-400 mt-4 mb-1.5   font-mono tracking-wider"
         >
           {parseInline(trimmed.substring(5), postSlug)}
         </h4>
@@ -1192,7 +1192,7 @@ export default function MarkdownRenderer({
           <div key={`table-${i}`} className="overflow-x-auto my-5 rounded-2xl border border-[var(--border)] shadow-xs bg-[var(--card)]">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="bg-slate-100/90 dark:bg-slate-900/90 border-b border-[var(--border)] text-[10.5px] font-mono uppercase tracking-wider text-[var(--text)]">
+                <tr className="bg-slate-100/90 dark:bg-slate-900/90 border-b border-[var(--border)] text-[10.5px] font-mono   tracking-wider text-[var(--text)]">
                   {headerCells.map((hc, hIdx) => (
                     <th key={hIdx} className="p-3.5 font-bold">
                       {parseInline(hc, postSlug)}
