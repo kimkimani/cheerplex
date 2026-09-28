@@ -337,7 +337,7 @@ export default function JackpotListPage({
       {/* Editorial & Strategy Analysis */}
       {(pageMd.sectionTitle || pageMd.sectionDescription || pageMd.middle || pageMd.meat) && (
         <section className="p-6 md:p-8 rounded-3xl bg-[var(--card)] border border-[var(--border)] shadow-md text-left space-y-4">
-          <div className="space-y-1 border-b border-[var(--border)] pb-3">
+          {/* <div className="space-y-1 border-b border-[var(--border)] pb-3">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
               <h2 className="text-base sm:text-lg font-black uppercase text-[var(--text)] tracking-tight font-display">
@@ -349,7 +349,7 @@ export default function JackpotListPage({
                 {pageMd.sectionDescription}
               </p>
             )}
-          </div>
+          </div> */}
           {pageMd.middle && (
             <div className="text-xs leading-relaxed text-[var(--text-muted)] pb-3 border-b border-[var(--border)]">
               <MarkdownRenderer content={pageMd.middle} />

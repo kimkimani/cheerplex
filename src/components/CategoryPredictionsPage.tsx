@@ -339,7 +339,7 @@ export default function CategoryPredictionsPage({
   const handleCopyAccumulator = () => {
     if (topThreeAccumulator.length === 0) return;
     const slipText = [
-      `🔥 CHEERPLEX CURATED ${category.label.toUpperCase()} 3-MATCH ACCUMULATOR`,
+      `🔥 CHEERPLEX CURATED ${category.label.to ()} 3-MATCH ACCUMULATOR`,
       `Total Estimated Odds: ${accumulatorCombinedOdds}x`,
       `----------------------------------------`,
       ...topThreeAccumulator.map((f, i) => `${i + 1}. ${f.homeTeam} vs ${f.awayTeam} → Tip: ${formatTipLabel(f.prediction)} (Odds: ${getBankerEstimatedOdds(f)})`),
@@ -410,7 +410,7 @@ export default function CategoryPredictionsPage({
             <div className="relative z-10 space-y-6">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[var(--border)] pb-5">
                 <div className="space-y-2">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/60 text-[10px] font-black uppercase tracking-wider font-mono">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/60 text-[10px] font-black   tracking-wider font-mono">
                     <span className="flex h-2 w-2 relative">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
@@ -419,7 +419,7 @@ export default function CategoryPredictionsPage({
                   </div>
                   
                   <h1 
-                    className="text-2xl md:text-3xl font-black text-[var(--text)] tracking-tight uppercase"
+                    className="text-2xl md:text-3xl font-black text-[var(--text)] tracking-tight"
                     style={{ fontFamily: 'var(--font-display)' }}
                   >
                     {pageMd.displayTitle || pageMd.title || "Yesterday's Football Predictions & Winning Results"}
@@ -430,7 +430,7 @@ export default function CategoryPredictionsPage({
                     </div>
                   )}
                   <div>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-slate-900 text-white font-mono text-xs font-bold border border-slate-800 uppercase tracking-wide">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-slate-900 text-white font-mono text-xs font-bold border border-slate-800   tracking-wide">
                       <Calendar className="w-3.5 h-3.5 text-blue-400 shrink-0" />
                       <span>{formattedYesterdayDate}</span>
                     </span>
@@ -438,12 +438,12 @@ export default function CategoryPredictionsPage({
                 </div>
 
                 <div className="flex flex-col items-start md:items-end gap-1 shrink-0">
-                  <span className="text-[10px] font-mono font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider block">Settled Win Ratio</span>
+                  <span className="text-[10px] font-mono font-bold text-slate-600 dark:text-slate-400   tracking-wider block">Settled Win Ratio</span>
                   <div className="flex items-baseline gap-1">
                     <span className="text-3xl font-black font-mono text-blue-600 dark:text-blue-400">{yesterdayStats.winRate}%</span>
                     <span className="text-xs font-bold text-blue-800 dark:text-blue-300">ACCURACY</span>
                   </div>
-                  <span className="text-[9px] text-blue-900 dark:text-blue-200 font-bold font-mono uppercase bg-blue-500/20 px-2 py-0.5 rounded border border-blue-500/30">
+                  <span className="text-[9px] text-blue-900 dark:text-blue-200 font-bold font-mono   bg-blue-500/20 px-2 py-0.5 rounded border border-blue-500/30">
                     Statistical Recalibration Active
                   </span>
                 </div>
@@ -454,7 +454,7 @@ export default function CategoryPredictionsPage({
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)]">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Total Evaluated Matches</span>
+                    <span className="text-[10px] font-mono font-bold text-slate-700 dark:text-slate-300   tracking-wider">Total Evaluated Matches</span>
                     <TrendingUp className="w-4 h-4 text-blue-500" />
                   </div>
                   <div className="mt-2 flex items-baseline gap-2">
@@ -465,7 +465,7 @@ export default function CategoryPredictionsPage({
 
                 <div className="p-4 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.04]">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono font-bold text-emerald-800 dark:text-emerald-300 uppercase tracking-wider">Settled Won Tips</span>
+                    <span className="text-[10px] font-mono font-bold text-emerald-800 dark:text-emerald-300   tracking-wider">Settled Won Tips</span>
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                   </div>
                   <div className="mt-2 flex items-baseline gap-2">
@@ -476,7 +476,7 @@ export default function CategoryPredictionsPage({
 
                 <div className="p-4 rounded-xl border border-rose-500/20 bg-rose-500/[0.03]">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Settled Lost Tips</span>
+                    <span className="text-[10px] font-mono font-bold text-slate-700 dark:text-slate-300   tracking-wider">Settled Lost Tips</span>
                     <XCircle className="w-4 h-4 text-rose-500" />
                   </div>
                   <div className="mt-2 flex items-baseline gap-2">
@@ -488,7 +488,7 @@ export default function CategoryPredictionsPage({
 
               {/* Visual Accuracy Bar */}
               <div className="pt-2">
-                <div className="flex justify-between items-center text-[10px] font-mono font-bold uppercase tracking-wider mb-2">
+                <div className="flex justify-between items-center text-[10px] font-mono font-bold   tracking-wider mb-2">
                   <span className="text-blue-600 dark:text-blue-400">Win Rate ({yesterdayStats.winRate}%)</span>
                   <span className="text-slate-400">Loss Variance ({yesterdayStats.lossRate}%)</span>
                 </div>
@@ -502,7 +502,7 @@ export default function CategoryPredictionsPage({
 
           {/* Yesterday Outcome Switcher */}
           <div className="bg-[var(--card)] border border-[var(--border)] p-3 rounded-2xl shadow-xs text-left flex flex-wrap items-center gap-2">
-            <span className="text-[10px] font-mono font-bold text-slate-500 uppercase tracking-wider mr-2">Filter Ledger:</span>
+            <span className="text-[10px] font-mono font-bold text-slate-500   tracking-wider mr-2">Filter Ledger:</span>
             <button
               onClick={() => setYesterdayFilter('won')}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold font-mono transition-all border cursor-pointer ${
@@ -542,7 +542,7 @@ export default function CategoryPredictionsPage({
             <div className="space-y-1.5 max-w-2xl">
               <div className="flex items-center gap-2">
                 <span className="text-2xl shrink-0">{category.icon}</span>
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/60">
+                <span className="text-[10px] font-mono font-bold   tracking-wider px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/60">
                   {category.label}
                 </span>
                 <span className="text-xs font-mono text-slate-500">
@@ -551,7 +551,7 @@ export default function CategoryPredictionsPage({
               </div>
 
               <h1 
-                className="text-2xl sm:text-3xl font-black text-[var(--text)] tracking-tight uppercase"
+                className="text-2xl sm:text-3xl font-black text-[var(--text)] tracking-tight  "
                 style={{ fontFamily: 'var(--font-display)' }}
               >
                 {pageMd.displayTitle || pageMd.title || category.name}
@@ -569,7 +569,7 @@ export default function CategoryPredictionsPage({
             </div>
 
             <div className="px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-[var(--border)] text-center shrink-0 self-start sm:self-center">
-              <span className="text-[10px] font-mono font-bold text-slate-500 uppercase block">Available Picks</span>
+              <span className="text-[10px] font-mono font-bold text-slate-500   block">Available Picks</span>
               <span className="text-xl font-black font-mono text-blue-600 dark:text-blue-400 block mt-0.5">
                 {isLoading ? '...' : `${fixtures.length} Tips`}
               </span>
@@ -630,7 +630,7 @@ export default function CategoryPredictionsPage({
 
       {/* 3.1 PREDICTION TYPE TABS (All Matches vs Wins / Over-Under / BTTS / Double Chance / Draws) */}
       <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
-        <span className="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider shrink-0 flex items-center gap-1.5 pl-1 pr-1">
+        <span className="text-[11px] font-mono font-bold text-slate-400   tracking-wider shrink-0 flex items-center gap-1.5 pl-1 pr-1">
           <Filter className="w-3.5 h-3.5 text-blue-500" /> Market:
         </span>
         {marketFilterOptions.map((opt) => (
@@ -704,7 +704,7 @@ export default function CategoryPredictionsPage({
           <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 flex items-center justify-center mx-auto mb-4">
             <Search className="w-5 h-5" />
           </div>
-          <p className="text-xs font-black text-[var(--text)] uppercase tracking-tight">No fixtures found matching your criteria</p>
+          <p className="text-xs font-black text-[var(--text)]   tracking-tight">No fixtures found matching your criteria</p>
           <p className="text-[11px] text-[var(--text-muted)] mt-1">Try resetting your prediction market filter, search term, or confidence toggle.</p>
           <button
             type="button"
@@ -724,10 +724,10 @@ export default function CategoryPredictionsPage({
       <section aria-label="Alternative Betting Markets" className="p-5 rounded-2xl bg-[var(--card)] border border-[var(--border)] shadow-xs text-left space-y-4">
         <div className="flex items-center justify-between">
           <div className="space-y-0.5">
-            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">
+            <span className="text-[10px] font-mono font-bold   tracking-wider text-blue-600 dark:text-blue-400">
               Explore Alternative Markets
             </span>
-            <h3 className="text-sm font-black text-[var(--text)] uppercase">
+            <h3 className="text-sm font-black text-[var(--text)]  ">
               Complementary Mathematical Prediction Portals
             </h3>
           </div>
@@ -768,7 +768,7 @@ export default function CategoryPredictionsPage({
                       {altCat.countText}
                     </span>
                   </div>
-                  <h4 className="text-xs font-black text-[var(--text)] group-hover:text-blue-600 transition-colors uppercase mt-2 font-display">
+                  <h4 className="text-xs font-black text-[var(--text)] group-hover:text-blue-600 transition-colors   mt-2 font-display">
                     {altCat.label}
                   </h4>
                   <p className="text-[10.5px] text-[var(--text-muted)] line-clamp-2 mt-1 leading-relaxed">
@@ -788,11 +788,11 @@ export default function CategoryPredictionsPage({
       {/* 8. STREAMLINED PREMIUM VIP / SURE ODDS UPGRADE BANNER */}
       <section aria-label="Premium VIP Upgrade" className="p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 text-white border border-blue-500/30 shadow-md text-left flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-5">
         <div className="space-y-2 max-w-xl">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 text-amber-300 text-[10px] font-mono font-bold uppercase">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 text-amber-300 text-[10px] font-mono font-bold  ">
             <Crown className="w-3.5 h-3.5 text-amber-300 shrink-0" />
             <span>Cheerplex Join VIP • Instant Pochi La Biashara</span>
           </div>
-          <h3 className="text-base sm:text-lg font-black uppercase tracking-tight font-display">
+          <h3 className="text-base sm:text-lg font-black   tracking-tight font-display">
             Want Curated 5+ Odds or Weekly VIP Selections?
           </h3>
           <p className="text-xs text-slate-300 leading-relaxed font-sans">
@@ -809,7 +809,7 @@ export default function CategoryPredictionsPage({
                 onOpenPayment(pkg.name, pkg.price, pkg.id, pkg.slug, 'vip');
               }
             }}
-            className="min-h-[46px] px-5 py-2.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 text-xs font-black font-mono uppercase tracking-wider rounded-xl transition-all cursor-pointer border-none shadow-sm flex items-center justify-center gap-2 active:scale-95"
+            className="min-h-[46px] px-5 py-2.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 text-xs font-black font-mono   tracking-wider rounded-xl transition-all cursor-pointer border-none shadow-sm flex items-center justify-center gap-2 active:scale-95"
           >
             <Coins className="w-3.5 h-3.5 text-slate-950 shrink-0" />
             <span>Unlock VIP (KES 500)</span>
@@ -822,7 +822,7 @@ export default function CategoryPredictionsPage({
                 onOpenPayment(pack.name, pack.price, pack.id, pack.slug, 'odds');
               }
             }}
-            className="min-h-[46px] px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white text-xs font-bold font-mono uppercase tracking-wider rounded-xl transition-all cursor-pointer border border-white/20 flex items-center justify-center gap-2 active:scale-95"
+            className="min-h-[46px] px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white text-xs font-bold font-mono   tracking-wider rounded-xl transition-all cursor-pointer border border-white/20 flex items-center justify-center gap-2 active:scale-95"
           >
             <Zap className="w-3.5 h-3.5 text-amber-300 shrink-0" />
             <span>Unlock 5+ Odds</span>
@@ -833,10 +833,11 @@ export default function CategoryPredictionsPage({
       {/* 8. CHEERPLEX EDITORIAL ANALYSIS & QUANTITATIVE STRATEGY */}
       {(pageMd.sectionTitle || pageMd.sectionDescription || pageMd.analysis || pageMd.meat) && (
         <section aria-label="Editorial Analysis" className="p-6 md:p-7 rounded-3xl bg-[var(--card)] border border-[var(--border)] shadow-xs text-left space-y-4">
-          <div className="space-y-1 border-b border-[var(--border)] pb-3">
+          {/* <div className="space-y-1 border-b border-[var(--border)] pb-3">
             <div className="flex items-center gap-2">
+
               <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-              <h2 className="text-sm sm:text-base font-black uppercase text-[var(--text)] tracking-tight font-display">
+              <h2 className="text-sm sm:text-base font-black   text-[var(--text)] tracking-tight font-display">
                 {pageMd.sectionTitle || "Cheerplex Quantitative Analysis & Strategy"}
               </h2>
             </div>
@@ -845,7 +846,8 @@ export default function CategoryPredictionsPage({
                 {pageMd.sectionDescription}
               </p>
             )}
-          </div>
+          </div> */}
+          
           {(pageMd.analysis || pageMd.meat) && (
             <MarkdownRenderer 
               content={pageMd.analysis || pageMd.meat} 
