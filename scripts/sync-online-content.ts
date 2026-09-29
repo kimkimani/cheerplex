@@ -30,7 +30,7 @@ const pages: PageDefinition[] = [
 
 **Get reliable SportPesa Mega Jackpot predictions, free daily shortlists, and premium VIP packages — delivered via SMS & Telegram. Bet responsibly.**
 
-Or check [Sokaking predictions](https://sokaking.com/) for latest updates.
+Or check [Cheerplex predictions](https://cheerplex.co.ke/) for latest updates.
 
 > Updated daily — short, actionable predictions derived from form, team news, head-to-head and odds movement analysis.
 

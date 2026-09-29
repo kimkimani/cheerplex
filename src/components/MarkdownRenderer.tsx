@@ -322,7 +322,7 @@ export function parseAllFixtureLine(line: string): {
   let rawTip = headerMatch[4].trim();
 
   // Strip leading "Database Tip:" or "Cheerplex Tip:" if present
-  rawTip = rawTip.replace(/^(?:Database|Cheerplex|SokaKing|DB)\s*Tip:\s*/i, '').trim();
+  rawTip = rawTip.replace(/^(?:Database|Cheerplex|Cheerplex|DB)\s*Tip:\s*/i, '').trim();
 
   const isVipLocked = /vip/i.test(rawTip) || /join vip/i.test(rawTip);
   const prediction = isVipLocked ? 'Join VIP' : rawTip.replace(/[\[\]]/g, '').trim();

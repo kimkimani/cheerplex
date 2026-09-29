@@ -43,7 +43,7 @@ Open `public_html/soka_king/config.php` on your server and update your database 
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'cheerple_soka_king'); // Your cPanel Database Name
 define('DB_USER', 'cheerple_soka_user'); // Your cPanel DB Username
-define('DB_PASS', 'SokaKingSecret2026!'); // Your cPanel DB Password
+define('DB_PASS', 'CheerplexSecret2026!'); // Your cPanel DB Password
 define('DB_PORT', '3306');
 ```
 

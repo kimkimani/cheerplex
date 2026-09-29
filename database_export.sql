@@ -1,5 +1,5 @@
 -- ====================================================
--- MySQL / phpMyAdmin Database Dump (Soka King Platform)
+-- MySQL / phpMyAdmin Database Dump (Cheerplex Platform)
 -- Exported on: 2026-08-03T09:10:44.840Z
 -- ====================================================
 

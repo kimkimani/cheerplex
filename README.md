@@ -1,6 +1,6 @@
-# SokaKing - Dynamic Jackpot Shortcodes & Tags Documentation
+# Cheerplex - Dynamic Jackpot Shortcodes & Tags Documentation
 
-This document provides complete documentation for the **Dynamic Jackpot Shortcode & Tagging System** used across SokaKing markdown pages, blog posts, and prediction guides.
+This document provides complete documentation for the **Dynamic Jackpot Shortcode & Tagging System** used across Cheerplex markdown pages, blog posts, and prediction guides.
 
 ---
 
@@ -294,7 +294,7 @@ jackpotId: "betika-midweek"
 ## Betika Midweek Jackpot Predictions This Week
 
 <!-- INTRO -->
-Welcome to Soka King's Betika Midweek Jackpot prediction portal. Matches kick off on {{JACKPOT_SCHEDULE}}, featuring competitive fixtures from {{JACKPOT_LEAGUES}}. This round's computer model {{JACKPOT_SELECTIONS_INCLUDE}}.
+Welcome to Cheerplex's Betika Midweek Jackpot prediction portal. Matches kick off on {{JACKPOT_SCHEDULE}}, featuring competitive fixtures from {{JACKPOT_LEAGUES}}. This round's computer model {{JACKPOT_SELECTIONS_INCLUDE}}.
 
 <!-- MIDDLE -->
 The Betika Midweek Jackpot challenges players to correctly predict 15 football games for a stake of KSh 15. Our analytical engine evaluates recent form, underlying expected goals (xG), and head-to-head records to help you compete for the top prize.

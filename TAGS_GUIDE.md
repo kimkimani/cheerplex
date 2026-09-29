@@ -1,6 +1,6 @@
-# SokaKing Dynamic Tags & Shortcodes Guide
+# Cheerplex Dynamic Tags & Shortcodes Guide
 
-This document details all supported dynamic shortcodes and tags across SokaKing markdown content, SEO templates, crawler HTML injection, and prediction pages.
+This document details all supported dynamic shortcodes and tags across Cheerplex markdown content, SEO templates, crawler HTML injection, and prediction pages.
 
 ---
 

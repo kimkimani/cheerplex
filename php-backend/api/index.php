@@ -1524,7 +1524,7 @@ if ($path === '/external-links' || $path === '/footer-links') {
 // 16. Dynamic Sitemap Route GET /api/sitemap.xml or /api/sitemap
 if ($path === '/sitemap.xml' || $path === '/sitemap') {
     header('Content-Type: application/xml; charset=utf-8');
-    $baseUrl = 'https://sokaking.com';
+    $baseUrl = 'https://cheerplex.co.ke';
     $routes = [
         '/',
         '/football-predictions-today',

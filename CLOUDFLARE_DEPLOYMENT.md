@@ -1,6 +1,6 @@
-# Deploying Soka King to Cloudflare Pages
+# Deploying Cheerplex to Cloudflare Pages
 
-This guide covers deploying **Soka King** to **Cloudflare Pages**.
+This guide covers deploying **Cheerplex** to **Cloudflare Pages**.
 
 ---
 
@@ -13,7 +13,7 @@ This guide covers deploying **Soka King** to **Cloudflare Pages**.
 ### 2. `/bin/sh: 1: npm: not found` Error
 - **Root Cause**: Because your repository includes `bun.lock`, Cloudflare Pages automatically uses **Bun** as the package manager and container runtime. In this environment, `npm` is not present.
 - **Solution in Cloudflare Dashboard**:
-  1. Go to **Cloudflare Dashboard** → **Workers & Pages** → Select **Soka King**.
+  1. Go to **Cloudflare Dashboard** → **Workers & Pages** → Select **Cheerplex**.
   2. Go to **Settings** → **Build & deployments** → Click **Edit configuration**.
   3. Update build settings:
      - **Framework preset**: `Vite`
@@ -33,9 +33,9 @@ This guide covers deploying **Soka King** to **Cloudflare Pages**.
 - **Build output directory**: `dist`
 - **Environment Variables**: None required! (The backend URL `https://cheerplex.co.ke/soka_king` is built directly into the application).
 
-### 2. Custom Domain Setup (`sokaking.com`)
+### 2. Custom Domain Setup (`cheerplex.co.ke`)
 1. In Cloudflare Pages → **Custom Domains** → Click **Set up a custom domain**.
-2. Enter `sokaking.com` (and `www.sokaking.com`).
+2. Enter `cheerplex.co.ke` (and `www.cheerplex.co.ke`).
 3. Cloudflare will automatically provision SSL certificates and update DNS records.
 
 ---

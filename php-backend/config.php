@@ -13,7 +13,7 @@ error_reporting(E_ALL);
 define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
 define('DB_NAME', getenv('DB_NAME') ?: 'cheerple_soka_king'); // update with your cPanel database name
 define('DB_USER', getenv('DB_USER') ?: 'cheerple_soka_user'); // update with your cPanel DB user
-define('DB_PASS', getenv('DB_PASS') ?: 'SokaKingSecret2026!'); // update with your cPanel DB password
+define('DB_PASS', getenv('DB_PASS') ?: 'CheerplexSecret2026!'); // update with your cPanel DB password
 define('DB_PORT', getenv('DB_PORT') ?: '3306');
 
 // M-Pesa Safaricom Daraja API Credentials
