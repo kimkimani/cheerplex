@@ -661,7 +661,7 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
               <span 
                 className="font-black text-lg tracking-tight text-[var(--text)] font-display"
               >
-                Cheer<span className="text-blue-600 dark:text-blue-400 font-mono text-xs font-bold ml-1">Plex</span>
+                CHEER<span className="text-blue-400">PLEX</span>
               </span>
             </a>
           </div>
@@ -1384,9 +1384,7 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
                 <div className="flex flex-col">
                   <span className="font-black text-lg text-white tracking-tight flex items-center gap-1.5 font-display">
                     CHEER<span className="text-blue-400">PLEX</span>
-                    <span className="text-[9.5px] font-bold px-1.5 py-0.2 rounded-md bg-blue-950 text-blue-300 font-mono border border-blue-800/60">
-                      .CO.KE
-                    </span>
+          
                   </span>
                   <span className="text-[9.5px] text-slate-400 font-mono   tracking-wider">
                     Your Best Sports Lab • Nairobi
