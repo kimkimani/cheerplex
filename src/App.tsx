@@ -661,7 +661,7 @@ export default function App({ initialPage, initialJackpotId, initialPredictions,
               <span 
                 className="font-black text-lg tracking-tight text-[var(--text)] font-display"
               >
-                CHEERPLEX<span className="text-blue-600 dark:text-blue-400 font-mono text-xs font-bold ml-1">.KE</span>
+                Cheer<span className="text-blue-600 dark:text-blue-400 font-mono text-xs font-bold ml-1">Plex</span>
               </span>
             </a>
           </div>
