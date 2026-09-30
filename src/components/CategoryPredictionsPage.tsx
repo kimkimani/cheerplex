@@ -96,7 +96,7 @@ export function matchesPredictionMarket(fixture: Fixture, marketType: MarketFilt
 
 function getMarketTacticalMeta(categoryId: string): MarketTacticalMeta {
   const norm = categoryId.toLowerCase();
-  if (norm.includes('1x2') || norm.includes('homewin')) {
+  if (norm.includes('1x2') || norm.includes('1')) {
     return {
       oddsRange: '1.65 – 2.45',
       historicalAccuracy: '84.8%',

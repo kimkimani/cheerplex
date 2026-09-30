@@ -253,8 +253,8 @@ export function matchPredictionCategory(prediction: string, categoryId: string):
 
   if (categoryId === 'category-homewin') {
     return (
-      p.includes('home win') ||
-      p.includes('home') ||
+      p.includes('1') ||
+      p.includes('2') ||
       p.includes('1x2') ||
       p === '1' ||
       p.includes('1 (home') ||
@@ -308,7 +308,7 @@ export function generateUnifiedPredictionsPool(): Fixture[] {
         '12 Double Chance',
         'Home Win (1)',
         'Draw (X)',
-        'Away Win (2)',
+        '2',
         '1'
       ];
 

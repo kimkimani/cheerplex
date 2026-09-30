@@ -352,7 +352,7 @@ export default function JackpotPage({ jackpot, hasPaid, onOpenPayment, onBackToL
             </p>
             {detailedTiming.firstFixture ? (
               <span className="text-[10px] font-mono text-slate-500 truncate block mt-0.5">
-                #{detailedTiming.firstFixture.position} {detailedTiming.firstFixture.homeTeam}
+                #{detailedTiming.firstFixture.position} {detailedTiming.firstFixture.homeTeam} vs {detailedTiming.firstFixture.awayTeam}
               </span>
             ) : (
               <span className="text-[10px] font-mono text-slate-500 block mt-0.5">Opening Match</span>
