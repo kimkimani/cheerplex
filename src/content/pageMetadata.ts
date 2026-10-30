@@ -73,7 +73,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Get the latest Cheerplex Betika jackpot predictions today. Explore expert 15-match Betika Midweek jackpot analysis, bonus winning insights, and KES 15 entry tips.",
     "listTitle": "Betika Midweek Jackpot Fixtures & Selections",
     "listSubtitle": "Complete 15-match coupon analysis with calibrated 1X2 win probabilities and double-chance hedges.",
-    "dateModified": "2026-09-28T12:45:09+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
     "tags": [
       "betika midweek jackpot",
@@ -83,7 +83,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
       "betika 15m jackpot",
       "kenya jackpot tips"
     ],
-    "mtime": "2026-09-28T09:45:09.592Z"
+    "mtime": "2026-10-05T08:31:17.860Z"
   },
   "chearplex-prediction": {
     "pageKey": "chearplex-prediction",
@@ -108,9 +108,9 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Looking for Chearplex prediction tips? Find football predictions, match selections and jackpot tips for the latest fixtures.",
     "listTitle": "Today's Featured Chearplex Tips",
     "listSubtitle": "Verified daily single bankers, double chances, and goal market predictions.",
-    "dateModified": "2026-09-28T12:52:00+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
-    "mtime": "2026-09-28T09:52:00.974Z"
+    "mtime": "2026-10-05T08:31:17.867Z"
   },
   "cheerplex-1x2-prediction-tips": {
     "pageKey": "cheerplex-1x2-prediction-tips",
@@ -135,7 +135,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Expert 1X2 football predictions covering Home Win (1), Draw (X), and Away Win (2). Verified mathematical analysis and sure matchday banker tips from Cheerplex.",
     "listTitle": "Featured 1X2 Match Outcome Predictions",
     "listSubtitle": "Daily high-confidence Home Win (1), Draw (X), and Away Win (2) single bets evaluated by Cheerplex algorithms.",
-    "dateModified": "2026-09-28T12:45:09+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
     "tags": [
       "1x2 predictions",
@@ -145,15 +145,15 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
       "cheerplex 1x2",
       "match winner tips"
     ],
-    "mtime": "2026-09-28T09:45:09.579Z"
+    "mtime": "2026-10-05T08:31:17.895Z"
   },
-  "cheerplex-betting-tips": {
-    "pageKey": "cheerplex-betting-tips",
+  "cheerplex-free-predictions-and-tips": {
+    "pageKey": "cheerplex-free-predictions-and-tips",
     "title": "Cheerplex Betting Tips - Football Picks Today",
     "displayTitle": "Cheerplex Betting Tips & Daily Picks",
     "description": "Get Cheerplex betting tips, football picks and match selections for today's games, with useful match analysis and daily football predictions.",
     "keywords": "cheerplex betting tips, cheerplex betting tips today, free cheerplex betting tips, cheerplex tip, cheerplex tips, cheerplex tips today, cheerplex sure bet, cheaplex betting tips",
-    "link": "/cheerplex-betting-tips/",
+    "link": "/cheerplex-free-predictions-and-tips/",
     "type": "category",
     "fixturesCategory": "today",
     "authorId": "john-mwangi",
@@ -170,9 +170,9 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Get Cheerplex betting tips, football picks and match selections for today's games, with useful match analysis and daily football predictions.",
     "listTitle": "Today's Curated Betting Tips",
     "listSubtitle": "Daily football selections evaluated by expected goals (xG), rolling form, and market value.",
-    "dateModified": "2026-09-28T12:51:43+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
-    "mtime": "2026-09-28T09:51:43.147Z"
+    "mtime": "2026-10-05T08:31:17.880Z"
   },
   "cheerplex-free-predictions-and-tips": {
     "pageKey": "cheerplex-free-predictions-and-tips",
@@ -197,9 +197,9 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Get Cheerplex daily free football predictions and tips. Accurate and verified tips from our sports analytics experts across global leagues.",
     "listTitle": "Free Daily Football Predictions",
     "listSubtitle": "Accurate 1X2, GG/BTTS, and over/under goals verified by Cheerplex mathematical indexes.",
-    "dateModified": "2026-09-28T12:45:09+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
-    "mtime": "2026-09-28T09:45:09.626Z"
+    "mtime": "2026-10-05T08:31:17.867Z"
   },
   "cheerplex-gg-prediction-tips": {
     "pageKey": "cheerplex-gg-prediction-tips",
@@ -224,7 +224,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Master Both Teams To Score (GG/BTTS) betting with Cheerplex expert predictions. Get daily verified GG analysis, high-probability scoring fixtures, and smart tips.",
     "listTitle": "Featured Both Teams To Score (GG/BTTS) Predictions",
     "listSubtitle": "Verified daily GG picks where both clubs hold statistical goal expectancy exceeding 80%.",
-    "dateModified": "2026-09-28T12:45:09+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
     "tags": [
       "gg prediction",
@@ -234,7 +234,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
       "cheerplex gg",
       "over 1.5 goals"
     ],
-    "mtime": "2026-09-28T09:45:09.592Z"
+    "mtime": "2026-10-05T08:31:17.879Z"
   },
   "cheerplex-jackpots-predictions-and-tips": {
     "pageKey": "cheerplex-jackpots-predictions-and-tips",
@@ -243,7 +243,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "description": "Accurate Cheerplex jackpot predictions for SportPesa Mega & Midweek, Betika Midweek, Mozzart Grand, and Mozzart Super Daily Jackpots.",
     "keywords": "cheerplex jackpots predictions and tips, cheerplex jackpot, sportpesa mega jackpot, sportpesa midweek jackpot, betika midweek jackpot, mozzart grand jackpot, mozzart super daily jackpot",
     "link": "/cheerplex-jackpots-predictions-and-tips/",
-    "type": "jackpot-hub",
+    "type": "jackpot-list",
     "authorId": "john-mwangi",
     "authorName": "John K. Mwangi",
     "authorTitle": "Lead Football Analyst & Predictive Modeler",
@@ -258,7 +258,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Accurate Cheerplex jackpot predictions for SportPesa Mega & Midweek, Betika Midweek, Mozzart Grand, and Mozzart Super Daily Jackpots.",
     "listTitle": "All Active Kenyan Jackpot Pools",
     "listSubtitle": "Real-time pool tracking, prize cash metrics, and expert coupon breakdowns for major Kenyan bookmakers.",
-    "dateModified": "2026-09-28T12:51:01+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
     "tags": [
       "cheerplex jackpots",
@@ -269,7 +269,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
       "mozzart super daily",
       "jackpot tips"
     ],
-    "mtime": "2026-09-28T09:51:01.374Z"
+    "mtime": "2026-10-05T08:31:17.895Z"
   },
   "cheerplex-mega-jackpot-prediction": {
     "pageKey": "cheerplex-mega-jackpot-prediction",
@@ -277,7 +277,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "displayTitle": "Cheerplex Mega Jackpot Prediction",
     "description": "Get Cheerplex Mega Jackpot prediction tips, match selections and football analysis for the latest Mega Jackpot fixtures this week and weekend.",
     "keywords": "cheerplex mega jackpot prediction, cheerplex mega jackpot, mega jackpot cheerplex, mega jackpot cheerplex prediction, cheerplex prediction mega jackpot, cheerplex prediction for mega jackpot, cheerplex mega jackpot tips, cheerplex mega jackpot prediction this weekend, cheaplex mega jackpot prediction",
-    "link": "/cheerplex-mega-jackpot-prediction",
+    "link": "/cheerplex-mega-jackpot-prediction/",
     "type": "jackpot",
     "jackpotId": "sportpesa-mega",
     "authorId": "john-mwangi",
@@ -294,10 +294,10 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Get Cheerplex Mega Jackpot prediction tips, match selections and football analysis for the latest Mega Jackpot fixtures this week and weekend.",
     "listTitle": "Mega Jackpot 17-Match Analysis & Slip",
     "listSubtitle": "Mathematical 1X2 tips, calculated odds, and high-probability double chance hedges.",
-    "dateModified": "2026-09-28T12:51:32+03:00",
+    "dateModified": "2026-10-05T11:32:58+03:00",
     "topConfidenceFixtures": true,
     "topConfidenceCount": 7,
-    "mtime": "2026-09-28T09:51:32.006Z"
+    "mtime": "2026-10-05T08:32:58.621Z"
   },
   "cheerplex-sportpesa-jackpot-prediction": {
     "pageKey": "cheerplex-sportpesa-jackpot-prediction",
@@ -305,7 +305,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "displayTitle": "Cheerplex SportPesa Jackpot Prediction",
     "description": "Find Cheerplex SportPesa jackpot predictions, football tips and match analysis for the latest SportPesa jackpot fixtures.",
     "keywords": "cheerplex sportpesa jackpot prediction, cheerplex sportpesa jackpot, cheerplex sportpesa prediction, sportpesa cheerplex prediction, sportpesa jackpot prediction cheerplex",
-    "link": "/cheerplex-sportpesa-jackpot-prediction",
+    "link": "/cheerplex-sportpesa-jackpot-prediction/",
     "type": "jackpot",
     "jackpotId": "sportpesa-mega",
     "authorId": "john-mwangi",
@@ -322,10 +322,10 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Find Cheerplex SportPesa jackpot predictions, football tips and match analysis for the latest SportPesa jackpot fixtures.",
     "listTitle": "SportPesa Mega Jackpot Coupon Fixtures",
     "listSubtitle": "Mathematical 1X2 tips, odds calculations, and double-chance safety combinations.",
-    "dateModified": "2026-09-28T12:51:54+03:00",
+    "dateModified": "2026-10-05T11:33:00+03:00",
     "topConfidenceFixtures": true,
     "topConfidenceCount": 7,
-    "mtime": "2026-09-28T09:51:54.925Z"
+    "mtime": "2026-10-05T08:33:00.994Z"
   },
   "cheerplex-sure-tips-and-odds": {
     "pageKey": "cheerplex-sure-tips-and-odds",
@@ -349,7 +349,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Access Cheerplex verified sure odds and daily multibets. High-probability 2+, 3+, 5+, 7+, and 10+ odds packs with instant M-Pesa delivery and bookmaker codes.",
     "listTitle": "Curated Decimal Odds & Multipliers",
     "listSubtitle": "Daily 2+ to 10+ odds accumulator slips with high strike rates and instant bookie codes.",
-    "dateModified": "2026-09-28T12:45:09+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
     "tags": [
       "sure tips",
@@ -360,15 +360,15 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
       "sure betting tips kenya",
       "odds packs"
     ],
-    "mtime": "2026-09-28T09:45:09.596Z"
+    "mtime": "2026-10-05T08:31:17.833Z"
   },
-  "cheerplex-today-prediction-betting-tips": {
-    "pageKey": "cheerplex-today-prediction-betting-tips",
+  "cheerplex-today-prediction": {
+    "pageKey": "cheerplex-today-prediction",
     "title": "Cheerplex Today Prediction Betting Tips - All Matches",
     "displayTitle": "Cheerplex Today Prediction Betting Tips",
     "description": "Get today's football predictions and betting tips from Cheerplex. Full 1X2, GG/BTTS, over/under goals, and multibets for today's matches.",
     "keywords": "cheerplex today prediction betting tips, cheerplex today tips, football predictions today, cheerplex betting tips, today match predictions",
-    "link": "/cheerplex-today-prediction-betting-tips/",
+    "link": "/cheerplex-today-prediction/",
     "type": "category",
     "fixturesCategory": "today",
     "authorId": "john-mwangi",
@@ -385,9 +385,9 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Get today's football predictions and betting tips from Cheerplex. Full 1X2, GG/BTTS, over/under goals, and multibets for today's matches.",
     "listTitle": "Today's Featured Football Predictions",
     "listSubtitle": "Verified daily single bankers, double chances, and goal market predictions evaluated by Cheerplex algorithms.",
-    "dateModified": "2026-09-28T12:45:09+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
-    "mtime": "2026-09-28T09:45:09.619Z"
+    "mtime": "2026-10-05T08:31:17.876Z"
   },
   "cheerplex-tomorrow-prediction": {
     "pageKey": "cheerplex-tomorrow-prediction",
@@ -412,9 +412,9 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Ready tomorrow's Cheerplex football predictions and betting tips. Get in advance exclusive predictions for tomorrow's matches with early market odds.",
     "listTitle": "Tomorrow's Early Football Predictions",
     "listSubtitle": "High-probability early forecast picks computed before public volume moves bookmaker lines.",
-    "dateModified": "2026-09-28T12:45:09+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
-    "mtime": "2026-09-28T09:45:09.594Z"
+    "mtime": "2026-10-05T08:31:17.896Z"
   },
   "cheerplex-vip-tips": {
     "pageKey": "cheerplex-vip-tips",
@@ -439,9 +439,9 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Join Cheerplex VIP for high-accuracy daily 2+ to 10+ odds banker slips, expert multibet combinations, and full 15 & 17-game Kenyan jackpot permutations via M-Pesa Pochi La Biashara.",
     "listTitle": "Cheerplex VIP Packages & Daily Odds",
     "listSubtitle": "Instant automated delivery via Safaricom M-Pesa Pochi La Biashara to your phone within 60 seconds.",
-    "dateModified": "2026-09-28T12:45:09+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
-    "mtime": "2026-09-28T09:45:09.619Z"
+    "mtime": "2026-10-05T08:31:17.862Z"
   },
   "cheerplex-yesterday-prediction": {
     "pageKey": "cheerplex-yesterday-prediction",
@@ -466,9 +466,9 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Review yesterday's Cheerplex football predictions, winning banker slips, and full-time scores. Transparent settlement with verified 85%+ accuracy records.",
     "listTitle": "Yesterday's Settled Matches & Verification Ledger",
     "listSubtitle": "Transparent post-match verification database recording all winning and settled selections to continuously validate model performance.",
-    "dateModified": "2026-09-28T12:45:09+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
-    "mtime": "2026-09-28T09:45:09.611Z"
+    "mtime": "2026-10-05T08:31:17.853Z"
   },
   "contact": {
     "pageKey": "contact",
@@ -492,7 +492,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Contact Cheerplex via WhatsApp, Telegram, or email for VIP subscriptions, M-Pesa payment confirmations, predictions support, and partnership inquiries.",
     "listTitle": "Today's Free Football Predictions",
     "listSubtitle": "High-probability daily double-chance options and standard single tips verified by Cheerplex mathematical indexes.",
-    "dateModified": "2026-09-28T12:45:09+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
     "tags": [
       "contact cheerplex",
@@ -501,7 +501,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
       "cheerplex helpline",
       "customer care"
     ],
-    "mtime": "2026-09-28T09:45:09.574Z"
+    "mtime": "2026-10-05T08:31:17.892Z"
   },
   "home": {
     "pageKey": "home",
@@ -525,7 +525,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Premier Kenyan football predictions, 1X2 tips, GG/BTTS, multi-tier sure odds, and jackpot predictions for SportPesa, Betika, and Mozzart.",
     "listTitle": "Today's Featured Banker Selections",
     "listSubtitle": "Daily high-confidence single bankers, double chances, and goal market picks verified by Cheerplex algorithms.",
-    "dateModified": "2026-09-28T12:51:25+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
     "tags": [
       "cheerplex",
@@ -536,7 +536,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
       "1x2 tips",
       "gg btts"
     ],
-    "mtime": "2026-09-28T09:51:25.569Z"
+    "mtime": "2026-10-05T08:31:17.891Z"
   },
   "jackpot-list": {
     "pageKey": "jackpot-list",
@@ -561,9 +561,9 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Master Kenyan jackpot hub for SportPesa Mega & Midweek, Betika Midweek, Mozzart Grand, and Mozzart Super Daily. Access weekly and daily jackpot predictions and double-chance slips.",
     "listTitle": "All Active Kenyan Jackpot Pools",
     "listSubtitle": "Direct access to SportPesa, Betika, and Mozzart verified coupons.",
-    "dateModified": "2026-09-28T12:51:13+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
-    "mtime": "2026-09-28T09:51:13.638Z"
+    "mtime": "2026-10-05T08:31:17.829Z"
   },
   "mozzart-grand": {
     "pageKey": "mozzart-grand",
@@ -588,9 +588,9 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Mozzart Grand Jackpot predictions for all 20 games. Fixed KES 200 Million jackpot analysis, statistical goal modeling, and bonus tips.",
     "listTitle": "Mozzart Grand Jackpot Selections",
     "listSubtitle": "Complete 20-fixture analysis, banker singles, and multi-ticket safety combinations.",
-    "dateModified": "2026-09-28T12:45:09+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
-    "mtime": "2026-09-28T09:45:09.568Z"
+    "mtime": "2026-10-05T08:31:17.850Z"
   },
   "mozzart-super-daily": {
     "pageKey": "mozzart-super-daily",
@@ -615,7 +615,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Get accurate Cheerplex Mozzart Bet jackpot predictions today. Expert analysis for the 16-game Mozzart Super Daily Jackpot with KES 20M prize and KES 20 stake.",
     "listTitle": "Mozzart Super Daily 16-Match Coupon",
     "listSubtitle": "Daily 16-match coupon analysis with calibrated win probabilities and double-chance safety indicators.",
-    "dateModified": "2026-09-28T12:45:09+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
     "tags": [
       "mozzart super daily jackpot",
@@ -624,7 +624,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
       "mozzartbet daily tips",
       "mozzart 20m jackpot"
     ],
-    "mtime": "2026-09-28T09:45:09.611Z"
+    "mtime": "2026-10-05T08:31:17.874Z"
   },
   "odds-3plus": {
     "pageKey": "odds-3plus",
@@ -648,7 +648,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Get Cheerplex daily sure 3+ odds betting tips. Low-risk, high-probability 2-3 match accumulators designed for consistent bankroll growth.",
     "listTitle": "Today's Curated 3+ Odds Banker Selections",
     "listSubtitle": "Daily 2-3 match accumulator slip with verified 82%+ historical accuracy and instant booking codes.",
-    "dateModified": "2026-09-28T12:45:09+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
     "tags": [
       "3 plus odds",
@@ -657,7 +657,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
       "low risk multibet",
       "banker double tips"
     ],
-    "mtime": "2026-09-28T09:45:09.631Z"
+    "mtime": "2026-10-05T08:31:17.857Z"
   },
   "odds-5plus": {
     "pageKey": "odds-5plus",
@@ -681,7 +681,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Get daily Cheerplex 5+ odds multibets. 3 to 4 well-analyzed soccer matches with combined odds exceeding 5.00 for balanced betting returns.",
     "listTitle": "Today's Curated 5+ Odds Accumulator",
     "listSubtitle": "Daily 3-4 match accumulator slip combining strong bankers with high-value goal market picks.",
-    "dateModified": "2026-09-28T12:45:09+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
     "tags": [
       "5 plus odds",
@@ -690,7 +690,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
       "5x multibet",
       "daily multibet kenya"
     ],
-    "mtime": "2026-09-28T09:45:09.566Z"
+    "mtime": "2026-10-05T08:31:17.842Z"
   },
   "odds-7plus": {
     "pageKey": "odds-7plus",
@@ -714,7 +714,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Get Cheerplex 7+ odds accumulator tips. Carefully calculated multibets with total odds over 7.00 for strong payout potential and smart returns.",
     "listTitle": "Today's Curated 7+ Odds High-Yield Ticket",
     "listSubtitle": "Daily 4-5 match multibet engineered for high payout returns with disciplined match correlation.",
-    "dateModified": "2026-09-28T12:45:09+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
     "tags": [
       "7 plus odds",
@@ -723,7 +723,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
       "weekend multibet",
       "high return tips"
     ],
-    "mtime": "2026-09-28T09:45:09.634Z"
+    "mtime": "2026-10-05T08:31:17.842Z"
   },
   "odds-9plus": {
     "pageKey": "odds-9plus",
@@ -747,7 +747,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Get daily Cheerplex 9+ odds mega multibets. High-return soccer prediction accumulators with combined odds above 9.00 and verified strike rates.",
     "listTitle": "Today's Curated 9+ Odds Mega Accumulator",
     "listSubtitle": "Daily high-multiplier coupon engineered to turn modest wagers into substantial cash payouts.",
-    "dateModified": "2026-09-28T12:45:09+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
     "tags": [
       "9 plus odds",
@@ -756,7 +756,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
       "cheerplex 9 odds",
       "high payout slips"
     ],
-    "mtime": "2026-09-28T09:45:09.575Z"
+    "mtime": "2026-10-05T08:31:17.892Z"
   },
   "responsible-gambling": {
     "pageKey": "responsible-gambling",
@@ -764,7 +764,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "displayTitle": "Responsible Gambling & Player Protection Center",
     "description": "Cheerplex advocates for responsible gambling, strict 18+ age verification, healthy bankroll management, and player support resources across Kenya.",
     "keywords": "responsible gambling Kenya, player protection, betting helpline Kenya, safe betting tips, bclb compliant, gambling addiction support",
-    "link": "/responsible-gambling",
+    "link": "/responsible-gambling/",
     "type": "static",
     "authorId": "soka-safety-board",
     "authorName": "John K. Mwangi",
@@ -780,7 +780,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Cheerplex advocates for responsible gambling, strict 18+ age verification, healthy bankroll management, and player support resources across Kenya.",
     "listTitle": "Today's Free Football Predictions",
     "listSubtitle": "High-probability daily double-chance options and standard single tips verified by Cheerplex mathematical indexes.",
-    "dateModified": "2026-09-28T12:45:09+03:00",
+    "dateModified": "2026-10-05T11:33:02+03:00",
     "topConfidenceCount": 5,
     "tags": [
       "responsible gambling",
@@ -789,7 +789,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
       "safe betting",
       "18+ betting"
     ],
-    "mtime": "2026-09-28T09:45:09.570Z"
+    "mtime": "2026-10-05T08:33:02.697Z"
   },
   "sportpesa-mega": {
     "pageKey": "sportpesa-mega",
@@ -814,7 +814,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Today's SportPesa Mega Jackpot (17 matches) predictions. Expert analysis, double-chance hedges, and winning bonus tips for Kenya's KES 412M+ pool.",
     "listTitle": "SportPesa Mega Jackpot 17-Match Analysis",
     "listSubtitle": "Complete 17-fixture breakdown with calibrated win probabilities, double-chance covers, and bonus tier indicators.",
-    "dateModified": "2026-09-28T12:45:09+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
     "tags": [
       "sportpesa mega jackpot prediction",
@@ -824,7 +824,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
       "sportpesa 17 prediction",
       "cheerplex sportpesa"
     ],
-    "mtime": "2026-09-28T09:45:09.638Z"
+    "mtime": "2026-10-05T08:31:17.847Z"
   },
   "sportpesa-midweek": {
     "pageKey": "sportpesa-midweek",
@@ -849,7 +849,7 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
     "unlockDescription": "Get SportPesa Midweek Jackpot predictions today with free and VIP analysis. 13-match coupon tips, bonus strategies, and KES 10M jackpot insights.",
     "listTitle": "SportPesa Midweek 13-Match Selections",
     "listSubtitle": "Daily 13-fixture coupon analysis with calibrated win probabilities and bonus safety hedging.",
-    "dateModified": "2026-09-28T12:45:09+03:00",
+    "dateModified": "2026-10-05T11:31:17+03:00",
     "topConfidenceCount": 5,
     "tags": [
       "sportpesa midweek jackpot",
@@ -858,6 +858,40 @@ export const PAGE_METADATA_MAP: Record<string, PageMetadata> = {
       "sportpesa 13 games",
       "midweek jackpot bonuses"
     ],
-    "mtime": "2026-09-28T09:45:09.592Z"
+    "mtime": "2026-10-05T08:31:17.868Z"
+  },
+  "sportybet-jackpot": {
+    "pageKey": "sportybet-jackpot",
+    "title": "Cheerplex SportyBet 12 Jackpot Prediction & Bonus Tips",
+    "displayTitle": "Cheerplex SportyBet 12 Jackpot Prediction Tips",
+    "description": "Expert Cheerplex SportyBet 12 Jackpot predictions today. Complete 12-match analysis, double-chance safety combinations, and KES 5M jackpot bonus tips.",
+    "keywords": "sportybet jackpot prediction, cheerplex sportybet, sportybet 12 prediction, sportybet jackpot tips, sportybet 5m jackpot",
+    "link": "/cheerplex-jackpots-predictions-and-tips/sportybet-jackpot/",
+    "type": "jackpot",
+    "jackpotId": "sportybet",
+    "authorId": "victor-bett",
+    "authorName": "John K. Mwangi",
+    "authorTitle": "Lead Football Analyst & Predictive Modeler",
+    "miniIntro": "Unlock verified Cheerplex SportyBet 12 Jackpot predictions for all 12 matches. Get tactical previews, top confidence bankers, double-chance safety hedges, and strategic bonus winning combinations for the KES 5 Million pool.",
+    "intro": "Unlock verified Cheerplex SportyBet 12 Jackpot predictions for all 12 matches. Get tactical previews, top confidence bankers, double-chance safety hedges, and strategic bonus winning combinations for the KES 5 Million pool.",
+    "introParagraph": "Unlock verified Cheerplex SportyBet 12 Jackpot predictions for all 12 matches. Get tactical previews, top confidence bankers, double-chance safety hedges, and strategic bonus winning combinations for the KES 5 Million pool.",
+    "sectionTitle": "SportyBet 12 Jackpot Strategy: Permutation Architecture & Bonus Tiers",
+    "sectionDescription": "Mathematical strategies for navigating 12 matches and targeting 10 and 11 bonus payout tiers.",
+    "faqTitle": "Frequently Asked Questions - SportyBet 12 Jackpot",
+    "faqHeading": "Frequently Asked Questions - SportyBet 12 Jackpot",
+    "unlockHeading": "Cheerplex SportyBet 12 Jackpot Prediction Tips",
+    "unlockDescription": "Expert Cheerplex SportyBet 12 Jackpot predictions today. Complete 12-match analysis, double-chance safety combinations, and KES 5M jackpot bonus tips.",
+    "listTitle": "SportyBet 12-Match Coupon Selections",
+    "listSubtitle": "Complete 12-fixture breakdown with calibrated win probabilities, double-chance covers, and bonus tier indicators.",
+    "dateModified": "2026-10-05T11:31:17+03:00",
+    "topConfidenceCount": 5,
+    "tags": [
+      "sportybet jackpot prediction",
+      "cheerplex sportybet",
+      "sportybet 12 tips",
+      "sportybet 5m jackpot",
+      "kenya jackpot tips"
+    ],
+    "mtime": "2026-10-05T08:31:17.853Z"
   }
 };

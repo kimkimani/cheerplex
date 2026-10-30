@@ -16,17 +16,44 @@ faqTitle: "Frequently Asked Questions - SportPesa Midweek Jackpot"
 tags: ["sportpesa midweek jackpot", "cheerplex sportpesa midweek", "sportpesa midweek tips", "sportpesa 13 games", "midweek jackpot bonuses"]
 ---
 
-Welcome to **Cheerplex SportPesa Midweek Jackpot Predictions**, your trusted analytical resource for Kenya's premier 13-match challenge. Competing for the **KES 10 Million** grand prize demands precision, as even a single upset can derail a coupon. Our models balance form indicators with double-chance hedges to help punters secure life-changing jackpots and guaranteed cash bonuses for 10, 11, and 12 correct picks.
+Welcome to **Cheerplex SportPesa Midweek Jackpot Predictions**, your trusted analytical resource for Kenya's premier 13-match challenge. Matches kick off on {{JACKPOT_SCHEDULE}}, featuring competitive fixtures from {{JACKPOT_LEAGUES}}. This round's computer model {{JACKPOT_SELECTIONS_INCLUDE}}. Competing for the **KES 10 Million** grand prize demands precision, as even a single upset can derail a coupon. Our models balance form indicators with double-chance hedges to help punters secure life-changing jackpots and guaranteed cash bonuses for 10, 11, and 12 correct picks.
+
+{{UI_TIMER}}
+
+### Key Jackpot Schedule & Timing
+- **Jackpot Kickoff Window**: {{JACKPOT_SCHEDULE}}
+- **Kickoff Start Date & Time**: {{START_DATETIME}} (Kickoff Date: {{KICKOFF_DATE}}, Start Time: {{KICKOFF_TIME}})
+- **Jackpot Closing / Final Fixture**: {{END_DATETIME}} (Closing Date: {{CLOSING_DATE}}, Closing Time: {{END_TIME}})
+- **Featured Leagues Across Coupon**: {{JACKPOT_LEAGUES}}
+- **Model Distribution Breakdown**: {{JACKPOT_SELECTIONS}}
+- **Double Chance Allocation**: {{JACKPOT_DOUBLE_CHANCES_COUNT}}
+- **Primary Upset Alert Fixtures**: {{JACKPOT_UPSET_ALERT}}
+
+### Upset Alerts (High-Variance Fixtures)
+Analysis of coupon fixtures to locate tight head-to-head margins, low-confidence fixtures, or draws, providing specific double-chance tactical recommendations:
+- **Upset Alerts**: {{JACKPOT_UPSET_ALERT}}
 
 Explore our other football hubs:
-- Check active matchday tips on [Today's Free Predictions](/cheerplex-today-prediction-betting-tips/)
+- Check active matchday tips on [Today's Free Predictions](/cheerplex-today-prediction/)
 - Verify yesterday's settlements on [Yesterday's Results](/cheerplex-yesterday-prediction/)
 - Review upcoming odds on [Tomorrow's Tips](/cheerplex-tomorrow-prediction/)
 - Compare with [Betika Midweek Jackpot](/cheerplex-jackpots-predictions-and-tips/betika-midweek/)
-- View weekend pools on [SportPesa Mega Jackpot](/sportpesa-mega-jackpot-prediction/)
+- View weekend pools on [SportPesa Mega Jackpot](/cheerplex-jackpots-predictions-and-tips/sportpesa-mega/)
 - Unlock curated slips on [Cheerplex VIP Packages](/cheerplex-vip-tips/)
 
 ## SportPesa Midweek 13-Game Analysis: Targeting 10, 11 & 12 Bonuses
+
+### Prize Structure & Combinations
+{{JACKPOT_SUB_COMBOS:list}}
+
+### Top Predictions by Confidence
+{{TOP_CONFIDENCE_FIXTURES:5}}
+
+### Recommended Double Chance Coverage
+{{DOUBLE_CHANCE_FIXTURES:3}}
+
+### Complete 13-Match Coupon Breakdown
+{{ALL_JACKPOT_FIXTURES}}
 
 With only 13 games on the coupon, the SportPesa Midweek Jackpot offers significantly higher mathematical odds of reaching the prize payouts compared to 17-game pools:
 

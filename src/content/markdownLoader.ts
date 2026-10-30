@@ -119,7 +119,7 @@ export function normalizePageKey(pageKey: string): string {
   if (!rawKey) return 'home';
 
   let key = rawKey;
-  if (key === 'today' || key === 'category-today' || key === 'football-predictions-today') key = 'cheerplex-today-prediction-betting-tips';
+  if (key === 'today' || key === 'category-today' || key === 'football-predictions-today') key = 'cheerplex-today-prediction';
   if (key === 'tomorrow' || key === 'category-tomorrow' || key === 'football-predictions-tomorrow') key = 'cheerplex-tomorrow-prediction';
   if (key === 'yesterday' || key === 'football-predictions-yesterday' || key === 'category-yesterday') key = 'cheerplex-yesterday-prediction';
   if (key === 'over15' || key === 'over-1-5' || key === 'football-predictions-over-1-5-goals') key = 'category-over15';

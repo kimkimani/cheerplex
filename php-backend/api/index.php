@@ -125,6 +125,67 @@ function computeFixtureConfidenceAndProbabilities($prediction, $hp = 0, $dp = 0,
 }
 
 /**
+ * Evaluates whether a prediction won or lost based on actual scores and status
+ */
+function evaluateBackendFixtureResult($prediction, $homeScore, $awayScore, $statusShort) {
+    $status = strtoupper(trim((string)$statusShort));
+    $hasScore = is_numeric($homeScore) && is_numeric($awayScore);
+    $isFinished = in_array($status, ['FT', 'AET', 'AP', 'PEN', 'FINISHED'], true);
+
+    if ($hasScore && $isFinished) {
+        $h = (int)$homeScore;
+        $a = (int)$awayScore;
+        $total = $h + $a;
+        $pred = strtolower(trim((string)$prediction));
+
+        if (strpos($pred, '1x') !== false || strpos($pred, 'x1') !== false || strpos($pred, 'dc1x') !== false || strpos($pred, 'home or draw') !== false) {
+            return $h >= $a ? 'won' : 'lost';
+        }
+        if (strpos($pred, 'x2') !== false || strpos($pred, '2x') !== false || strpos($pred, 'dcx2') !== false || strpos($pred, 'draw or away') !== false) {
+            return $a >= $h ? 'won' : 'lost';
+        }
+        if (strpos($pred, '12') !== false || strpos($pred, '21') !== false || strpos($pred, 'dc12') !== false || strpos($pred, 'home or away') !== false) {
+            return $h !== $a ? 'won' : 'lost';
+        }
+        if (strpos($pred, 'over 1.5') !== false || strpos($pred, 'ov 1.5') !== false || strpos($pred, 'ov1.5') !== false || strpos($pred, 'o1.5') !== false || strpos($pred, 'o 1.5') !== false || strpos($pred, '2+') !== false) {
+            return $total >= 2 ? 'won' : 'lost';
+        }
+        if (strpos($pred, 'under 1.5') !== false || strpos($pred, 'un 1.5') !== false || strpos($pred, 'u1.5') !== false) {
+            return $total < 2 ? 'won' : 'lost';
+        }
+        if (strpos($pred, 'over 2.5') !== false || strpos($pred, 'ov 2.5') !== false || strpos($pred, 'ov2.5') !== false || strpos($pred, 'o2.5') !== false || strpos($pred, 'o 2.5') !== false || strpos($pred, '3+') !== false) {
+            return $total >= 3 ? 'won' : 'lost';
+        }
+        if (strpos($pred, 'under 2.5') !== false || strpos($pred, 'un 2.5') !== false || strpos($pred, 'un2.5') !== false || strpos($pred, 'u2.5') !== false || strpos($pred, 'u 2.5') !== false) {
+            return $total < 3 ? 'won' : 'lost';
+        }
+        if (strpos($pred, 'over 3.5') !== false || strpos($pred, 'ov 3.5') !== false || strpos($pred, 'o3.5') !== false) {
+            return $total >= 4 ? 'won' : 'lost';
+        }
+        if (strpos($pred, 'under 3.5') !== false || strpos($pred, 'un 3.5') !== false || strpos($pred, 'u3.5') !== false) {
+            return $total < 4 ? 'won' : 'lost';
+        }
+        if (strpos($pred, 'no gg') !== false || strpos($pred, 'ng') !== false || strpos($pred, 'btts - no') !== false || strpos($pred, 'btts no') !== false) {
+            return ($h === 0 || $a === 0) ? 'won' : 'lost';
+        }
+        if (strpos($pred, 'gg') !== false || strpos($pred, 'btts') !== false || strpos($pred, 'both teams') !== false) {
+            return ($h > 0 && $a > 0) ? 'won' : 'lost';
+        }
+        if ($pred === '1' || strpos($pred, '(1)') !== false || strpos($pred, 'home') !== false) {
+            return $h > $a ? 'won' : 'lost';
+        }
+        if ($pred === '2' || strpos($pred, '(2)') !== false || strpos($pred, 'away') !== false) {
+            return $a > $h ? 'won' : 'lost';
+        }
+        if ($pred === 'x' || strpos($pred, '(x)') !== false || strpos($pred, 'draw') !== false) {
+            return $h === $a ? 'won' : 'lost';
+        }
+    }
+
+    return $isFinished ? 'lost' : 'pending';
+}
+
+/**
  * Format a jackpot match row into a full, standardized fixture object
  */
 function formatJackpotGame($g, $pdo = null) {
@@ -162,7 +223,7 @@ function formatJackpotGame($g, $pdo = null) {
     }
 
     $statusShort = $g['status_short'] ?? $g['status'] ?? 'NS';
-    $result = ($statusShort === 'FT' || $statusShort === 'AET' || $statusShort === 'AP') ? 'won' : 'pending';
+    $result = evaluateBackendFixtureResult($tip, $homeScore, $awayScore, $statusShort);
 
     $pos = (int)($g['jackpot_position'] ?? $g['position'] ?? $g['fixtureNumber'] ?? 1);
 
@@ -208,7 +269,7 @@ $jackpotTableMap = [
 // ROUTE DISPATCHER
 // -------------------------------------------------------------
 
-// 0. Health Check
+// 0. Health Check & Database Table Scanner
 if ($path === '' || $path === '/' || $path === '/health') {
     jsonResponse([
         'status' => 'online',
@@ -217,6 +278,8 @@ if ($path === '' || $path === '/' || $path === '/health') {
         'database' => 'cheerple_soka_king',
         'timestamp' => date('Y-m-d H:i:s'),
         'endpoints' => [
+            'GET /api/database/scan',
+            'GET /api/scan-tables',
             'GET /api/predictions',
             'GET /api/predictions/vote',
             'POST /api/predictions/vote',
@@ -238,6 +301,11 @@ if ($path === '' || $path === '/' || $path === '/health') {
             'POST /api/partners'
         ]
     ]);
+}
+
+// 0.1 Scan All Tables and Databases Endpoint
+if ($path === '/database/scan' || $path === '/database/tables' || $path === '/scan-tables') {
+    jsonResponse(Database::scanDatabase());
 }
 
 // 1. Predictions Endpoint GET /api/predictions
@@ -301,17 +369,16 @@ if ($path === '/predictions' && $method === 'GET') {
 
     $formatted = array_map(function($row) {
         $statusShort = $row['status'] ?: 'NS';
-        $result = 'pending';
-        if ($statusShort === 'FT') {
-            $result = 'won'; // Default verified outcome metric
-        }
+        $predictionStr = $row['prediction'] ?: 'Home Win (1)';
+        $hScore = $row['homeScore'] !== null ? $row['homeScore'] : '-';
+        $aScore = $row['awayScore'] !== null ? $row['awayScore'] : '-';
+        $result = evaluateBackendFixtureResult($predictionStr, $hScore, $aScore, $statusShort);
 
         // Clean raw probabilities from DB if present
         $hpRaw = (int)preg_replace('/[^0-9]/', '', $row['homeProbability'] ?? '');
         $dpRaw = (int)preg_replace('/[^0-9]/', '', $row['drawProbability'] ?? '');
         $apRaw = (int)preg_replace('/[^0-9]/', '', $row['awayProbability'] ?? '');
 
-        $predictionStr = $row['prediction'] ?: 'Home Win (1)';
         $fixtureId = $row['id'] ?: 1;
 
         $probCalc = computeFixtureConfidenceAndProbabilities($predictionStr, $hpRaw, $dpRaw, $apRaw, $fixtureId);
@@ -1539,7 +1606,7 @@ if ($path === '/sitemap.xml' || $path === '/sitemap') {
         '/cheerplex-predictions-and-tips-today',
         '/liobet-predictions-and-tips',
         '/sunpel-free-football-betting-tips-and-soccer-predictions',
-        '/jackpot-tips',
+        'cheerplex-jackpots-predictions-and-tips',
         '/sportpesa-mega-jackpot-prediction',
         '/free-betika-midweek-jackpot-predictions-and-analysis',
         '/free-mozzart-grand-jackpot-predictions-and-analysis',

@@ -3,7 +3,7 @@ title: "Responsible Gambling and Player Protection - Cheerplex"
 displayTitle: "Responsible Gambling & Player Protection Center"
 description: "Cheerplex advocates for responsible gambling, strict 18+ age verification, healthy bankroll management, and player support resources across Kenya."
 keywords: "responsible gambling Kenya, player protection, betting helpline Kenya, safe betting tips, bclb compliant, gambling addiction support"
-link: "/responsible-gambling"
+link: "/responsible-gambling/"
 type: "static"
 authorId: "soka-safety-board"
 introParagraph: "Cheerplex is strictly an analytical sports advisory portal. We advocate for responsible gaming, rigorous 18+ age compliance under the Betting Control and Licensing Board (BCLB) of Kenya, and disciplined bankroll management."
@@ -16,7 +16,8 @@ tags: ["responsible gambling", "bclb kenya", "player protection", "safe betting"
 Welcome to the **Cheerplex Responsible Gambling & Player Protection Center**. Cheerplex operates as an analytical sports research portal. We believe that sports wagering should remain an enjoyable recreational pursuit rather than a financial hazard.
 
 Explore our football prediction sections:
-- [Today's Free Football Predictions](/cheerplex-today-prediction-betting-tips/)
+
+- [Today's Free Football Predictions](/cheerplex-today-prediction/)
 - [Yesterday's Verified Match Results](/cheerplex-yesterday-prediction/)
 - [Tomorrow's Early Predictions](/cheerplex-tomorrow-prediction/)
 - [Contact Customer Support Desk](/contact/)
