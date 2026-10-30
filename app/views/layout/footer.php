@@ -172,8 +172,16 @@ $externalLinks = getExternalLinks();
               <span>Mozzart Super Daily (16 Games)</span>
               <span class="text-[10px] font-mono text-emerald-400">Ksh 20M</span>
             </a>
+            <a href="<?= getPageUrl('cheerplex-mega-jackpot-prediction') ?>" class="py-1 text-slate-400 hover:text-blue-400 transition-colors no-underline cursor-pointer flex items-center justify-between">
+              <span>Cheerplex Mega Jackpot</span>
+              <span class="text-[10px] font-mono text-amber-400">Tips</span>
+            </a>
+            <a href="<?= getPageUrl('cheerplex-sportpesa-jackpot-prediction') ?>" class="py-1 text-slate-400 hover:text-blue-400 transition-colors no-underline cursor-pointer flex items-center justify-between">
+              <span>SportPesa Jackpot Prediction</span>
+              <span class="text-[10px] font-mono text-emerald-400">17 & 13</span>
+            </a>
             <a href="<?= getPageUrl('jackpot-list') ?>" class="py-1 text-blue-400 font-bold hover:underline transition-colors no-underline cursor-pointer flex items-center justify-between">
-              <span>View All 5 Jackpot Pools →</span>
+              <span>View All Jackpot Pools →</span>
             </a>
           </div>
         </div>

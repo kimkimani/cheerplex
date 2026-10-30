@@ -31,8 +31,6 @@ $mdKeyMap = [
     'betika-midweek'        => 'betika-midweek',
     'mozzart-grand'         => 'mozzart-grand',
     'mozzart-super-daily'   => 'mozzart-super-daily',
-    'sportybet'             => 'sportybet-jackpot',
-    'sportybet-jackpot'     => 'sportybet-jackpot',
 ];
 $mdKey = $mdKeyMap[$jackpotId] ?? $jackpotId;
 $mdData = loadMarkdownPage($mdKey, $jackpotId);
@@ -346,6 +344,16 @@ $freeCutoff = (int)round(($gamesCount * 2) / 3);
           </div>
         </div>
       <?php else: ?>
+      <?php 
+        $jpPreloadIds = [];
+        foreach ($fixtures as $idx => $m) {
+          $mPos = (int)($m['fixtureNumber'] ?? ($idx + 1));
+          $jpPreloadIds[] = "jackpot_{$jackpotId}_{$mPos}";
+        }
+        if (!empty($jpPreloadIds)) {
+          getBatchFixtureVoteStats($jpPreloadIds);
+        }
+      ?>
       <?php foreach ($fixtures as $idx => $match): 
         $pos = (int)($match['fixtureNumber'] ?? ($idx + 1));
         $mHome = $match['homeTeam'] ?? 'Home Team';
@@ -362,6 +370,7 @@ $freeCutoff = (int)round(($gamesCount * 2) / 3);
         
         $pLower = strtolower($mPred);
         $isDcMatch = (strpos($pLower, '1x') !== false || strpos($pLower, 'x2') !== false || strpos($pLower, '12') !== false || strpos($pLower, 'double') !== false);
+        $jpFixtureId = $match['fixtureId'] ?? "jackpot_{$jackpotId}_{$pos}";
         
         // Probability estimations
         $hp = min(80, max(20, (int)round($mConf * 0.6)));
@@ -373,7 +382,7 @@ $freeCutoff = (int)round(($gamesCount * 2) / 3);
           data-dc="<?= $isDcMatch ? 'true' : 'false' ?>"
           data-conf="<?= $mConf ?>"
           data-query="<?= strtolower(e($mHome . ' ' . $mAway . ' ' . $mLeague . ' ' . $mCountry)) ?>"
-          data-fid="jp-<?= $pos ?>"
+          data-fid="<?= e($jpFixtureId) ?>"
         >
           <!-- Top Header Strip -->
           <div class="px-3.5 sm:px-4 py-2 bg-slate-50/80 dark:bg-slate-950/80 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2 text-xs">
@@ -527,7 +536,7 @@ $freeCutoff = (int)round(($gamesCount * 2) / 3);
             <div class="hidden md:block px-5 py-3.5">
               <?php 
                 $fixture = [
-                    'id' => "jp_{$jackpotId}_{$pos}",
+                    'id' => $jpFixtureId,
                     'homeTeam' => $mHome,
                     'awayTeam' => $mAway,
                     'prediction' => $mPred,

@@ -3,10 +3,12 @@
     RewriteEngine On
     RewriteBase /
 
-    # Redirect trailing slashes if not a folder
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [L,R=301]
+    # Enforce trailing slash for non-file, non-api requests to avoid redirects
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_URI} !^/api/
+    RewriteCond %{REQUEST_URI} !\.[a-zA-Z0-9]+$
+    RewriteCond %{REQUEST_URI} !(.*)/$
+    RewriteRule ^(.*)$ /$1/ [L,R=301]
 
     # Serve existing static files directly
     RewriteCond %{REQUEST_FILENAME} -f [OR]

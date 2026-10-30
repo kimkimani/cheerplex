@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
   if (overlay) overlay.addEventListener('click', closeDrawer);
 
-  // Restore community votes from localStorage on page load
-  restoreUserVotes();
+  // Restore community votes and hydrate live database counts on page load
+  hydrateAllVotes();
 });
 
 // 2. Floor Toast Alert Helper
@@ -134,28 +134,111 @@ function toggleAnalysis(id, btn) {
   }
 }
 
-// 6. Community Fan Voting (Matches React VotePoll.tsx)
+// 6. Community Fan Voting & Live Hydration (Matches React VotePoll.tsx)
 function getVisitorId() {
-  let id = 'visitor_guest';
+  let id = 'anonymous';
   try {
     id = localStorage.getItem('aistudio_visitor_id');
     if (!id) {
       id = 'visitor_' + Math.random().toString(36).substring(2, 15);
       localStorage.setItem('aistudio_visitor_id', id);
     }
-  } catch (e) {}
+  } catch (e) {
+    id = 'visitor_' + Math.random().toString(36).substring(2, 15);
+  }
   return id;
 }
 
-function restoreUserVotes() {
-  const visitorId = getVisitorId();
-  const seenFixtures = new Set();
+function updateWrapperVoteStats(wrapper, stats) {
+  if (!wrapper || !stats) return;
+  const v1 = Number(stats.votes1 || 0);
+  const vx = Number(stats.votesX || 0);
+  const v2 = Number(stats.votes2 || 0);
+  const total = Number(stats.totalVotes !== undefined ? stats.totalVotes : (v1 + vx + v2));
 
-  document.querySelectorAll('.vote-poll-wrapper').forEach(wrapper => {
-    const fid = wrapper.getAttribute('data-fid');
-    if (!fid) return;
+  wrapper.setAttribute('data-total', total);
+  wrapper.setAttribute('data-v1', v1);
+  wrapper.setAttribute('data-vx', vx);
+  wrapper.setAttribute('data-v2', v2);
 
-    // 1. Immediately highlight local cached vote from localStorage (optimistic)
+  // Update total vote count displays
+  wrapper.querySelectorAll('.vote-count-display').forEach(el => {
+    el.textContent = `(${total.toLocaleString()} ${total === 1 ? 'vote' : 'votes'})`;
+  });
+
+  // Update status badge if match has not ended
+  const isEnded = wrapper.getAttribute('data-ended') === '1';
+  if (!isEnded) {
+    const badgeStatuses = wrapper.querySelectorAll('.poll-badge-status');
+    const badgeTexts = wrapper.querySelectorAll('.poll-badge-text');
+    badgeStatuses.forEach(b => {
+      if (total > 0) {
+        b.className = b.className
+          .replace('bg-amber-100', 'bg-emerald-50')
+          .replace('border-amber-300', 'border-emerald-300')
+          .replace('text-amber-900', 'text-emerald-800');
+      }
+    });
+    badgeTexts.forEach(t => {
+      if (total > 0) {
+        t.textContent = t.closest('.poll-badge-status')?.classList.contains('text-[10px]') ? 'Voting Open' : 'VOTING OPEN • Tap to Vote';
+      }
+    });
+  }
+
+  // Update button percentages and progress bars
+  const btns = wrapper.querySelectorAll('.poll-opt-btn');
+  if (btns.length === 2) {
+    const sum = v1 + v2;
+    let p1 = 0, p2 = 0;
+    if (sum > 0) {
+      p1 = Math.round((v1 / sum) * 100);
+      p2 = 100 - p1;
+    }
+    btns.forEach(b => {
+      const k = b.getAttribute('data-dbkey');
+      const realPct = (k === '1') ? p1 : p2;
+      b.setAttribute('data-pct', realPct);
+      const pctEl = b.querySelector('.opt-pct');
+      const fillEl = b.querySelector('.poll-progress-fill');
+      if (pctEl) pctEl.textContent = (total === 0) ? '0%' : (realPct + '%');
+      if (fillEl) fillEl.style.width = (total === 0) ? '0%' : (realPct + '%');
+    });
+  } else if (btns.length === 3) {
+    const sum = v1 + vx + v2;
+    let p1 = 0, px = 0, p2 = 0;
+    if (sum > 0) {
+      p1 = Math.round((v1 / sum) * 100);
+      px = Math.round((vx / sum) * 100);
+      p2 = Math.max(0, 100 - p1 - px);
+    }
+    btns.forEach(b => {
+      const k = b.getAttribute('data-dbkey');
+      let realPct = 0;
+      if (k === '1') realPct = p1;
+      else if (k === 'X') realPct = px;
+      else if (k === '2') realPct = p2;
+
+      b.setAttribute('data-pct', realPct);
+      const pctEl = b.querySelector('.opt-pct');
+      const fillEl = b.querySelector('.poll-progress-fill');
+      if (pctEl) pctEl.textContent = (total === 0) ? '0%' : (realPct + '%');
+      if (fillEl) fillEl.style.width = (total === 0) ? '0%' : (realPct + '%');
+    });
+  }
+}
+
+function hydrateAllVotes() {
+  const wrappers = document.querySelectorAll('.vote-poll-wrapper');
+  if (!wrappers.length) return;
+
+  const fids = [];
+  wrappers.forEach(w => {
+    const fid = w.getAttribute('data-fid');
+    if (fid && !fids.includes(fid)) {
+      fids.push(fid);
+    }
+    // Restore locally saved vote if any
     let savedVote = null;
     try {
       savedVote = localStorage.getItem('vote_' + fid);
@@ -164,262 +247,182 @@ function restoreUserVotes() {
         savedVote = legacy[fid] || null;
       }
     } catch (e) {}
-
     if (savedVote) {
-      highlightSelectedVote(wrapper, savedVote);
-    }
-
-    // 2. Fetch live database vote counts and verify user vote (once per unique fixture on page)
-    if (!seenFixtures.has(fid)) {
-      seenFixtures.add(fid);
-
-      fetch(`/api/predictions/vote?fixtureId=${encodeURIComponent(fid)}&userId=${encodeURIComponent(visitorId)}`)
-        .then(r => r.json())
-        .then(stats => {
-          if (!stats || typeof stats !== 'object') return;
-          const totalVotes = Math.max(0, Number(stats.totalVotes ?? 0));
-          const allWrappers = document.querySelectorAll(`.vote-poll-wrapper[data-fid="${fid}"]`);
-
-          allWrappers.forEach(w => {
-            w.setAttribute('data-total', totalVotes);
-            w.querySelectorAll('.vote-count-display').forEach(el => {
-              el.textContent = `(${totalVotes.toLocaleString()} ${totalVotes === 1 ? 'vote' : 'votes'})`;
-            });
-
-            applyVotePercentagesToWrapper(w, stats);
-
-            const activeUserVote = stats.userVote || savedVote;
-            if (activeUserVote) {
-              highlightSelectedVote(w, activeUserVote);
-              try {
-                localStorage.setItem('vote_' + fid, activeUserVote);
-              } catch (e) {}
-            }
-          });
-        })
-        .catch(err => {
-          console.warn('[Cheerplex] Could not fetch live database votes for fixture ' + fid, err);
-        });
+      highlightSelectedVote(w, savedVote);
     }
   });
+
+  if (!fids.length) return;
+
+  const visitorId = getVisitorId();
+
+  // Fetch batch vote stats for all fixtures on this page so all visitors see real total counts from all users
+  fetch('/api/predictions/vote?fixtures=' + encodeURIComponent(fids.join(',')) + '&userId=' + encodeURIComponent(visitorId))
+    .then(r => r.json())
+    .then(data => {
+      const votesMap = data?.votes || {};
+      const applyVotes = (map) => {
+        wrappers.forEach(w => {
+          const fid = w.getAttribute('data-fid');
+          if (fid && map[fid]) {
+            const stats = map[fid];
+            updateWrapperVoteStats(w, stats);
+            const savedVote = localStorage.getItem('vote_' + fid) || stats.userVote;
+            if (savedVote) {
+              try { localStorage.setItem('vote_' + fid, savedVote); } catch (e) {}
+              highlightSelectedVote(w, savedVote);
+            }
+          }
+        });
+      };
+
+      applyVotes(votesMap);
+
+      // Fallback for any missing fixtures
+      const missingFids = fids.filter(id => !votesMap[id]);
+      if (missingFids.length > 0) {
+        missingFids.forEach(fid => {
+          fetch('/api/predictions/vote?fixtureId=' + encodeURIComponent(fid) + '&userId=' + encodeURIComponent(visitorId))
+            .then(r => r.json())
+            .then(sData => {
+              if (sData && (sData.totalVotes !== undefined || sData.fixtureId)) {
+                applyVotes({ [fid]: sData });
+              }
+            })
+            .catch(() => {});
+        });
+      }
+    })
+    .catch(() => {});
 }
 
-function applyVotePercentagesToWrapper(wrapper, stats) {
-  const btns = wrapper.querySelectorAll('.poll-opt-btn');
-  const v1 = Math.max(0, Number(stats.votes1 ?? 0));
-  const vX = Math.max(0, Number(stats.votesX ?? 0));
-  const v2 = Math.max(0, Number(stats.votes2 ?? 0));
-  const total = Math.max(0, Number(stats.totalVotes !== undefined ? stats.totalVotes : (v1 + vX + v2)));
-
-  if (btns.length === 2) {
-    const sum = v1 + v2;
-    let p1 = 0, p2 = 0;
-    if (sum > 0) {
-      p1 = Math.round((v1 / sum) * 100);
-      p2 = Math.max(0, 100 - p1);
-    } else if (total > 0) {
-      p1 = Number(stats.homePercent ?? 50);
-      p2 = Math.max(0, 100 - p1);
-    }
-    btns.forEach(b => {
-      const k = b.getAttribute('data-dbkey');
-      const realPct = (k === '1') ? p1 : p2;
-      b.setAttribute('data-pct', realPct);
-      const pctEl = b.querySelector('.opt-pct');
-      const fillEl = b.querySelector('.poll-progress-fill');
-      if (pctEl) pctEl.textContent = (total === 0 ? '0%' : (realPct + '%'));
-      if (fillEl) fillEl.style.width = realPct + '%';
-    });
-  } else if (btns.length === 3) {
-    let p1 = 0, pX = 0, p2 = 0;
-    if (total > 0) {
-      p1 = Math.round((v1 / total) * 100);
-      pX = Math.round((vX / total) * 100);
-      p2 = Math.max(0, 100 - p1 - pX);
-    }
-    btns.forEach(b => {
-      const k = b.getAttribute('data-dbkey');
-      let realPct = 0;
-      if (k === '1') realPct = p1;
-      else if (k === 'X') realPct = pX;
-      else if (k === '2') realPct = p2;
-
-      b.setAttribute('data-pct', realPct);
-      const pctEl = b.querySelector('.opt-pct');
-      const fillEl = b.querySelector('.poll-progress-fill');
-      if (pctEl) pctEl.textContent = (total === 0 ? '0%' : (realPct + '%'));
-      if (fillEl) fillEl.style.width = realPct + '%';
-    });
-  }
+function restoreUserVotes() {
+  hydrateAllVotes();
 }
 
 function highlightSelectedVote(wrapper, selectedKey) {
+  if (!wrapper || !selectedKey) return;
+  const sUpper = String(selectedKey).toUpperCase().trim();
   const btns = wrapper.querySelectorAll('.poll-opt-btn');
   btns.forEach(btn => {
-    const key = btn.getAttribute('data-key');
+    const key = (btn.getAttribute('data-key') || '').toUpperCase().trim();
+    const dbKey = (btn.getAttribute('data-dbkey') || '').toUpperCase().trim();
     const color = btn.getAttribute('data-color') || 'emerald';
     const check = btn.querySelector('.voted-check');
     const hint = btn.querySelector('.vote-hint');
 
-    const matches = (
-      key === selectedKey ||
-      btn.getAttribute('data-dbkey') === selectedKey ||
-      (btn.getAttribute('data-dbkey') === '1' && (selectedKey === '1X' || selectedKey === 'GG' || selectedKey.startsWith('OVER'))) ||
-      (btn.getAttribute('data-dbkey') === '2' && (selectedKey === '2X' || selectedKey === 'NG' || selectedKey.startsWith('UNDER')))
-    );
+    const isMatch = (key === sUpper || dbKey === sUpper ||
+      (sUpper === '1' && (key === '1' || key === '1X' || key === 'GG' || key.startsWith('OVER'))) ||
+      (sUpper === 'X' && (key === 'X' || key === '12')) ||
+      (sUpper === '2' && (key === '2' || key === 'X2' || key === 'NG' || key.startsWith('UNDER'))));
 
-    if (matches) {
+    if (isMatch) {
       btn.classList.add(`border-${color}-500`, `bg-${color}-50/70`, 'ring-2', `ring-${color}-500/20`);
       if (check) check.classList.remove('hidden');
       if (hint) hint.textContent = '• Voted';
     } else {
       btn.classList.remove('border-emerald-500', 'border-blue-500', 'border-amber-500', 'bg-emerald-50/70', 'bg-blue-50/70', 'bg-amber-50/70', 'ring-2');
       if (check) check.classList.add('hidden');
-      if (hint) hint.textContent = '• Tap to vote';
     }
   });
 }
-
-let isVoteInFlight = false;
 
 function castVote(fixtureId, optKey, dbKey, btn) {
   const wrapper = btn.closest('.vote-poll-wrapper');
   if (!wrapper) return;
 
+  const fIdStr = String(fixtureId);
   const isEnded = wrapper.getAttribute('data-ended') === '1';
   if (isEnded) {
     showToast('This match has ended. You cannot vote on completed matches.');
     return;
   }
 
-  if (isVoteInFlight) return;
-  isVoteInFlight = true;
+  // Retrieve current stats and previous user vote
+  let v1 = parseInt(wrapper.getAttribute('data-v1') || '0', 10);
+  let vx = parseInt(wrapper.getAttribute('data-vx') || '0', 10);
+  let v2 = parseInt(wrapper.getAttribute('data-v2') || '0', 10);
+  let prevTotal = parseInt(wrapper.getAttribute('data-total') || '0', 10);
+  if (prevTotal === 0 && (v1 + vx + v2 > 0)) {
+    prevTotal = v1 + vx + v2;
+  }
 
-  const prevTotal = parseInt(wrapper.getAttribute('data-total') || '0', 10);
+  let prevUserVote = null;
+  try {
+    prevUserVote = localStorage.getItem('vote_' + fIdStr);
+  } catch (e) {}
+
   if (prevTotal === 0) {
     showToast('Congratulations! You cast the first prediction vote for this match!');
   }
 
-  let prevVote = null;
-  try {
-    prevVote = localStorage.getItem('vote_' + fixtureId);
-  } catch (e) {}
+  // Optimistic calculation exactly matching https://github.com/kimkimani/sokaking
+  if (prevUserVote) {
+    const pu = prevUserVote.toUpperCase().trim();
+    if (pu === '1' || pu === '1X' || pu === 'GG' || pu.startsWith('OVER')) v1 = Math.max(0, v1 - 1);
+    else if (pu === 'X' || pu === '12') vx = Math.max(0, vx - 1);
+    else if (pu === '2' || pu === '2X' || pu === 'NG' || pu.startsWith('UNDER')) v2 = Math.max(0, v2 - 1);
+  }
+
+  if (dbKey === '1') v1 += 1;
+  else if (dbKey === 'X') vx += 1;
+  else if (dbKey === '2') v2 += 1;
+
+  const newTotal = v1 + vx + v2;
+  const optimisticStats = {
+    fixtureId: fIdStr,
+    totalVotes: newTotal,
+    votes1: v1,
+    votesX: vx,
+    votes2: v2,
+    userVote: optKey
+  };
 
   // Save to localStorage immediately
   try {
-    localStorage.setItem('vote_' + fixtureId, optKey);
+    localStorage.setItem('vote_' + fIdStr, optKey);
     const legacy = JSON.parse(localStorage.getItem('cheerplex_user_votes') || '{}');
-    legacy[fixtureId] = optKey;
+    legacy[fIdStr] = optKey;
     localStorage.setItem('cheerplex_user_votes', JSON.stringify(legacy));
   } catch (e) {}
 
-  // Update all wrappers for this fixture optimistically
-  const allWrappers = document.querySelectorAll(`.vote-poll-wrapper[data-fid="${fixtureId}"]`);
+  // Update all wrappers on page for this fixture immediately
+  const allWrappers = document.querySelectorAll(`.vote-poll-wrapper[data-fid="${fIdStr}"]`);
   allWrappers.forEach(w => {
-    let currentTotal = parseInt(w.getAttribute('data-total') || '0', 10);
-    if (!prevVote) {
-      currentTotal++;
-      w.setAttribute('data-total', currentTotal);
-      w.querySelectorAll('.vote-count-display').forEach(el => {
-        el.textContent = `(${currentTotal.toLocaleString()} ${currentTotal === 1 ? 'vote' : 'votes'})`;
-      });
-    }
+    updateWrapperVoteStats(w, optimisticStats);
     highlightSelectedVote(w, optKey);
   });
 
+  // Send asynchronous request to database voting API
   const visitorId = getVisitorId();
 
-  // Send request to real database API
   fetch('/api/predictions/vote', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      fixtureId: String(fixtureId),
+      id: Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 1000),
+      fixtureId: fIdStr,
       userId: visitorId,
-      vote: dbKey || '1'
+      vote: dbKey || '1',
+      choice: optKey,
+      prediction: wrapper.getAttribute('data-prediction') || '',
+      isEnded: isEnded,
+      status: wrapper.getAttribute('data-status') || ''
     })
-  })
-    .then(r => r.json())
-    .then(data => {
-      const stats = (data && data.stats) ? data.stats : data;
-      if (stats && typeof stats.totalVotes === 'number') {
-        allWrappers.forEach(w => {
-          w.setAttribute('data-total', stats.totalVotes);
-          w.querySelectorAll('.vote-count-display').forEach(el => {
-            el.textContent = `(${stats.totalVotes.toLocaleString()} ${stats.totalVotes === 1 ? 'vote' : 'votes'})`;
-          });
-          applyVotePercentagesToWrapper(w, stats);
-          highlightSelectedVote(w, stats.userVote || optKey);
-        });
-      }
-    })
-    .catch(err => {
-      console.warn('[Cheerplex] Vote POST sync warning:', err);
-    })
-    .finally(() => {
-      isVoteInFlight = false;
-    });
+  }).then(r => r.json()).then(data => {
+    const stats = (data && data.stats) ? data.stats : data;
+    if (stats && typeof stats.totalVotes === 'number') {
+      allWrappers.forEach(w => {
+        updateWrapperVoteStats(w, stats);
+        highlightSelectedVote(w, optKey);
+      });
+    }
+  }).catch(err => {
+    console.warn('[Vote Sync Notice]:', err);
+  });
 
   showToast(`✓ Vote recorded for ${optKey}!`);
 }
-
-// 7. Contact Form Handler (Saves to database / API)
-window.handleContactSubmit = async function(e) {
-  if (e && e.preventDefault) e.preventDefault();
-  const form = e ? e.target : document.getElementById('contactTicketForm');
-  if (!form) return;
-
-  const submitBtn = form.querySelector('button[type="submit"]');
-  const successMsg = document.getElementById('contactSuccessMsg');
-  const errorMsg = document.getElementById('contactErrorMsg');
-
-  const nameInput = form.querySelector('[name="name"]') || document.getElementById('ticketName');
-  const emailInput = form.querySelector('[name="email"]') || document.getElementById('ticketEmail');
-  const subjectInput = form.querySelector('[name="subject"]') || document.getElementById('ticketSubject');
-  const messageInput = form.querySelector('[name="message"]') || document.getElementById('ticketMessage');
-
-  const name = nameInput ? nameInput.value.trim() : '';
-  const email = emailInput ? emailInput.value.trim() : '';
-  const subject = subjectInput ? subjectInput.value.trim() : 'General Support Ticket';
-  const message = messageInput ? messageInput.value.trim() : '';
-
-  if (!name || !email || !message) {
-    showToast('Please fill in your name, contact email/phone, and message.');
-    return;
-  }
-
-  if (submitBtn) {
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = 'Submitting Ticket...';
-  }
-
-  try {
-    const res = await fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, subject, message })
-    });
-    const data = await res.json().catch(() => ({}));
-    if (res.ok && data.success !== false) {
-      if (successMsg) successMsg.classList.remove('hidden');
-      if (errorMsg) errorMsg.classList.add('hidden');
-      form.reset();
-      showToast('✓ Support ticket saved to database successfully!');
-    } else {
-      throw new Error(data.error || 'Failed to submit ticket');
-    }
-  } catch (err) {
-    console.error('Contact submission error:', err);
-    if (successMsg) successMsg.classList.remove('hidden');
-    form.reset();
-    showToast('✓ Support ticket received! We will contact you shortly.');
-  } finally {
-    if (submitBtn) {
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = 'Submit Message';
-    }
-  }
-};
 
 // 7. Toggle FAQ Accordion
 function toggleFaq(id) {
@@ -652,5 +655,3 @@ function copyAccaSlip(btn) {
     showToast('✓ Slip ready');
   });
 }
-
-

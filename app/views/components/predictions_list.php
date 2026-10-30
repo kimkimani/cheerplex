@@ -42,6 +42,18 @@ if ($groupByDate && !empty($fixturesList)) {
         }));
     }
 }
+
+// Preload real database vote stats for all fixtures in parallel before rendering rows
+if (!empty($fixturesList)) {
+    $preloadIds = [];
+    foreach ($fixturesList as $f) {
+        $fid = (string)($f['id'] ?? $f['fixture_id'] ?? '');
+        if ($fid !== '') $preloadIds[] = $fid;
+    }
+    if (!empty($preloadIds)) {
+        getBatchFixtureVoteStats(array_slice($preloadIds, 0, 50));
+    }
+}
 ?>
 <section id="predictions" class="space-y-4 text-left">
   

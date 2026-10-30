@@ -119,17 +119,17 @@ export function normalizePageKey(pageKey: string): string {
   if (!rawKey) return 'home';
 
   let key = rawKey;
-  if (key === 'today' || key === 'category-today' || key === 'football-predictions-today') key = 'cheerplex-today-prediction';
+  if (key === 'today' || key === 'category-today' || key === 'football-predictions-today' || key === 'cheerplex-today-prediction-betting-tips') key = 'cheerplex-today-prediction';
   if (key === 'tomorrow' || key === 'category-tomorrow' || key === 'football-predictions-tomorrow') key = 'cheerplex-tomorrow-prediction';
-  if (key === 'yesterday' || key === 'football-predictions-yesterday' || key === 'category-yesterday') key = 'cheerplex-yesterday-prediction';
-  if (key === 'over15' || key === 'over-1-5' || key === 'football-predictions-over-1-5-goals') key = 'category-over15';
-  if (key === 'over25' || key === 'over-2-5' || key === 'football-predictions-over-2-5-goals') key = 'category-over25';
+  if (key === 'yesterday' || key === 'category-yesterday' || key === 'football-predictions-yesterday') key = 'cheerplex-yesterday-prediction';
+  if (key === 'over15' || key === 'over-1-5' || key === 'category-over15' || key === 'football-predictions-over-1-5-goals') key = 'cheerplex-sure-tips-and-odds';
+  if (key === 'over25' || key === 'over-2-5' || key === 'category-over25' || key === 'football-predictions-over-2-5-goals') key = 'cheerplex-free-predictions-and-tips';
   if (key === 'btts' || key === 'gg' || key === 'category-btts' || key === 'football-predictions-btts-gg') key = 'cheerplex-gg-prediction-tips';
-  if (key === 'doublechance' || key === 'double-chance' || key === 'football-predictions-double-chance') key = 'category-doublechance';
+  if (key === 'doublechance' || key === 'double-chance' || key === 'category-doublechance' || key === 'football-predictions-double-chance') key = 'cheerplex-1x2-prediction-tips';
   if (key === 'homewin' || key === 'home-win' || key === '1x2' || key === 'category-homewin' || key === 'football-predictions-1x2-home-win') key = 'cheerplex-1x2-prediction-tips';
   if (key === 'contact-us') key = 'contact';
   if (key === 'vip' || key === 'vip-tips' || key === 'odds' || key === 'vip-packages') key = 'cheerplex-vip-tips';
-  if (key === 'jackpot-tips') key = 'jackpot-list';
+  if (key === 'jackpot-tips' || key === 'jackpots') key = 'jackpot-list';
   return key;
 }
 

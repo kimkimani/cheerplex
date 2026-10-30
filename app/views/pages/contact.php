@@ -73,29 +73,28 @@ global $SITE_CONTACTS;
 
     <form id="contactTicketForm" onsubmit="handleContactSubmit(event)" class="space-y-3 font-sans text-xs">
       <div>
-        <label for="ticketName" class="block text-[11px] font-bold text-slate-700 font-mono mb-1">Your Full Name:</label>
-        <input type="text" id="ticketName" name="name" required placeholder="e.g. Brian Ochieng" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 text-xs text-slate-900" />
+        <label class="block text-[11px] font-bold text-slate-700 font-mono mb-1">Your Full Name:</label>
+        <input type="text" required placeholder="e.g. Brian Ochieng" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 text-xs text-slate-900" />
       </div>
 
       <div>
-        <label for="ticketEmail" class="block text-[11px] font-bold text-slate-700 font-mono mb-1">Email or Phone Number:</label>
-        <input type="text" id="ticketEmail" name="email" required placeholder="e.g. 0740841375 or email@domain.com" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 text-xs text-slate-900" />
+        <label class="block text-[11px] font-bold text-slate-700 font-mono mb-1">Email or Phone Number:</label>
+        <input type="text" required placeholder="e.g. 0740841375 or email@domain.com" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 text-xs text-slate-900" />
       </div>
 
       <div>
-        <label for="ticketSubject" class="block text-[11px] font-bold text-slate-700 font-mono mb-1">Inquiry Subject:</label>
-        <select id="ticketSubject" name="subject" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 text-xs text-slate-900 font-mono">
-          <option value="M-Pesa STK Push Confirmation">M-Pesa STK Push Confirmation</option>
-          <option value="VIP Package Inquiry">VIP Package Inquiry</option>
-          <option value="Jackpot Permutations Question">Jackpot Permutations Question</option>
-          <option value="Sure Odds Packs Inquiry">Sure Odds Packs Inquiry</option>
-          <option value="General Feedback / Other">General Feedback / Other</option>
+        <label class="block text-[11px] font-bold text-slate-700 font-mono mb-1">Inquiry Subject:</label>
+        <select class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 text-xs text-slate-900 font-mono">
+          <option>M-Pesa STK Push Confirmation</option>
+          <option>VIP Package Inquiry</option>
+          <option>Jackpot Permutations Question</option>
+          <option>General Feedback / Other</option>
         </select>
       </div>
 
       <div>
-        <label for="ticketMessage" class="block text-[11px] font-bold text-slate-700 font-mono mb-1">Message Details:</label>
-        <textarea id="ticketMessage" name="message" required rows="3" placeholder="Describe your question, transaction reference, or inquiry..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 text-xs text-slate-900"></textarea>
+        <label class="block text-[11px] font-bold text-slate-700 font-mono mb-1">Message Details:</label>
+        <textarea required rows="3" placeholder="Describe your question or transaction details..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 text-xs text-slate-900"></textarea>
       </div>
 
       <button 
@@ -106,11 +105,7 @@ global $SITE_CONTACTS;
       </button>
 
       <div id="contactSuccessMsg" class="hidden p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-center font-mono font-bold">
-        ✓ Your ticket has been saved into our support desk. Our team will contact you shortly!
-      </div>
-
-      <div id="contactErrorMsg" class="hidden p-3 bg-rose-50 border border-rose-200 text-rose-800 rounded-xl text-center font-mono font-bold">
-        ✕ An error occurred while saving your message. Please try again or chat via WhatsApp.
+        ✓ Your ticket has been received. Our team will contact you shortly!
       </div>
     </form>
   </div>

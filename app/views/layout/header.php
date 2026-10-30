@@ -15,7 +15,6 @@ $topJackpotsMenu = [
     ['id' => 'betika-midweek', 'name' => 'Betika Midweek JP', 'games' => '15 Games', 'prize' => 'Ksh 15M', 'badge' => 'Midweek', 'url' => getPageUrl('betika-midweek')],
     ['id' => 'mozzart-grand', 'name' => 'Mozzart Grand JP', 'games' => '20 Games', 'prize' => 'Ksh 200M', 'badge' => 'Active', 'url' => getPageUrl('mozzart-grand')],
     ['id' => 'mozzart-super-daily', 'name' => 'Mozzart Super Daily', 'games' => '16 Games', 'prize' => 'Ksh 20M', 'badge' => 'Daily', 'url' => getPageUrl('mozzart-super-daily')],
-    ['id' => 'sportybet', 'name' => 'SportyBet 12 Jackpot', 'games' => '12 Games', 'prize' => 'Ksh 5M', 'badge' => 'Weekend', 'url' => getPageUrl('sportybet')],
 ];
 
 $marketChannelsMenu = [
@@ -32,6 +31,28 @@ $marketChannelsMenu = [
 <html lang="en" class="h-full">
 <head>
   <meta charset="UTF-8">
+  <script>
+    (function() {
+      try {
+        var origFetch = window.fetch;
+        var customFetch = origFetch;
+        var desc = Object.getOwnPropertyDescriptor(window, 'fetch') || 
+                   Object.getOwnPropertyDescriptor(Object.getPrototypeOf(window) || {}, 'fetch');
+        if (!desc || !desc.set || !desc.writable) {
+          Object.defineProperty(window, 'fetch', {
+            configurable: true,
+            enumerable: true,
+            get: function() {
+              return customFetch || origFetch;
+            },
+            set: function(fn) {
+              customFetch = fn;
+            }
+          });
+        }
+      } catch (e) {}
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title><?= e($pageTitle) ?></title>
   <meta name="description" content="<?= e($pageDesc) ?>">
@@ -110,7 +131,7 @@ $marketChannelsMenu = [
           'inLanguage' => 'en-KE',
           'potentialAction' => [
               '@type' => 'SearchAction',
-              'target' => 'https://cheerplex.co.ke/football-predictions-today?q={search_term_string}',
+              'target' => 'https://cheerplex.co.ke/cheerplex-today-prediction/?q={search_term_string}',
               'query-input' => 'required name=search_term_string'
           ]
       ],

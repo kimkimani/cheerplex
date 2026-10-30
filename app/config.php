@@ -25,6 +25,7 @@ define('DATA_SOURCE', getenv('DATA_SOURCE') ?: 'api');
 
 // Standalone Remote Backend API Base URL
 define('BACKEND_API_URL', getenv('BACKEND_API_URL') ?: (getenv('API_BASE_URL') ?: 'https://cheerplex.co.ke/soka_king'));
+define('ENABLE_REMOTE_API', true);
 
 // Direct Database Configuration (Local MySQL / XAMPP / cPanel / Remote)
 define('DB_HOST', getenv('MYSQL_HOST') ?: '127.0.0.1');

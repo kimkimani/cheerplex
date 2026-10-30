@@ -189,29 +189,40 @@ $gridCols = count($options) === 2 ? 'grid-cols-2' : 'grid-cols-3';
 // Fetch real vote stats directly from the database or API
 $dbVoteStats = getFixtureVoteStats($fid);
 $totalVotes = (int)($dbVoteStats['totalVotes'] ?? 0);
+$v1 = (int)($dbVoteStats['votes1'] ?? 0);
+$vx = (int)($dbVoteStats['votesX'] ?? 0);
+$v2 = (int)($dbVoteStats['votes2'] ?? 0);
 $userVoteChoice = $dbVoteStats['userVote'] ?? null;
 
-if ($totalVotes > 0) {
-    if (count($options) === 2) {
-        $p1 = (int)($dbVoteStats['homePercent'] ?? 0);
-        $p2 = (int)($dbVoteStats['awayPercent'] ?? 0);
-        $sum = $p1 + $p2;
-        if ($sum > 0) {
-            $options[0]['basePct'] = (int)round(($p1 / $sum) * 100);
-            $options[1]['basePct'] = max(0, 100 - $options[0]['basePct']);
-        } else {
-            $options[0]['basePct'] = 50;
-            $options[1]['basePct'] = 50;
-        }
-    } elseif (count($options) === 3) {
-        $options[0]['basePct'] = (int)($dbVoteStats['homePercent'] ?? 0);
-        $options[1]['basePct'] = (int)($dbVoteStats['drawPercent'] ?? 0);
-        $options[2]['basePct'] = (int)($dbVoteStats['awayPercent'] ?? 0);
+if (count($options) === 2) {
+    $sum = $v1 + $v2;
+    if ($sum > 0) {
+        $p1 = (int)round(($v1 / $sum) * 100);
+        $p2 = 100 - $p1;
+        $options[0]['basePct'] = $p1;
+        $options[1]['basePct'] = $p2;
+    } else {
+        $options[0]['basePct'] = 0;
+        $options[1]['basePct'] = 0;
+    }
+} elseif (count($options) === 3) {
+    $sum = $v1 + $vx + $v2;
+    if ($sum > 0) {
+        $p1 = (int)round(($v1 / $sum) * 100);
+        $px = (int)round(($vx / $sum) * 100);
+        $p2 = max(0, 100 - $p1 - $px);
+        $options[0]['basePct'] = $p1;
+        $options[1]['basePct'] = $px;
+        $options[2]['basePct'] = $p2;
+    } else {
+        $options[0]['basePct'] = 0;
+        $options[1]['basePct'] = 0;
+        $options[2]['basePct'] = 0;
     }
 }
 unset($opt);
 ?>
-<div class="vote-poll-wrapper select-none text-left" data-fid="<?= $fid ?>" data-status="<?= e($status) ?>" data-ended="<?= $isCompleted ? '1' : '0' ?>" data-total="<?= $totalVotes ?>">
+<div class="vote-poll-wrapper select-none text-left" data-fid="<?= e((string)$fid) ?>" data-status="<?= e($status) ?>" data-ended="<?= $isCompleted ? '1' : '0' ?>" data-total="<?= $totalVotes ?>" data-v1="<?= $v1 ?>" data-vx="<?= $vx ?>" data-v2="<?= $v2 ?>" data-prediction="<?= e($prediction) ?>">
 
 <?php if ($variant === 'desktop-row'): ?>
   <!-- ========================================================================= -->
@@ -230,19 +241,19 @@ unset($opt);
 
       <div class="shrink-0 flex items-center gap-2">
         <?php if ($isCompleted): ?>
-          <span class="text-[11px] font-mono font-bold text-slate-700 bg-slate-200/90 px-3 py-1 rounded-full border border-slate-300 flex items-center gap-1.5 shadow-2xs">
+          <span class="text-[11px] font-mono font-bold text-slate-700 bg-slate-200/90 px-3 py-1 rounded-full border border-slate-300 flex items-center gap-1.5 shadow-2xs poll-badge-status">
             <?= renderIcon('lock', 'w-3 h-3 text-slate-500') ?>
-            <span>Match Ended • Voting Closed (You cannot vote)</span>
+            <span class="poll-badge-text">Match Ended • Voting Closed (You cannot vote)</span>
           </span>
         <?php elseif ($totalVotes === 0): ?>
-          <span class="text-[11px] font-mono font-bold text-amber-900 bg-amber-100 px-3 py-1 rounded-full border border-amber-300 flex items-center gap-1.5 shadow-2xs">
+          <span class="text-[11px] font-mono font-bold text-amber-900 bg-amber-100 px-3 py-1 rounded-full border border-amber-300 flex items-center gap-1.5 shadow-2xs poll-badge-status">
             <?= renderIcon('star', 'w-3 h-3 text-amber-600 fill-amber-500') ?>
-            <span>No votes yet • Be the first to vote!</span>
+            <span class="poll-badge-text">No votes yet • Be the first to vote!</span>
           </span>
         <?php else: ?>
-          <span class="text-[11px] font-mono font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-300 flex items-center gap-1.5 shadow-2xs">
+          <span class="text-[11px] font-mono font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-300 flex items-center gap-1.5 shadow-2xs poll-badge-status">
             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>VOTING OPEN • Tap to Vote</span>
+            <span class="poll-badge-text">VOTING OPEN • Tap to Vote</span>
           </span>
         <?php endif; ?>
         <span class="text-[11px] font-mono text-slate-500 hidden sm:inline vote-count-display">
@@ -262,7 +273,7 @@ unset($opt);
         <button
           type="button"
           <?= $isCompleted ? 'disabled' : '' ?>
-          onclick="castVote(<?= $fid ?>, '<?= $opt['key'] ?>', '<?= $opt['dbKey'] ?>', this)"
+          onclick="castVote('<?= e((string)$fid) ?>', '<?= $opt['key'] ?>', '<?= $opt['dbKey'] ?>', this)"
           aria-label="<?= $isCompleted ? "Match ended. Voting closed for {$opt['label']}" : "Vote for {$opt['label']} ({$opt['basePct']}% community consensus)" ?>"
           class="poll-opt-btn py-3 px-3.5 rounded-xl border text-left transition-all duration-150 flex flex-col justify-between min-h-[76px] active:scale-[0.98] group relative overflow-hidden shadow-2xs <?= $isCompleted ? 'cursor-not-allowed opacity-90' : 'cursor-pointer hover:shadow-xs' ?> <?= $cardBorderClass ?>"
           data-key="<?= $opt['key'] ?>"
@@ -361,19 +372,19 @@ unset($opt);
 
       <div class="flex items-center gap-1.5">
         <?php if ($isCompleted): ?>
-          <span class="text-[10px] font-mono font-bold text-slate-700 bg-slate-200/90 px-2 py-0.5 rounded-full border border-slate-300 flex items-center gap-1 shadow-2xs">
+          <span class="text-[10px] font-mono font-bold text-slate-700 bg-slate-200/90 px-2 py-0.5 rounded-full border border-slate-300 flex items-center gap-1 shadow-2xs poll-badge-status">
             <?= renderIcon('lock', 'w-2.5 h-2.5 text-slate-500') ?>
-            <span>Ended • Voting Closed (Cannot vote)</span>
+            <span class="poll-badge-text">Ended • Voting Closed (Cannot vote)</span>
           </span>
         <?php elseif ($totalVotes === 0): ?>
-          <span class="text-[10px] font-mono font-bold text-amber-900 bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300 flex items-center gap-1 shadow-2xs">
+          <span class="text-[10px] font-mono font-bold text-amber-900 bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300 flex items-center gap-1 shadow-2xs poll-badge-status">
             <?= renderIcon('star', 'w-2.5 h-2.5 text-amber-600 fill-amber-500') ?>
-            <span>No votes yet • Be first to vote!</span>
+            <span class="poll-badge-text">No votes yet • Be first to vote!</span>
           </span>
         <?php else: ?>
-          <span class="text-[10px] font-mono font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-300 flex items-center gap-1 shadow-2xs">
+          <span class="text-[10px] font-mono font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-300 flex items-center gap-1 shadow-2xs poll-badge-status">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>Voting Open</span>
+            <span class="poll-badge-text">Voting Open</span>
           </span>
         <?php endif; ?>
         <span class="tabular-nums font-bold text-slate-600 text-[10px] vote-count-display">
@@ -393,7 +404,7 @@ unset($opt);
         <button
           type="button"
           <?= $isCompleted ? 'disabled' : '' ?>
-          onclick="castVote(<?= $fid ?>, '<?= $opt['key'] ?>', '<?= $opt['dbKey'] ?>', this)"
+          onclick="castVote('<?= e((string)$fid) ?>', '<?= $opt['key'] ?>', '<?= $opt['dbKey'] ?>', this)"
           aria-label="<?= $isCompleted ? "Match ended. Voting closed for {$opt['label']}" : "Vote for {$opt['label']} ({$opt['basePct']}% community consensus)" ?>"
           class="poll-opt-btn relative overflow-hidden py-2 px-2.5 rounded-xl border text-left transition-all duration-150 flex flex-col justify-between min-h-[46px] font-mono text-xs active:scale-[0.97] touch-manipulation group <?= $isCompleted ? 'cursor-not-allowed opacity-90' : 'cursor-pointer hover:shadow-xs' ?> <?= $cardBorderClass ?>"
           data-key="<?= $opt['key'] ?>"

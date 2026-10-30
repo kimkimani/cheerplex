@@ -87,7 +87,7 @@ $frontmatter = $mdData['frontmatter'] ?? [];
         <?= count($jackpots) ?> Active Pools
       </span>
       <a 
-        href="cheerplex-jackpots-predictions-and-tips" 
+        href="/jackpot-tips" 
         class="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 transition-colors no-underline cursor-pointer flex items-center gap-1.5"
       >
         <span>View Hub</span>

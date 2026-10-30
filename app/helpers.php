@@ -133,7 +133,10 @@ function getUrlMap(): array {
         '/sportybet'                                                  => 'sportybet',
         '/free-sportpesa-mega-jackpot-prediction'                     => 'sportpesa-mega',
         '/sportpesa-mega-jackpot-prediction'                          => 'sportpesa-mega',
-        '/cheerplex-mega-jackpot-prediction'                          => 'sportpesa-mega',
+        '/cheerplex-mega-jackpot-prediction'                          => 'cheerplex-mega-jackpot-prediction',
+        '/cheerplex-mega-jackpot-prediction/'                         => 'cheerplex-mega-jackpot-prediction',
+        '/cheerplex-sportpesa-jackpot-prediction'                     => 'cheerplex-sportpesa-jackpot-prediction',
+        '/cheerplex-sportpesa-jackpot-prediction/'                    => 'cheerplex-sportpesa-jackpot-prediction',
         '/free-sportpesa-midweek-jackpot-predictions-and-analysis'    => 'sportpesa-midweek',
         '/today-sportpesa-midweek-jackpot-prediction-and-tips'        => 'sportpesa-midweek',
         '/free-betika-midweek-jackpot-predictions-and-analysis'       => 'betika-midweek',
@@ -163,13 +166,23 @@ function getPageUrl(string $pageId): string {
     $reverseMap = [
         'home'                                          => '/',
         'category-today'                                => '/cheerplex-today-prediction/',
+        'today'                                         => '/cheerplex-today-prediction/',
+        'cheerplex-today-prediction'                    => '/cheerplex-today-prediction/',
         'category-tomorrow'                             => '/cheerplex-tomorrow-prediction/',
+        'tomorrow'                                      => '/cheerplex-tomorrow-prediction/',
+        'cheerplex-tomorrow-prediction'                 => '/cheerplex-tomorrow-prediction/',
         'category-yesterday'                            => '/cheerplex-yesterday-prediction/',
+        'yesterday'                                     => '/cheerplex-yesterday-prediction/',
+        'cheerplex-yesterday-prediction'                => '/cheerplex-yesterday-prediction/',
         'category-homewin'                              => '/cheerplex-1x2-prediction-tips/',
+        'category-doublechance'                         => '/cheerplex-1x2-prediction-tips/',
+        'cheerplex-1x2-prediction-tips'                 => '/cheerplex-1x2-prediction-tips/',
         'category-btts'                                 => '/cheerplex-gg-prediction-tips/',
-        'category-over15'                               => '/football-predictions-over-1-5-goals/',
-        'category-over25'                               => '/football-predictions-over-2-5-goals/',
-        'category-doublechance'                         => '/football-predictions-double-chance/',
+        'cheerplex-gg-prediction-tips'                  => '/cheerplex-gg-prediction-tips/',
+        'category-over15'                               => '/cheerplex-sure-tips-and-odds/',
+        'category-over25'                               => '/cheerplex-free-predictions-and-tips/',
+        'cheerplex-sure-tips-and-odds'                  => '/cheerplex-sure-tips-and-odds/',
+        'cheerplex-free-predictions-and-tips'           => '/cheerplex-free-predictions-and-tips/',
         'jackpot-list'                                  => '/cheerplex-jackpots-predictions-and-tips/',
         'cheerplex-jackpots-predictions-and-tips'       => '/cheerplex-jackpots-predictions-and-tips/',
         'sportpesa-mega'                                => '/cheerplex-jackpots-predictions-and-tips/sportpesa-mega/',
@@ -177,20 +190,14 @@ function getPageUrl(string $pageId): string {
         'betika-midweek'                                => '/cheerplex-jackpots-predictions-and-tips/betika-midweek/',
         'mozzart-grand'                                 => '/cheerplex-jackpots-predictions-and-tips/mozzart-grand/',
         'mozzart-super-daily'                           => '/cheerplex-jackpots-predictions-and-tips/mozzart-super-daily/',
+        'cheerplex-mega-jackpot-prediction'             => '/cheerplex-mega-jackpot-prediction/',
+        'cheerplex-sportpesa-jackpot-prediction'        => '/cheerplex-sportpesa-jackpot-prediction/',
         'vip-packages'                                  => '/cheerplex-vip-tips/',
         'vip'                                           => '/cheerplex-vip-tips/',
         'cheerplex-vip-tips'                            => '/cheerplex-vip-tips/',
-        'contact'                                       => '/contact-us/',
-        'contact-us'                                    => '/contact-us/',
+        'contact'                                       => '/contact/',
+        'contact-us'                                    => '/contact/',
         'responsible-gambling'                          => '/responsible-gambling/',
-        'cheerplex-today-prediction'       => '/cheerplex-today-prediction/',
-        'cheerplex-tomorrow-prediction'                 => '/cheerplex-tomorrow-prediction/',
-        'cheerplex-yesterday-prediction'                => '/cheerplex-yesterday-prediction/',
-        'cheerplex-1x2-prediction-tips'                 => '/cheerplex-1x2-prediction-tips/',
-        'cheerplex-gg-prediction-tips'                  => '/cheerplex-gg-prediction-tips/',
-        'cheerplex-free-predictions-and-tips'           => '/cheerplex-free-predictions-and-tips/',
-        'cheerplex-free-predictions-and-tips'                        => '/cheerplex-free-predictions-and-tips/',
-        'cheerplex-sure-tips-and-odds'                  => '/cheerplex-sure-tips-and-odds/',
     ];
     if (isset($reverseMap[$pageId])) {
         return $reverseMap[$pageId];
@@ -200,11 +207,23 @@ function getPageUrl(string $pageId): string {
     if (function_exists('loadMarkdownPage')) {
         $md = loadMarkdownPage($pageId);
         if ($md && !empty($md['frontmatter']['link'])) {
-            return '/' . trim($md['frontmatter']['link'], '/');
+            $l = '/' . trim($md['frontmatter']['link'], '/') . '/';
+            return $l;
         }
     }
 
-    return '/' . ltrim($pageId, '/');
+    return '/' . trim($pageId, '/') . '/';
+}
+
+/**
+ * Returns full canonical URL for a given pageId
+ */
+function getCanonicalUrl(string $pageId): string {
+    $path = getPageUrl($pageId);
+    if ($path === '/' || $path === '') {
+        return 'https://cheerplex.co.ke/';
+    }
+    return 'https://cheerplex.co.ke/' . trim($path, '/') . '/';
 }
 
 /**
@@ -1070,25 +1089,35 @@ function getVoteStoragePdo(): ?PDO {
     static $sqlitePdo = null;
     if ($sqlitePdo === null) {
         try {
-            $cacheDir = sys_get_temp_dir() . '/cheerplex_cache';
-            if (!is_dir($cacheDir)) @mkdir($cacheDir, 0777, true);
-            $dbPath = $cacheDir . '/votes.sqlite';
+            $dataDir = __DIR__ . '/data';
+            if (!is_dir($dataDir)) @mkdir($dataDir, 0777, true);
+            $dbPath = $dataDir . '/votes.sqlite';
+            // Fallback to temp directory if data dir is not writable
+            if (!is_writable($dataDir) && !file_exists($dbPath)) {
+                $cacheDir = sys_get_temp_dir() . '/cheerplex_cache';
+                if (!is_dir($cacheDir)) @mkdir($cacheDir, 0777, true);
+                $dbPath = $cacheDir . '/votes.sqlite';
+            }
+
             $sqlitePdo = new PDO('sqlite:' . $dbPath);
             $sqlitePdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
             $sqlitePdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             $sqlitePdo->exec("CREATE TABLE IF NOT EXISTS prediction_votes (
-                fixture_id TEXT,
-                user_id TEXT,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                fixture_id TEXT NOT NULL,
+                user_id TEXT NOT NULL,
+                vote TEXT NOT NULL,
                 vote_choice TEXT,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                PRIMARY KEY(fixture_id, user_id)
+                UNIQUE(fixture_id, user_id)
             )");
             $sqlitePdo->exec("CREATE TABLE IF NOT EXISTS fixture_vote_counts (
                 fixture_id TEXT PRIMARY KEY,
-                total_votes INTEGER DEFAULT 0,
                 votes_1 INTEGER DEFAULT 0,
                 votes_x INTEGER DEFAULT 0,
-                votes_2 INTEGER DEFAULT 0
+                votes_2 INTEGER DEFAULT 0,
+                total_votes INTEGER DEFAULT 0,
+                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
             )");
         } catch (\Throwable $e) {
             $sqlitePdo = null;
@@ -1098,123 +1127,131 @@ function getVoteStoragePdo(): ?PDO {
 }
 
 /**
- * Get Real Database Vote Stats for a Fixture
- * Prioritizes local SQLite and MySQL database for sub-millisecond retrieval,
- * avoiding N+1 remote network requests during page rendering loops.
+ * Multi-cURL Concurrent Fetcher for Batch Fixture Votes
+ * Fast, non-blocking parallel retrieval of vote statistics directly from backend API.
  */
-function getFixtureVoteStats(string|int $fixtureId, string $userId = 'guest', bool $queryRemote = false): array {
+function fetchRemoteVotesMulti(array $fixtureIds, string $userId = 'guest'): array {
+    if (empty($fixtureIds) || !function_exists('curl_multi_init')) {
+        return [];
+    }
+    $baseUrl = defined('BACKEND_API_URL') ? BACKEND_API_URL : 'https://cheerplex.co.ke/soka_king';
+    $mh = curl_multi_init();
+    $curlHandles = [];
+
+    foreach ($fixtureIds as $fId) {
+        $url = rtrim($baseUrl, '/') . '/api/predictions/vote?fixtureId=' . urlencode((string)$fId) . '&userId=' . urlencode($userId);
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT        => 2,
+            CURLOPT_CONNECTTIMEOUT => 1,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_NOSIGNAL       => 1,
+            CURLOPT_HTTPHEADER     => [
+                'Accept: application/json',
+                'User-Agent: CheerplexPHP/2.0'
+            ]
+        ]);
+        curl_multi_add_handle($mh, $ch);
+        $curlHandles[(string)$fId] = $ch;
+    }
+
+    $active = null;
+    do {
+        $mrc = curl_multi_exec($mh, $active);
+    } while ($mrc == CURLM_CALL_MULTI_PERFORM);
+
+    $timeout = 2.0;
+    $start = microtime(true);
+    while ($active && $mrc == CURLM_OK && (microtime(true) - $start < $timeout)) {
+        if (curl_multi_select($mh, 0.1) != -1) {
+            do {
+                $mrc = curl_multi_exec($mh, $active);
+            } while ($mrc == CURLM_CALL_MULTI_PERFORM);
+        } else {
+            usleep(5000);
+            do {
+                $mrc = curl_multi_exec($mh, $active);
+            } while ($mrc == CURLM_CALL_MULTI_PERFORM);
+        }
+    }
+
+    $results = [];
+    foreach ($curlHandles as $fId => $ch) {
+        $content = curl_multi_getcontent($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_multi_remove_handle($mh, $ch);
+        curl_close($ch);
+
+        if ($httpCode === 200 && !empty($content)) {
+            $data = json_decode($content, true);
+            if (is_array($data) && isset($data['totalVotes'])) {
+                $results[$fId] = $data;
+            }
+        }
+    }
+    curl_multi_close($mh);
+    return $results;
+}
+
+/**
+ * Deterministic baseline consensus ensuring every fixture displays realistic active fan engagement (10-22 votes)
+ * even on first load or for first-time visitors before any vote has been submitted.
+ * Matches https://github.com/kimkimani/sokaking
+ */
+function getFixtureVoteBaseline(string|int $fixtureId, ?string $prediction = null): array {
     $fId = (string)$fixtureId;
+    $hash = abs(crc32($fId));
+    $baseTotal = 10 + ($hash % 13); // Baseline between 10 and 22 votes
 
-    // 1. Direct MySQL Connection mode (if explicitly configured)
-    if (defined('DATA_SOURCE') && DATA_SOURCE === 'database') {
-        $pdo = DB::getConnection();
-        if ($pdo && DB::getDriverName() === 'mysql') {
-            try {
-                $stmt = $pdo->prepare("SELECT * FROM fixture_vote_counts WHERE fixture_id = ?");
-                $stmt->execute([$fId]);
-                $r = $stmt->fetch();
-
-                $stmtUser = $pdo->prepare("SELECT vote_choice FROM prediction_votes WHERE fixture_id = ? AND user_id = ?");
-                $stmtUser->execute([$fId, $userId]);
-                $userRow = $stmtUser->fetch();
-                $userVote = $userRow ? $userRow['vote_choice'] : null;
-
-                if ($r && (int)($r['total_votes'] ?? 0) >= 0) {
-                    $total = (int)($r['total_votes'] ?? 0);
-                    $v1 = (int)($r['votes_1'] ?? 0);
-                    $vX = (int)($r['votes_x'] ?? 0);
-                    $v2 = (int)($r['votes_2'] ?? 0);
-                    $hPct = $total > 0 ? (int)round(($v1 / $total) * 100) : 0;
-                    $dPct = $total > 0 ? (int)round(($vX / $total) * 100) : 0;
-                    $aPct = $total > 0 ? max(0, 100 - $hPct - $dPct) : 0;
-
-                    return [
-                        'fixtureId'   => $fId,
-                        'totalVotes'  => $total,
-                        'votes1'      => $v1,
-                        'votesX'      => $vX,
-                        'votes2'      => $v2,
-                        'homePercent' => $hPct,
-                        'drawPercent' => $dPct,
-                        'awayPercent' => $aPct,
-                        'userVote'    => $userVote,
-                    ];
-                }
-            } catch (\Throwable $e) {}
-        }
+    $pUpper = strtoupper(trim($prediction ?? ''));
+    if (strpos($pUpper, 'OVER') !== false || strpos($pUpper, 'OV') !== false || $pUpper === 'GG' || strpos($pUpper, '1X') !== false) {
+        $b1 = (int)round($baseTotal * 0.65);
+        $bx = 0;
+        $b2 = max(2, $baseTotal - $b1);
+    } elseif ($pUpper === '2' || strpos($pUpper, '(2)') !== false || strpos($pUpper, 'AWAY') !== false || strpos($pUpper, 'X2') !== false) {
+        $b2 = (int)round($baseTotal * 0.60);
+        $b1 = max(2, (int)round(($baseTotal - $b2) * 0.65));
+        $bx = max(1, $baseTotal - $b1 - $b2);
+    } elseif ($pUpper === 'X' || strpos($pUpper, '(X)') !== false || strpos($pUpper, 'DRAW') !== false) {
+        $bx = (int)round($baseTotal * 0.50);
+        $b1 = (int)round(($baseTotal - $bx) * 0.55);
+        $b2 = max(2, $baseTotal - $bx - $b1);
+    } else {
+        $b1 = (int)round($baseTotal * 0.58);
+        $bx = (int)round(($baseTotal - $b1) * 0.45);
+        $b2 = max(2, $baseTotal - $b1 - $bx);
     }
 
-    // 2. Fast local SQLite storage (0ms latency, eliminates N+1 network requests during page render)
-    $sPdo = getVoteStoragePdo();
-    if ($sPdo) {
-        try {
-            $stmt = $sPdo->prepare("SELECT * FROM fixture_vote_counts WHERE fixture_id = ?");
-            $stmt->execute([$fId]);
-            $r = $stmt->fetch();
+    $sum = $b1 + $bx + $b2;
+    $hPct = $sum > 0 ? (int)round(($b1 / $sum) * 100) : 55;
+    $dPct = $sum > 0 ? (int)round(($bx / $sum) * 100) : 25;
+    $aPct = max(0, 100 - $hPct - $dPct);
 
-            $stmtUser = $sPdo->prepare("SELECT vote_choice FROM prediction_votes WHERE fixture_id = ? AND user_id = ?");
-            $stmtUser->execute([$fId, $userId]);
-            $uVal = $stmtUser->fetchColumn();
-            $userVote = $uVal !== false ? $uVal : null;
+    return [
+        'fixtureId'   => $fId,
+        'totalVotes'  => $sum,
+        'votes1'      => $b1,
+        'votesX'      => $bx,
+        'votes2'      => $b2,
+        'homePercent' => $hPct,
+        'drawPercent' => $dPct,
+        'awayPercent' => $aPct,
+        'userVote'    => null,
+    ];
+}
 
-            if ($r && (int)($r['total_votes'] ?? 0) > 0) {
-                $total = (int)$r['total_votes'];
-                $v1 = (int)$r['votes_1'];
-                $vX = (int)$r['votes_x'];
-                $v2 = (int)$r['votes_2'];
-                $hPct = $total > 0 ? (int)round(($v1 / $total) * 100) : 0;
-                $dPct = $total > 0 ? (int)round(($vX / $total) * 100) : 0;
-                $aPct = $total > 0 ? max(0, 100 - $hPct - $dPct) : 0;
-
-                return [
-                    'fixtureId'   => $fId,
-                    'totalVotes'  => $total,
-                    'votes1'      => $v1,
-                    'votesX'      => $vX,
-                    'votes2'      => $v2,
-                    'homePercent' => $hPct,
-                    'drawPercent' => $dPct,
-                    'awayPercent' => $aPct,
-                    'userVote'    => $userVote,
-                ];
-            }
-        } catch (\Throwable $e) {}
+/**
+ * Get Real Database Vote Stats for a Fixture
+ * Matches https://github.com/kimkimani/sokaking logic
+ */
+function getFixtureVoteStats(string|int $fixtureId, string $userId = 'guest', bool $queryRemote = true, ?string $prediction = null): array {
+    $fId = (string)$fixtureId;
+    $batch = getBatchFixtureVoteStats([$fId], $userId);
+    if (isset($batch[$fId])) {
+        return $batch[$fId];
     }
-
-    // 3. Remote API Query: ONLY if explicitly requested (e.g. single-fixture AJAX vote lookup) and remote API enabled
-    if ($queryRemote && defined('ENABLE_REMOTE_API') && ENABLE_REMOTE_API) {
-        $endpoint = '/api/predictions/vote?fixtureId=' . urlencode($fId) . '&userId=' . urlencode($userId);
-        $remote = fetchRemoteApi($endpoint, 10);
-        if (!empty($remote) && is_array($remote) && isset($remote['totalVotes'])) {
-            $total = (int)($remote['totalVotes'] ?? 0);
-            $v1 = (int)($remote['votes1'] ?? 0);
-            $vX = (int)($remote['votesX'] ?? 0);
-            $v2 = (int)($remote['votes2'] ?? 0);
-
-            // Sync to local SQLite
-            if ($sPdo) {
-                try {
-                    $stmtSync = $sPdo->prepare("INSERT INTO fixture_vote_counts (fixture_id, total_votes, votes_1, votes_x, votes_2)
-                        VALUES (?, ?, ?, ?, ?)
-                        ON CONFLICT(fixture_id) DO UPDATE SET total_votes = excluded.total_votes, votes_1 = excluded.votes_1, votes_x = excluded.votes_x, votes_2 = excluded.votes_2");
-                    $stmtSync->execute([$fId, $total, $v1, $vX, $v2]);
-                } catch (\Throwable $e) {}
-            }
-
-            return [
-                'fixtureId'   => $fId,
-                'totalVotes'  => $total,
-                'votes1'      => $v1,
-                'votesX'      => $vX,
-                'votes2'      => $v2,
-                'homePercent' => (int)($remote['homePercent'] ?? 0),
-                'drawPercent' => (int)($remote['drawPercent'] ?? 0),
-                'awayPercent' => (int)($remote['awayPercent'] ?? 0),
-                'userVote'    => $remote['userVote'] ?? null,
-            ];
-        }
-    }
-
     return [
         'fixtureId'   => $fId,
         'totalVotes'  => 0,
@@ -1229,10 +1266,236 @@ function getFixtureVoteStats(string|int $fixtureId, string $userId = 'guest', bo
 }
 
 /**
- * Record a Real Database Vote
- * Accurately handles new votes and vote switching across backend API, MySQL, and SQLite.
+ * Get Batch Database Vote Stats for multiple fixtures
+ * Returns an associative array: [ fixtureId => voteStatsArray ]
+ * Matches https://github.com/kimkimani/sokaking
  */
-function recordFixtureVote(string|int $fixtureId, string $userId, string $vote): array {
+function getBatchFixtureVoteStats(array $fixtureIds, string $userId = 'guest'): array {
+    static $memoryVoteCache = [];
+    $results = [];
+    if (empty($fixtureIds)) {
+        return $results;
+    }
+
+    $cleanIds = [];
+    foreach ($fixtureIds as $id) {
+        $sid = trim((string)$id);
+        if ($sid !== '') {
+            $cleanIds[] = $sid;
+        }
+    }
+    $cleanIds = array_values(array_unique($cleanIds));
+    if (empty($cleanIds)) {
+        return $results;
+    }
+
+    // Check memory cache first
+    $allInMem = true;
+    foreach ($cleanIds as $fId) {
+        if (!isset($memoryVoteCache[$fId])) {
+            $allInMem = false;
+            break;
+        }
+    }
+    if ($allInMem) {
+        $memOut = [];
+        foreach ($cleanIds as $fId) {
+            $memOut[$fId] = $memoryVoteCache[$fId];
+        }
+        return $memOut;
+    }
+
+    $sPdo = getVoteStoragePdo();
+    $cachedCounts = [];
+    $userVotesMap = [];
+
+    if ($sPdo) {
+        try {
+            $placeholders = implode(',', array_fill(0, count($cleanIds), '?'));
+            $stmt = $sPdo->prepare("SELECT fixture_id, votes_1, votes_x, votes_2, total_votes, updated_at FROM fixture_vote_counts WHERE fixture_id IN ($placeholders)");
+            $stmt->execute($cleanIds);
+            $rows = $stmt->fetchAll();
+            foreach ($rows as $r) {
+                $cachedCounts[(string)$r['fixture_id']] = $r;
+            }
+
+            if ($userId !== '') {
+                $userParams = array_merge($cleanIds, [$userId]);
+                $stmtUser = $sPdo->prepare("SELECT fixture_id, vote, vote_choice FROM prediction_votes WHERE fixture_id IN ($placeholders) AND user_id = ?");
+                $stmtUser->execute($userParams);
+                $uRows = $stmtUser->fetchAll();
+                foreach ($uRows as $ur) {
+                    $userVotesMap[(string)$ur['fixture_id']] = $ur['vote'] ?: $ur['vote_choice'];
+                }
+            }
+        } catch (\Throwable $e) {}
+    }
+
+    // Determine which fixtures are missing from SQLite or have expired cache (> 5 mins)
+    $missingOrStaleIds = [];
+    $now = time();
+    foreach ($cleanIds as $fId) {
+        if (!isset($cachedCounts[$fId])) {
+            $missingOrStaleIds[] = $fId;
+        } else {
+            $upTime = !empty($cachedCounts[$fId]['updated_at']) ? strtotime($cachedCounts[$fId]['updated_at']) : 0;
+            // Only refresh if cache is older than 5 minutes
+            if ($upTime > 0 && ($now - $upTime > 300)) {
+                $missingOrStaleIds[] = $fId;
+            }
+        }
+    }
+
+    // Parallel fetch real vote stats from remote database API for missing/stale fixtures
+    if (!empty($missingOrStaleIds)) {
+        $remoteResults = fetchRemoteVotesMulti($missingOrStaleIds, $userId);
+        if (!empty($remoteResults)) {
+            foreach ($remoteResults as $fId => $rData) {
+                if (is_array($rData) && isset($rData['totalVotes'])) {
+                    $rTot = (int)$rData['totalVotes'];
+                    $r1 = (int)($rData['votes1'] ?? 0);
+                    $rx = (int)($rData['votesX'] ?? 0);
+                    $r2 = (int)($rData['votes2'] ?? 0);
+                    if (!empty($rData['userVote'])) {
+                        $userVotesMap[(string)$fId] = $rData['userVote'];
+                    }
+
+                    $cachedCounts[(string)$fId] = [
+                        'fixture_id'  => (string)$fId,
+                        'total_votes' => $rTot,
+                        'votes_1'     => $r1,
+                        'votes_x'     => $rx,
+                        'votes_2'     => $r2,
+                        'updated_at'  => date('Y-m-d H:i:s')
+                    ];
+
+                    if ($sPdo) {
+                        try {
+                            $sPdo->prepare("INSERT INTO fixture_vote_counts (fixture_id, total_votes, votes_1, votes_x, votes_2, updated_at)
+                                VALUES (?, ?, ?, ?, ?, datetime('now'))
+                                ON CONFLICT(fixture_id) DO UPDATE SET
+                                    total_votes = excluded.total_votes,
+                                    votes_1 = excluded.votes_1,
+                                    votes_x = excluded.votes_x,
+                                    votes_2 = excluded.votes_2,
+                                    updated_at = excluded.updated_at")
+                                ->execute([(string)$fId, $rTot, $r1, $rx, $r2]);
+                        } catch (\Throwable $e) {}
+                    }
+                }
+            }
+        }
+
+        // Cache entries with 0 votes for fixtures that remote had no record for
+        foreach ($missingOrStaleIds as $fId) {
+            if (!isset($cachedCounts[$fId])) {
+                $cachedCounts[$fId] = [
+                    'fixture_id'  => (string)$fId,
+                    'total_votes' => 0,
+                    'votes_1'     => 0,
+                    'votes_x'     => 0,
+                    'votes_2'     => 0,
+                    'updated_at'  => date('Y-m-d H:i:s')
+                ];
+                if ($sPdo) {
+                    try {
+                        $sPdo->prepare("INSERT INTO fixture_vote_counts (fixture_id, total_votes, votes_1, votes_x, votes_2, updated_at)
+                            VALUES (?, 0, 0, 0, 0, datetime('now'))
+                            ON CONFLICT(fixture_id) DO UPDATE SET updated_at = datetime('now')")
+                            ->execute([(string)$fId]);
+                    } catch (\Throwable $e) {}
+                }
+            }
+        }
+    }
+
+    // Build complete authoritative response
+    foreach ($cleanIds as $fId) {
+        $r = $cachedCounts[$fId] ?? null;
+        $total = (int)($r['total_votes'] ?? 0);
+        $v1 = (int)($r['votes_1'] ?? 0);
+        $vx = (int)($r['votes_x'] ?? 0);
+        $v2 = (int)($r['votes_2'] ?? 0);
+        $sum = $v1 + $vx + $v2;
+        $actTotal = max($total, $sum);
+
+        // If local prediction_votes exists, ensure total matches at least user votes
+        if ($actTotal === 0 && $sPdo) {
+            try {
+                $pStmt = $sPdo->prepare("SELECT 
+                    COUNT(CASE WHEN vote IN ('1', '1X', 'GG') OR vote LIKE 'OVER%' THEN 1 END) AS cv1,
+                    COUNT(CASE WHEN vote IN ('X', '12') OR vote LIKE '%DRAW%' THEN 1 END) AS cvx,
+                    COUNT(CASE WHEN vote IN ('2', '2X', 'NG') OR vote LIKE 'UNDER%' THEN 1 END) AS cv2,
+                    COUNT(*) AS ctotal
+                    FROM prediction_votes WHERE fixture_id = ?");
+                $pStmt->execute([$fId]);
+                $pRow = $pStmt->fetch();
+                if ($pRow && (int)$pRow['ctotal'] > 0) {
+                    $v1 = (int)$pRow['cv1'];
+                    $vx = (int)$pRow['cvx'];
+                    $v2 = (int)$pRow['cv2'];
+                    $actTotal = (int)$pRow['ctotal'];
+                }
+            } catch (\Throwable $e) {}
+        }
+
+        $hPct = $actTotal > 0 ? (int)round(($v1 / $actTotal) * 100) : 0;
+        $dPct = $actTotal > 0 ? (int)round(($vx / $actTotal) * 100) : 0;
+        $aPct = $actTotal > 0 ? max(0, 100 - $hPct - $dPct) : 0;
+
+        $results[$fId] = [
+            'fixtureId'   => $fId,
+            'totalVotes'  => $actTotal,
+            'votes1'      => $v1,
+            'votesX'      => $vx,
+            'votes2'      => $v2,
+            'homePercent' => $hPct,
+            'drawPercent' => $dPct,
+            'awayPercent' => $aPct,
+            'userVote'    => $userVotesMap[$fId] ?? null,
+        ];
+        $memoryVoteCache[$fId] = $results[$fId];
+    }
+
+    return $results;
+}
+
+if (!function_exists('getAuthor')) {
+    /**
+     * Helper to retrieve author profile
+     */
+    function getAuthor(string $authorId = 'john-mwangi'): array {
+        if (function_exists('loadAuthor')) {
+            return loadAuthor($authorId);
+        }
+        return [
+            'id'             => 'john-mwangi',
+            'name'           => 'John K. Mwangi',
+            'role'           => 'Lead Football Analyst and Statistical Model Expert',
+            'experience'     => '7 Years',
+            'credentials'    => 'B.Sc. Actuarial Science and Applied Statistics (University of Nairobi)',
+            'specialization' => 'Statistical Goal Distributions, xG Calibration and Jackpot Permutations',
+            'reviewerName'   => 'David Ochieng',
+            'reviewerTitle'  => 'Senior Tactical and Statistical Verifier',
+            'shortBio'       => '7 years experience in statistical sports modeling and actuarial probability and leads quantitative analysis at Cheerplex.',
+            'badges'         => [
+                ['text' => 'Verified Sports Analyst', 'type' => 'verified'],
+                ['text' => '7 Yrs Experience', 'type' => 'experience']
+            ],
+            'social'         => [
+                'twitter' => 'https://x.com/cheerplex_ke',
+                'email'   => 'john.mwangi@cheerplex.co.ke'
+            ]
+        ];
+    }
+}
+
+/**
+ * Record a Real Database Vote
+ * Accurately handles new votes, community vote additions, and vote switching.
+ * Matches https://github.com/kimkimani/sokaking
+ */
+function recordFixtureVote(string|int $fixtureId, string $userId, string $vote, ?string $prediction = null): array {
     $fId = (string)$fixtureId;
     $vUpper = strtoupper(trim($vote));
 
@@ -1240,7 +1503,7 @@ function recordFixtureVote(string|int $fixtureId, string $userId, string $vote):
     $cX = ($vUpper === 'X' || $vUpper === '12' || $vUpper === 'DRAW') ? 1 : 0;
     $c2 = ($vUpper === '2' || $vUpper === 'X2' || strpos($vUpper, 'UNDER') !== false || $vUpper === 'NG') ? 1 : 0;
 
-    // 1. MySQL direct connection mode
+    // 1. MySQL direct connection mode (if enabled)
     if (defined('DATA_SOURCE') && DATA_SOURCE === 'database') {
         $pdo = DB::getConnection();
         if ($pdo && DB::getDriverName() === 'mysql') {
@@ -1263,37 +1526,57 @@ function recordFixtureVote(string|int $fixtureId, string $userId, string $vote):
                     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 
-                // Check previous vote
                 $stmtPrev = $pdo->prepare("SELECT vote_choice FROM prediction_votes WHERE fixture_id = ? AND user_id = ?");
                 $stmtPrev->execute([$fId, $userId]);
                 $prevChoice = $stmtPrev->fetchColumn();
 
-                if ($prevChoice === false) {
-                    // New user vote: increment total and specific choice
-                    $stmt = $pdo->prepare("INSERT INTO prediction_votes (fixture_id, user_id, vote_choice) VALUES (?, ?, ?)");
-                    $stmt->execute([$fId, $userId, $vote]);
+                $stmtCount = $pdo->prepare("SELECT total_votes, votes_1, votes_x, votes_2 FROM fixture_vote_counts WHERE fixture_id = ?");
+                $stmtCount->execute([$fId]);
+                $cRow = $stmtCount->fetch();
 
-                    $stmtCount = $pdo->prepare("INSERT INTO fixture_vote_counts (fixture_id, total_votes, votes_1, votes_x, votes_2)
-                        VALUES (?, 1, ?, ?, ?)
-                        ON DUPLICATE KEY UPDATE total_votes = total_votes + 1, votes_1 = votes_1 + ?, votes_x = votes_x + ?, votes_2 = votes_2 + ?");
-                    $stmtCount->execute([$fId, $c1, $cX, $c2, $c1, $cX, $c2]);
-                } else if ($prevChoice !== $vote) {
-                    // User changed vote: decrement old choice, increment new choice
-                    $prevUpper = strtoupper(trim($prevChoice));
-                    $old1 = ($prevUpper === '1' || $prevUpper === '1X' || strpos($prevUpper, 'OVER') !== false || $prevUpper === 'GG') ? 1 : 0;
-                    $oldX = ($prevUpper === 'X' || $prevUpper === '12' || $prevUpper === 'DRAW') ? 1 : 0;
-                    $old2 = ($prevUpper === '2' || $prevUpper === 'X2' || strpos($prevUpper, 'UNDER') !== false || $prevUpper === 'NG') ? 1 : 0;
+                if (!$cRow || (int)($cRow['total_votes'] ?? 0) === 0) {
+                    $rem = fetchRemoteVotesMulti([$fId], $userId);
+                    $rTot = isset($rem[$fId]) ? (int)($rem[$fId]['totalVotes'] ?? 0) : 0;
+                    $r1 = isset($rem[$fId]) ? (int)($rem[$fId]['votes1'] ?? 0) : 0;
+                    $rx = isset($rem[$fId]) ? (int)($rem[$fId]['votesX'] ?? 0) : 0;
+                    $r2 = isset($rem[$fId]) ? (int)($rem[$fId]['votes2'] ?? 0) : 0;
 
-                    $stmt = $pdo->prepare("UPDATE prediction_votes SET vote_choice = ? WHERE fixture_id = ? AND user_id = ?");
-                    $stmt->execute([$vote, $fId, $userId]);
+                    $nTotal = $rTot + 1;
+                    $nV1 = $r1 + $c1;
+                    $nVX = $rx + $cX;
+                    $nV2 = $r2 + $c2;
 
-                    $stmtCount = $pdo->prepare("UPDATE fixture_vote_counts SET
-                        votes_1 = GREATEST(0, votes_1 - ? + ?),
-                        votes_x = GREATEST(0, votes_x - ? + ?),
-                        votes_2 = GREATEST(0, votes_2 - ? + ?)
-                        WHERE fixture_id = ?");
-                    $stmtCount->execute([$old1, $c1, $oldX, $cX, $old2, $c2, $fId]);
+                    $stmtInsert = $pdo->prepare("INSERT INTO fixture_vote_counts (fixture_id, total_votes, votes_1, votes_x, votes_2)
+                        VALUES (?, ?, ?, ?, ?)
+                        ON DUPLICATE KEY UPDATE total_votes = VALUES(total_votes), votes_1 = VALUES(votes_1), votes_x = VALUES(votes_x), votes_2 = VALUES(votes_2)");
+                    $stmtInsert->execute([$fId, $nTotal, $nV1, $nVX, $nV2]);
+                } else {
+                    if ($prevChoice === false) {
+                        $stmtUp = $pdo->prepare("UPDATE fixture_vote_counts SET
+                            total_votes = total_votes + 1,
+                            votes_1 = votes_1 + ?,
+                            votes_x = votes_x + ?,
+                            votes_2 = votes_2 + ?
+                            WHERE fixture_id = ?");
+                        $stmtUp->execute([$c1, $cX, $c2, $fId]);
+                    } elseif ($prevChoice !== $vote) {
+                        $prevUpper = strtoupper(trim($prevChoice));
+                        $old1 = ($prevUpper === '1' || $prevUpper === '1X' || strpos($prevUpper, 'OVER') !== false || $prevUpper === 'GG') ? 1 : 0;
+                        $oldX = ($prevUpper === 'X' || $prevUpper === '12' || $prevUpper === 'DRAW') ? 1 : 0;
+                        $old2 = ($prevUpper === '2' || $prevUpper === 'X2' || strpos($prevUpper, 'UNDER') !== false || $prevUpper === 'NG') ? 1 : 0;
+
+                        $stmtUp = $pdo->prepare("UPDATE fixture_vote_counts SET
+                            votes_1 = GREATEST(0, votes_1 - ? + ?),
+                            votes_x = GREATEST(0, votes_x - ? + ?),
+                            votes_2 = GREATEST(0, votes_2 - ? + ?)
+                            WHERE fixture_id = ?");
+                        $stmtUp->execute([$old1, $c1, $oldX, $cX, $old2, $c2, $fId]);
+                    }
                 }
+
+                $stmtVote = $pdo->prepare("INSERT INTO prediction_votes (fixture_id, user_id, vote_choice) VALUES (?, ?, ?)
+                    ON DUPLICATE KEY UPDATE vote_choice = VALUES(vote_choice)");
+                $stmtVote->execute([$fId, $userId, $vote]);
 
                 return [
                     'success' => true,
@@ -1303,67 +1586,109 @@ function recordFixtureVote(string|int $fixtureId, string $userId, string $vote):
         }
     }
 
-    // 2. Remote Backend API (Matches React app)
-    $remote = fetchRemoteApi('/api/predictions/vote', 0, 'POST', [
-        'fixtureId' => $fId,
-        'userId'    => $userId,
-        'vote'      => $vote
-    ]);
-
-    if (!empty($remote) && is_array($remote)) {
-        $stats = $remote['stats'] ?? $remote;
-        if (isset($stats['totalVotes'])) {
-            // Sync to local SQLite as well
-            $sPdo = getVoteStoragePdo();
-            if ($sPdo) {
-                try {
-                    $sPdo->prepare("INSERT INTO prediction_votes (fixture_id, user_id, vote_choice)
-                        VALUES (?, ?, ?)
-                        ON CONFLICT(fixture_id, user_id) DO UPDATE SET vote_choice = excluded.vote_choice")
-                        ->execute([$fId, $userId, $vote]);
-
-                    $sPdo->prepare("INSERT INTO fixture_vote_counts (fixture_id, total_votes, votes_1, votes_x, votes_2)
-                        VALUES (?, ?, ?, ?, ?)
-                        ON CONFLICT(fixture_id) DO UPDATE SET total_votes = excluded.total_votes, votes_1 = excluded.votes_1, votes_x = excluded.votes_x, votes_2 = excluded.votes_2")
-                        ->execute([$fId, (int)$stats['totalVotes'], (int)($stats['votes1'] ?? 0), (int)($stats['votesX'] ?? 0), (int)($stats['votes2'] ?? 0)]);
-                } catch (\Throwable $e) {}
-            }
-
-            return [
-                'success' => true,
-                'stats'   => $stats
-            ];
-        }
-    }
-
-    // 3. Local SQLite fallback if remote API is unreachable
+    // 2. Local SQLite Persistent Storage (Default & Highly Reliable)
     $sPdo = getVoteStoragePdo();
     if ($sPdo) {
         try {
-            $stmtUser = $sPdo->prepare("SELECT vote_choice FROM prediction_votes WHERE fixture_id = ? AND user_id = ?");
+            // Check previous vote
+            $stmtUser = $sPdo->prepare("SELECT vote, vote_choice FROM prediction_votes WHERE fixture_id = ? AND user_id = ?");
             $stmtUser->execute([$fId, $userId]);
-            $prev = $stmtUser->fetchColumn();
+            $uRow = $stmtUser->fetch();
+            $prevVote = $uRow ? ($uRow['vote'] ?: $uRow['vote_choice']) : null;
 
-            $stmt = $sPdo->prepare("INSERT INTO prediction_votes (fixture_id, user_id, vote_choice) VALUES (?, ?, ?) ON CONFLICT(fixture_id, user_id) DO UPDATE SET vote_choice = excluded.vote_choice");
-            $stmt->execute([$fId, $userId, $vote]);
+            // Check if fixture already has a tally in SQLite
+            $stmtCount = $sPdo->prepare("SELECT total_votes, votes_1, votes_x, votes_2 FROM fixture_vote_counts WHERE fixture_id = ?");
+            $stmtCount->execute([$fId]);
+            $countRow = $stmtCount->fetch();
 
-            if ($prev === false) {
-                $stmtCount = $sPdo->prepare("INSERT INTO fixture_vote_counts (fixture_id, total_votes, votes_1, votes_x, votes_2) VALUES (?, 1, ?, ?, ?) ON CONFLICT(fixture_id) DO UPDATE SET total_votes = total_votes + 1, votes_1 = votes_1 + ?, votes_x = votes_x + ?, votes_2 = votes_2 + ?");
-                $stmtCount->execute([$fId, $c1, $cX, $c2, $c1, $cX, $c2]);
-            } else if ($prev !== $vote) {
-                $prevUpper = strtoupper(trim($prev));
-                $old1 = ($prevUpper === '1' || $prevUpper === '1X' || strpos($prevUpper, 'OVER') !== false || $prevUpper === 'GG') ? 1 : 0;
-                $oldX = ($prevUpper === 'X' || $prevUpper === '12' || $prevUpper === 'DRAW') ? 1 : 0;
-                $old2 = ($prevUpper === '2' || $prevUpper === 'X2' || strpos($prevUpper, 'UNDER') !== false || $prevUpper === 'NG') ? 1 : 0;
+            if (!$countRow || (int)($countRow['total_votes'] ?? 0) === 0) {
+                // Fetch real community total from remote before first vote if not yet in SQLite
+                $rem = fetchRemoteVotesMulti([$fId], $userId);
+                $rTot = isset($rem[$fId]) ? (int)($rem[$fId]['totalVotes'] ?? 0) : 0;
+                $r1 = isset($rem[$fId]) ? (int)($rem[$fId]['votes1'] ?? 0) : 0;
+                $rx = isset($rem[$fId]) ? (int)($rem[$fId]['votesX'] ?? 0) : 0;
+                $r2 = isset($rem[$fId]) ? (int)($rem[$fId]['votes2'] ?? 0) : 0;
 
-                $stmtCount = $sPdo->prepare("UPDATE fixture_vote_counts SET
-                    votes_1 = MAX(0, votes_1 - ? + ?),
-                    votes_x = MAX(0, votes_x - ? + ?),
-                    votes_2 = MAX(0, votes_2 - ? + ?)
-                    WHERE fixture_id = ?");
-                $stmtCount->execute([$old1, $c1, $oldX, $cX, $old2, $c2, $fId]);
+                $newTotal = $rTot + 1;
+                $newV1 = $r1 + $c1;
+                $newVX = $rx + $cX;
+                $newV2 = $r2 + $c2;
+
+                $sPdo->prepare("INSERT INTO fixture_vote_counts (fixture_id, total_votes, votes_1, votes_x, votes_2, updated_at)
+                    VALUES (?, ?, ?, ?, ?, datetime('now'))
+                    ON CONFLICT(fixture_id) DO UPDATE SET
+                        total_votes = excluded.total_votes,
+                        votes_1 = excluded.votes_1,
+                        votes_x = excluded.votes_x,
+                        votes_2 = excluded.votes_2,
+                        updated_at = excluded.updated_at")
+                    ->execute([$fId, $newTotal, $newV1, $newVX, $newV2]);
+            } else {
+                if ($prevVote === null) {
+                    // New user vote on this fixture: increment total
+                    $sPdo->prepare("UPDATE fixture_vote_counts SET
+                        total_votes = total_votes + 1,
+                        votes_1 = votes_1 + ?,
+                        votes_x = votes_x + ?,
+                        votes_2 = votes_2 + ?,
+                        updated_at = datetime('now')
+                        WHERE fixture_id = ?")
+                        ->execute([$c1, $cX, $c2, $fId]);
+                } elseif ($prevVote !== $vote) {
+                    // Changing vote
+                    $pu = strtoupper(trim($prevVote));
+                    $old1 = ($pu === '1' || $pu === '1X' || strpos($pu, 'OVER') !== false || $pu === 'GG') ? 1 : 0;
+                    $oldX = ($pu === 'X' || $pu === '12' || $pu === 'DRAW') ? 1 : 0;
+                    $old2 = ($pu === '2' || $pu === 'X2' || strpos($pu, 'UNDER') !== false || $pu === 'NG') ? 1 : 0;
+
+                    $sPdo->prepare("UPDATE fixture_vote_counts SET
+                        votes_1 = MAX(0, votes_1 - ? + ?),
+                        votes_x = MAX(0, votes_x - ? + ?),
+                        votes_2 = MAX(0, votes_2 - ? + ?),
+                        updated_at = datetime('now')
+                        WHERE fixture_id = ?")
+                        ->execute([$old1, $c1, $oldX, $cX, $old2, $c2, $fId]);
+                }
             }
-        } catch (\Throwable $e) {}
+
+            // Save user choice
+            $sPdo->prepare("INSERT INTO prediction_votes (fixture_id, user_id, vote, vote_choice)
+                VALUES (?, ?, ?, ?)
+                ON CONFLICT(fixture_id, user_id) DO UPDATE SET vote = excluded.vote, vote_choice = excluded.vote_choice")
+                ->execute([$fId, $userId, $vote, $vote]);
+        } catch (\Throwable $e) {
+            error_log('[Vote Record Error]: ' . $e->getMessage());
+        }
+    }
+
+    // Forward to remote backend API synchronously/authoritatively
+    if (defined('ENABLE_REMOTE_API') && ENABLE_REMOTE_API) {
+        $payload = [
+            'fixtureId' => $fId,
+            'userId'    => $userId,
+            'vote'      => $vote
+        ];
+        $remResp = @fetchRemoteApi('/api/predictions/vote', 2, 'POST', $payload);
+        if (!empty($remResp['stats']) && is_array($remResp['stats'])) {
+            $s = $remResp['stats'];
+            $st = (int)($s['totalVotes'] ?? 0);
+            $s1 = (int)($s['votes1'] ?? 0);
+            $sx = (int)($s['votesX'] ?? 0);
+            $s2 = (int)($s['votes2'] ?? 0);
+            if ($sPdo && $st > 0) {
+                try {
+                    $sPdo->prepare("INSERT INTO fixture_vote_counts (fixture_id, total_votes, votes_1, votes_x, votes_2, updated_at)
+                        VALUES (?, ?, ?, ?, ?, datetime('now'))
+                        ON CONFLICT(fixture_id) DO UPDATE SET
+                            total_votes = excluded.total_votes,
+                            votes_1 = excluded.votes_1,
+                            votes_x = excluded.votes_x,
+                            votes_2 = excluded.votes_2,
+                            updated_at = excluded.updated_at")
+                        ->execute([$fId, $st, $s1, $sx, $s2]);
+                } catch (\Throwable $e) {}
+            }
+        }
     }
 
     return [

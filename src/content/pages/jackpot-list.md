@@ -1,6 +1,6 @@
 ---
 title: "Cheerplex Today Jackpot Prediction - Free cheerplex jp Tips"
-displayTitle: "Cheerplex Today Jackpot Prediction - Free cheerplex jp Tips"
+displayTitle: "Cheerplex Jackpot Predictions :: Free JP Tips"
 description: "Get today's and daily accurate Cheerplex jackpot prediction for SportPesa Mega, Betika Grand, Mozzart, Odibets and many more cheerplex jp Tips."
 keywords: "cheerplex jackpot, cheerplex jackpot prediction, cheerplex jackpot prediction today, cheerplex prediction jackpot, cheerplex jackpot predictions, Free cheerplex jp Tips, cheerplex jp"
 link: "/cheerplex-jackpots-predictions-and-tips/"

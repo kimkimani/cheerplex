@@ -74,14 +74,14 @@ $title = $meta['displayTitle'] ?? $meta['title'] ?? 'Football Predictions';
 
 // Markdown loader
 $mdKeyMap = [
-    'category-today'        => 'cheerplex-today-prediction',
+    'category-today'        => 'cheerplex-today-prediction-betting-tips',
     'category-tomorrow'     => 'cheerplex-tomorrow-prediction',
     'category-yesterday'    => 'cheerplex-yesterday-prediction',
     'category-homewin'      => 'cheerplex-1x2-prediction-tips',
     'category-btts'         => 'cheerplex-gg-prediction-tips',
     'category-over15'       => 'cheerplex-sure-tips-and-odds',
     'category-over25'       => 'cheerplex-free-predictions-and-tips',
-    'category-doublechance' => 'cheerplex-free-predictions-and-tips',
+    'category-doublechance' => 'cheerplex-betting-tips',
 ];
 $mdKey = $pageKey ?? ($mdKeyMap[$categoryId] ?? $categoryId);
 $mdData = loadMarkdownPage($mdKey);
@@ -104,6 +104,12 @@ foreach ($fixtures as $idx => $f) {
     }
 }
 
+// Prefetch all fixture vote counts concurrently so SSR renders real votes immediately
+if (!empty($dedupedFixtures) && function_exists('prefetchFixtureVoteStats')) {
+    $fidsToPrefetch = array_column($dedupedFixtures, 'id');
+    prefetchFixtureVoteStats($fidsToPrefetch);
+}
+
 usort($dedupedFixtures, function($a, $b) {
     $dateA = substr($a['kickoffTime'] ?? $a['date'] ?? '', 0, 10);
     $dateB = substr($b['kickoffTime'] ?? $b['date'] ?? '', 0, 10);
@@ -113,57 +119,25 @@ usort($dedupedFixtures, function($a, $b) {
     return strcmp($a['kickoffTime'] ?? $a['date'] ?? '', $b['kickoffTime'] ?? $b['date'] ?? '');
 });
 
-// For yesterday page: strictly isolate matches belonging to calendar yesterday in Africa/Nairobi timezone
-$tzNairobi = new DateTimeZone('Africa/Nairobi');
-$nowNairobi = new DateTime('now', $tzNairobi);
-$yesterdayObj = clone $nowNairobi;
-$yesterdayObj->modify('-1 day');
-$yesterdayDateKey = $yesterdayObj->format('Y-m-d');
-$yesterdayDateLabel = $yesterdayObj->format('l, j F Y');
-
-if ($isYesterday) {
-    $dedupedFixtures = array_values(array_filter($dedupedFixtures, function($f) use ($yesterdayDateKey, $tzNairobi) {
-        $raw = $f['kickoffTime'] ?? $f['date'] ?? '';
-        if (empty($raw)) return false;
-        try {
-            $dt = new DateTime($raw);
-            $dt->setTimezone($tzNairobi);
-            return $dt->format('Y-m-d') === $yesterdayDateKey;
-        } catch (\Throwable $e) {
-            return substr($raw, 0, 10) === $yesterdayDateKey;
-        }
-    }));
-}
-
-// Calculate Yesterday Settled Win Ratio strictly based on that date's won, lost, and all matches that were there
+// Calculate Yesterday Settled Win Ratio based on Won, Lost, and All matches on that date
+$totalEvaluated = count($dedupedFixtures);
 $wonCount = 0;
 $lostCount = 0;
-if ($isYesterday) {
-    foreach ($dedupedFixtures as &$f) {
-        $res = evaluateFixtureResult($f);
-        if ($res === 'won') {
-            $f['result'] = 'won';
-            $wonCount++;
-        } else {
-            $f['result'] = 'lost';
-            $lostCount++;
-        }
+foreach ($dedupedFixtures as $f) {
+    if (($f['result'] ?? '') === 'won') {
+        $wonCount++;
+    } else {
+        $lostCount++;
     }
-    unset($f);
-    $totalEvaluated = $wonCount + $lostCount;
-    $winRate = $totalEvaluated > 0 ? round(($wonCount / $totalEvaluated) * 100, 1) : 0;
-    $lossRate = $totalEvaluated > 0 ? round(100 - $winRate, 1) : 0;
-} else {
-    $totalEvaluated = count($dedupedFixtures);
-    foreach ($dedupedFixtures as $f) {
-        if (($f['result'] ?? '') === 'won') {
-            $wonCount++;
-        } else {
-            $lostCount++;
-        }
+}
+$winRate = $totalEvaluated > 0 ? round(($wonCount / $totalEvaluated) * 100, 1) : 0;
+$lossRate = $totalEvaluated > 0 ? round(100 - $winRate, 1) : 0;
+$yesterdayDateLabel = date('l, j F Y', strtotime('-1 day'));
+if (!empty($dedupedFixtures)) {
+    $firstKo = substr($dedupedFixtures[0]['kickoffTime'] ?? $dedupedFixtures[0]['date'] ?? '', 0, 10);
+    if (!empty($firstKo) && strtotime($firstKo) !== false) {
+        $yesterdayDateLabel = date('l, j F Y', strtotime($firstKo));
     }
-    $winRate = $totalEvaluated > 0 ? round(($wonCount / $totalEvaluated) * 100, 1) : 0;
-    $lossRate = $totalEvaluated > 0 ? round(100 - $winRate, 1) : 0;
 }
 
 // Group fixtures strictly by date starting from the latest
@@ -185,7 +159,7 @@ foreach ($dedupedFixtures as $f) {
 }
 
 // Only show fixtures of only the last five days for pages showing fixtures grouped on dates
-if (!$isYesterday && count($dateGroups) > 5) {
+if (count($dateGroups) > 5) {
     $dateGroups = array_slice($dateGroups, 0, 5, true);
     $allowedDates = array_keys($dateGroups);
     $dedupedFixtures = array_values(array_filter($dedupedFixtures, function($f) use ($allowedDates) {
@@ -538,19 +512,18 @@ foreach ($dedupedFixtures as $f) {
   <!-- MATCH FIXTURES LIST STREAM (GROUPED BY DATES STARTING FROM THE LATEST)   -->
   <!-- ========================================================================= -->
   <div class="space-y-4 text-left" id="categoryFixturesStream">
-
-      <!-- Section Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-1 border-b border-slate-200 dark:border-slate-800">
-      <div>
-        <h2 class="text-base sm:text-lg font-black text-slate-900 dark:text-slate-100 font-display tracking-tight m-0">
-          <?= e($frontmatter['listTitle'] ?? (' Fixtures & Selections')) ?>
-        </h2>
-        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 m-0">
-          <?= e($frontmatter['listSubtitle'] ?? ("-match coupon analysis with calibrated 1X2 win probabilities and double-chance hedges.")) ?>
-        </p>
-      </div>
-    </div>
-
+    <?php
+      if (!empty($dedupedFixtures)) {
+        $cPreloadIds = [];
+        foreach ($dedupedFixtures as $f) {
+          $fid = (string)($f['id'] ?? $f['fixture_id'] ?? '');
+          if ($fid !== '') $cPreloadIds[] = $fid;
+        }
+        if (!empty($cPreloadIds)) {
+          getBatchFixtureVoteStats(array_slice($cPreloadIds, 0, 50));
+        }
+      }
+    ?>
     <?php if (empty($dedupedFixtures)): ?>
       <div id="catEmptyState" class="p-8 md:p-12 text-center rounded-2xl bg-white border border-[var(--border)] shadow-xs flex flex-col items-center justify-center space-y-3 font-mono">
         <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
@@ -656,14 +629,14 @@ foreach ($dedupedFixtures as $f) {
   <!-- ========================================================================= -->
   <?php if (!empty($editorialHtml)): ?>
     <article class="p-6 md:p-8 rounded-3xl bg-white border border-[var(--border)] shadow-xs text-left space-y-4">
-      <!-- <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
+      <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
         <div class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs">
           ✦
         </div>
         <h2 class="text-base sm:text-lg font-black text-slate-900 tracking-tight font-display m-0">
           <?= e($frontmatter['displayTitle'] ?? $frontmatter['title'] ?? 'Cheerplex Algorithmic Strategy') ?>
         </h2>
-      </div> -->
+      </div>
 
       <div class="prose max-w-none text-xs text-slate-700 leading-relaxed font-sans">
         <?= $editorialHtml ?>

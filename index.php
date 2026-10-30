@@ -5,12 +5,23 @@
  */
 
 require_once __DIR__ . '/app/config.php';
-require_once __DIR__ . '/app/tracking.php';
 require_once __DIR__ . '/app/db.php';
 require_once __DIR__ . '/app/helpers.php';
 require_once __DIR__ . '/app/markdown_loader.php';
+if (file_exists(__DIR__ . '/app/tracking.php')) {
+    require_once __DIR__ . '/app/tracking.php';
+}
 
-$uri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
+$rawUri = $_SERVER['REQUEST_URI'] ?? '/';
+$uri = parse_url($rawUri, PHP_URL_PATH);
+
+// Canonical Trailing Slash Enforcement (Except root '/', API routes, and static assets with extensions)
+if ($uri !== '/' && strpos($uri, '/api/') !== 0 && !preg_match('/\.[a-zA-Z0-9]+$/', $uri) && !str_ends_with($uri, '/')) {
+    $q = parse_url($rawUri, PHP_URL_QUERY);
+    $dest = $uri . '/' . ($q ? '?' . $q : '');
+    header("Location: " . $dest, true, 301);
+    exit;
+}
 
 // 1. Handle API Endpoints
 if (strpos($uri, '/api/') === 0) {
@@ -30,51 +41,31 @@ if (strpos($uri, '/api/') === 0) {
         exit;
     }
 
-    // Vote handling endpoint (GET to fetch stats, POST to record vote)
+    // Vote handling endpoint (GET to fetch stats / batch stats, POST to record vote)
     if (strpos($uri, '/api/predictions/vote') === 0 || strpos($uri, '/api/vote') === 0) {
         $input = json_decode(file_get_contents('php://input'), true) ?: $_POST;
-        $fId = $input['fixtureId'] ?? $_GET['fixtureId'] ?? '1';
         $userId = $input['userId'] ?? $_GET['userId'] ?? 'guest';
         $choice = $input['vote'] ?? $input['choice'] ?? null;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($choice)) {
-            $result = recordFixtureVote($fId, $userId, $choice);
+            $fId = $input['fixtureId'] ?? $_GET['fixtureId'] ?? '1';
+            $prediction = $input['prediction'] ?? $_GET['prediction'] ?? null;
+            $result = recordFixtureVote($fId, $userId, $choice, $prediction);
             echo json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
             exit;
         } else {
-            $stats = getFixtureVoteStats($fId, $userId);
-            echo json_encode($stats, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-            exit;
-        }
-    }
-
-    // Contact form submission endpoint (Saves to database / API)
-    if (strpos($uri, '/api/contact') === 0) {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $input = json_decode(file_get_contents('php://input'), true) ?: $_POST;
-            $name = trim($input['name'] ?? '');
-            $email = trim($input['email'] ?? $input['phone'] ?? '');
-            $subject = trim($input['subject'] ?? 'General Support Ticket');
-            $message = trim($input['message'] ?? '');
-
-            if (empty($name) || empty($email) || empty($message)) {
-                http_response_code(400);
-                echo json_encode(['error' => 'Name, email, and message are required']);
+            $batchParam = $_GET['fixtures'] ?? $_GET['fixtureIds'] ?? $input['fixtures'] ?? $input['fixtureIds'] ?? null;
+            if (!empty($batchParam)) {
+                $ids = is_array($batchParam) ? $batchParam : array_filter(array_map('trim', explode(',', (string)$batchParam)));
+                $statsMap = getBatchFixtureVoteStats($ids, $userId);
+                echo json_encode(['success' => true, 'votes' => $statsMap], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+                exit;
+            } else {
+                $fId = $input['fixtureId'] ?? $_GET['fixtureId'] ?? '1';
+                $stats = getFixtureVoteStats($fId, $userId, true);
+                echo json_encode($stats, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
                 exit;
             }
-
-            $res = saveContactMessage([
-                'name'    => $name,
-                'email'   => $email,
-                'subject' => $subject,
-                'message' => $message,
-            ]);
-            echo json_encode($res, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-            exit;
-        } else {
-            http_response_code(405);
-            echo json_encode(['error' => 'Method not allowed']);
-            exit;
         }
     }
 
@@ -203,13 +194,14 @@ include __DIR__ . '/app/views/layout/header.php';
 $isCategoryPage = (
     strpos($pageId, 'category-') === 0 ||
     in_array($pageId, [
-        'cheerplex-today-prediction',
+        'cheerplex-today-prediction-betting-tips',
         'cheerplex-tomorrow-prediction',
         'cheerplex-yesterday-prediction',
         'cheerplex-1x2-prediction-tips',
         'cheerplex-gg-prediction-tips',
         'cheerplex-free-predictions-and-tips',
-        'cheerplex-free-predictions-and-tips',
+        'cheerplex-sure-tips-and-odds',
+        'cheerplex-betting-tips',
         'chearplex-prediction'
     ])
 );
@@ -220,16 +212,12 @@ $isJackpotDetailPage = in_array($pageId, [
     'betika-midweek', 
     'mozzart-grand', 
     'mozzart-super-daily',
-    'sportybet',
-    'sportybet-jackpot',
     'cheerplex-mega-jackpot-prediction',
     'cheerplex-sportpesa-jackpot-prediction'
 ]);
 
 if ($pageId === 'home') {
     include __DIR__ . '/app/views/pages/home.php';
-} elseif ($pageId === 'cheerplex-sure-tips-and-odds') {
-    include __DIR__ . '/app/views/pages/odds_hub.php';
 } elseif ($isCategoryPage) {
     $categoryId = $pageId;
     include __DIR__ . '/app/views/pages/category.php';
@@ -239,7 +227,6 @@ if ($pageId === 'home') {
     $jackpotId = $pageId;
     if ($jackpotId === 'cheerplex-mega-jackpot-prediction') $jackpotId = 'sportpesa-mega';
     if ($jackpotId === 'cheerplex-sportpesa-jackpot-prediction') $jackpotId = 'sportpesa-midweek';
-    if ($jackpotId === 'sportybet-jackpot') $jackpotId = 'sportybet';
     include __DIR__ . '/app/views/pages/jackpot_detail.php';
 } elseif ($pageId === 'vip-packages' || $pageId === 'cheerplex-vip-tips') {
     include __DIR__ . '/app/views/pages/vip_packages.php';

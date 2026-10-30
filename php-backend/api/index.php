@@ -227,6 +227,25 @@ function formatJackpotGame($g, $pdo = null) {
 
     $pos = (int)($g['jackpot_position'] ?? $g['position'] ?? $g['fixtureNumber'] ?? 1);
 
+    // Look up real vote counts for this jackpot game from fixture_vote_counts table
+    $jpTotal = 0; $jpV1 = 0; $jpVX = 0; $jpV2 = 0;
+    if ($pdo) {
+        try {
+            $c1 = (string)($g['id'] ?? $pos);
+            $c2 = (string)($fixtureRef ?? '');
+            $c3 = "jackpot_{$pos}";
+            $vStmt = $pdo->prepare("SELECT votes_1, votes_x, votes_2, total_votes FROM fixture_vote_counts WHERE fixture_id IN (?, ?, ?) LIMIT 1");
+            $vStmt->execute([$c1, $c2, $c3]);
+            $vRow = $vStmt->fetch();
+            if ($vRow) {
+                $jpV1 = (int)($vRow['votes_1'] ?? 0);
+                $jpVX = (int)($vRow['votes_x'] ?? 0);
+                $jpV2 = (int)($vRow['votes_2'] ?? 0);
+                $jpTotal = (int)($vRow['total_votes'] ?? ($jpV1 + $jpVX + $jpV2));
+            }
+        } catch (Throwable $e) {}
+    }
+
     return [
         'id' => (int)($g['id'] ?? $pos),
         'fixtureNumber' => $pos,
@@ -252,7 +271,11 @@ function formatJackpotGame($g, $pdo = null) {
         'date' => $g['date'] ?? $g['kickoffTime'] ?? date('Y-m-d H:i:s'),
         'confidence' => $probCalc['confidence'],
         'probabilities' => $probCalc['probabilities'],
-        'aiAnalysis' => $g['ai_analysis'] ?? $g['aiAnalysis'] ?? 'AI mathematical model favors this outcome based on team form and historical metrics.'
+        'aiAnalysis' => $g['ai_analysis'] ?? $g['aiAnalysis'] ?? 'AI mathematical model favors this outcome based on team form and historical metrics.',
+        'totalVotes' => $jpTotal,
+        'votes1' => $jpV1,
+        'votesX' => $jpVX,
+        'votes2' => $jpV2
     ];
 }
 
@@ -356,10 +379,15 @@ if ($path === '/predictions' && $method === 'GET') {
                 fs.halftime_away AS halftimeAway,
                 pp.percent_pred_home AS homeProbability,
                 pp.percent_pred_draw AS drawProbability,
-                pp.percent_pred_away AS awayProbability
+                pp.percent_pred_away AS awayProbability,
+                vc.votes_1 AS votes1,
+                vc.votes_x AS votesX,
+                vc.votes_2 AS votes2,
+                vc.total_votes AS totalVotes
             FROM fixtures f
             LEFT JOIN fixture_scores fs ON f.fixture_id = fs.fixture_ref
             LEFT JOIN prediction_probabilities pp ON f.fixture_id = pp.fixture_ref
+            LEFT JOIN fixture_vote_counts vc ON f.fixture_id = vc.fixture_id
             $whereClause
             ORDER BY f.date ASC";
 
@@ -404,7 +432,11 @@ if ($path === '/predictions' && $method === 'GET') {
             'awayScore' => $row['awayScore'] !== null ? $row['awayScore'] : '-',
             'confidence' => $probCalc['confidence'],
             'aiAnalysis' => $row['aiAnalysis'] ?: 'AI mathematical prediction derived from team form & historical head-to-head metrics.',
-            'probabilities' => $probCalc['probabilities']
+            'probabilities' => $probCalc['probabilities'],
+            'totalVotes' => (int)($row['totalVotes'] ?? 0),
+            'votes1' => (int)($row['votes1'] ?? 0),
+            'votesX' => (int)($row['votesX'] ?? 0),
+            'votes2' => (int)($row['votes2'] ?? 0)
         ];
     }, $rows);
 
@@ -451,10 +483,65 @@ if ($path === '/predictions/vote' || $path === '/vote') {
 
     if ($method === 'GET') {
         $fixtureId = isset($_GET['fixtureId']) ? trim($_GET['fixtureId']) : '';
+        $fixturesParam = $_GET['fixtures'] ?? $_GET['fixtureIds'] ?? null;
         $userId = isset($_GET['userId']) ? trim($_GET['userId']) : '';
 
+        // Batch multi-fixture query
+        if (!empty($fixturesParam)) {
+            $ids = is_array($fixturesParam) ? $fixturesParam : array_filter(array_map('trim', explode(',', (string)$fixturesParam)));
+            $votesMap = [];
+
+            if (!empty($ids)) {
+                try {
+                    $placeholders = implode(',', array_fill(0, count($ids), '?'));
+                    $stmt = $pdo->prepare("SELECT fixture_id, votes_1, votes_x, votes_2, total_votes FROM fixture_vote_counts WHERE fixture_id IN ($placeholders)");
+                    $stmt->execute($ids);
+                    $rows = $stmt->fetchAll();
+                    $dbMap = [];
+                    foreach ($rows as $r) {
+                        $dbMap[(string)$r['fixture_id']] = $r;
+                    }
+
+                    $userVotesMap = [];
+                    if ($userId !== '') {
+                        $uParams = array_merge($ids, [$userId]);
+                        $uStmt = $pdo->prepare("SELECT fixture_id, vote FROM prediction_votes WHERE fixture_id IN ($placeholders) AND user_id = ?");
+                        $uStmt->execute($uParams);
+                        foreach ($uStmt->fetchAll() as $ur) {
+                            $userVotesMap[(string)$ur['fixture_id']] = $ur['vote'];
+                        }
+                    }
+
+                    foreach ($ids as $id) {
+                        $r = $dbMap[(string)$id] ?? null;
+                        $v1 = (int)($r['votes_1'] ?? 0);
+                        $vx = (int)($r['votes_x'] ?? 0);
+                        $v2 = (int)($r['votes_2'] ?? 0);
+                        $total = (int)($r['total_votes'] ?? ($v1 + $vx + $v2));
+                        $hPct = $total > 0 ? (int)round(($v1 / $total) * 100) : 0;
+                        $dPct = $total > 0 ? (int)round(($vx / $total) * 100) : 0;
+                        $aPct = $total > 0 ? max(0, 100 - $hPct - $dPct) : 0;
+
+                        $votesMap[(string)$id] = [
+                            'fixtureId' => (string)$id,
+                            'totalVotes' => $total,
+                            'votes1' => $v1,
+                            'votesX' => $vx,
+                            'votes2' => $v2,
+                            'homePercent' => $hPct,
+                            'drawPercent' => $dPct,
+                            'awayPercent' => $aPct,
+                            'userVote' => $userVotesMap[(string)$id] ?? null
+                        ];
+                    }
+                } catch (Throwable $e) {}
+            }
+
+            jsonResponse(['success' => true, 'votes' => $votesMap]);
+        }
+
         if (!$fixtureId) {
-            jsonResponse(['error' => 'fixtureId is required'], 400);
+            jsonResponse(['error' => 'fixtureId or fixtures is required'], 400);
         }
 
         try {
@@ -1606,7 +1693,7 @@ if ($path === '/sitemap.xml' || $path === '/sitemap') {
         '/cheerplex-predictions-and-tips-today',
         '/liobet-predictions-and-tips',
         '/sunpel-free-football-betting-tips-and-soccer-predictions',
-        'cheerplex-jackpots-predictions-and-tips',
+        '/jackpot-tips',
         '/sportpesa-mega-jackpot-prediction',
         '/free-betika-midweek-jackpot-predictions-and-analysis',
         '/free-mozzart-grand-jackpot-predictions-and-analysis',
